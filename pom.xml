@@ -8,20 +8,35 @@
         <version>2.2.2.BUILD-SNAPSHOT</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.springboot</groupId>
-    <artifactId>application</artifactId>
+    <groupId>tygri.pujcovna</groupId>
+    <artifactId>tygripujcovna</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>application</name>
-    <description>springboot project</description>
+    <name>TygriPujcovna</name>
+    <description>Projekt Tygri Pujcovna</description>
     <properties>
         <java.version>1.8</java.version>
     </properties>
+    
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>       
+        </dependency>  
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jasper</artifactId>
+            <version>9.0.29</version>
+        </dependency>  
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
     </dependencies>
+    
     <build>
         <plugins>
             <plugin>
