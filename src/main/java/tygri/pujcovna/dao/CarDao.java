@@ -15,8 +15,8 @@ public class CarDao extends BaseDao {
         return super.getAll();
     }
 
-    public boolean CreateCar(String name, String description, String model) {
-        Car car = new Car(name, description, model);
+    public boolean CreateCar(String model, String brand, double baseprice, String color, double power, int productionyear, double trunkvolume, boolean foldingrearseats, int seats, double consumption, String description) {
+        Car car = new Car(model, brand, baseprice, color, power, productionyear, trunkvolume, foldingrearseats, seats, consumption, description);
         try {
             persist(car);
         } catch (Exception e) {

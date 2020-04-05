@@ -22,7 +22,20 @@ public class CarService {
         return carDao.getAllCars();
     }
 
-    public boolean addCar(String name, String description, String model) {
-        return carDao.CreateCar(name, description, model);
+    @Transactional
+    public boolean createCar(String model, String brand, String baseprice, String color, String power, String productionyear, String trunkvolume, String foldingrearseats, String seats, String consumption, String description) {
+        try {
+            boolean foldingseats;
+            if ("yes".equals(foldingrearseats)) {
+                foldingseats = true;
+            } else if ("no".equals(foldingrearseats)) {
+                foldingseats = false;
+            } else {
+                return false;
+            }
+            return carDao.CreateCar(model, brand, Double.valueOf(baseprice), color, Double.valueOf(power), Integer.valueOf(productionyear), Double.valueOf(trunkvolume), foldingseats, Integer.valueOf(seats), Double.valueOf(consumption), description);
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 }
