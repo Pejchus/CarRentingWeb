@@ -20,7 +20,7 @@ public class HelloController {
     //ukazka
     @RequestMapping("/")
     public ModelAndView index() {
-        ModelAndView mv = new ModelAndView("/home.jsp");
+        ModelAndView mv = new ModelAndView("/index.jsp");
         mv.addObject("variable", "Dosazena hodnota");
         mv.addObject("carData", carService.getAllCars());
         return mv;
@@ -29,7 +29,7 @@ public class HelloController {
     //ukazka
     @RequestMapping("/addCar")
     public ModelAndView addCar(@RequestParam String model, @RequestParam String brand, @RequestParam String baseprice, @RequestParam String color, @RequestParam String power, @RequestParam String productionyear, @RequestParam String trunkvolume, @RequestParam String foldingrearseats, @RequestParam String seats, @RequestParam String consumption, @RequestParam String description) {
-        ModelAndView mv = new ModelAndView("/home.jsp");
+        ModelAndView mv = new ModelAndView("/index.jsp");
         if (carService.createCar(model, brand, baseprice, color, power, productionyear, trunkvolume, foldingrearseats, seats, consumption, description)) {
             mv.addObject("carAddedMessage", "Car added!");
         } else {

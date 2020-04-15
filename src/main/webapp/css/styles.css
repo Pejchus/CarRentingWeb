@@ -1,0 +1,55 @@
+/* HEADER */
+.header_title {
+    font-weight: bold;
+    font-size: 2rem;
+    color: orangered;
+}
+.logo_icon {
+    width: 100px;
+    height: 100px;
+}
+.navbar {
+    padding: .8rem;
+}
+.nav-link{
+    font-size: 1em !important;
+}
+.nav-item{
+    font-size: 20px;
+}
+.nav-item:hover{
+    background-color: #af9f9f;
+    /* padding-top: 20px;
+    padding-bottom: 20px; */
+}
+
+/*  MAIN SECTION */
+.main{
+    position: relative;
+    height: 100%;
+}
+.index-car-image{
+    width: 100%;
+    max-width: 100%;
+    object-fit: cover;
+}
+.main_description{
+    margin-top: 20px;
+}
+
+/* FOOTER */
+.footer_content{
+    padding: 20px 20px 20px 20px;
+    font-size: 1em;
+    color: rgb(252, 125, 79);
+}
+.footer_title{
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: orangered;
+}
+
+/* MEDIA QUERIES */
+@media only screen and (max-width: 1250px) {
+
+}
