@@ -1,27 +1,23 @@
 package tygri.pujcovna.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "ACCOUNT")
-public class Account {
+@Table(name = "USER")
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Enumerated(EnumType.STRING)
-    private Role accrole;
-
     @Basic(optional = false)
-    @Column(nullable = false)
-    private boolean enabled;
-
-    @Basic(optional = false)
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
 
     @Basic(optional = false)
@@ -29,16 +25,20 @@ public class Account {
     private String password;
 
     @Basic(optional = false)
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Basic(optional = false)
     @Column(nullable = false)
-    private int phone;
+    private boolean enabled;
+
+    @Basic(optional = false)
+    @Column(nullable = false, unique = true)
+    private String phone;
 
     @Basic(optional = false)
     @Column(nullable = false)
-    private int countryCode;
+    private String countryCode;
 
     @Basic(optional = false)
     @Column(nullable = false)
@@ -60,16 +60,16 @@ public class Account {
     @Column(nullable = false)
     private String streetno;
 
-    @OneToMany(
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Carorder> orders;
 
-    public Account() {
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Authority> authorities = new HashSet<>();
+
+    public User() {
     }
 
-    public Account(boolean enabled, String username, String password, String email, int phone, int countryCode, String firstname, String lastname, String city, String street, String streetno, Role accrole) {
+    public User(boolean enabled, String username, String password, String email, String phone, String countryCode, String firstname, String lastname, String city, String street, String streetno) {
         this.enabled = enabled;
         this.username = username;
         this.password = password;
@@ -81,20 +81,14 @@ public class Account {
         this.city = city;
         this.street = street;
         this.streetno = streetno;
-        this.accrole = accrole;
+        this.orders = new ArrayList<>();
     }
 
     public List<Carorder> getOrders() {
-        if (orders == null) {
-            orders = new ArrayList<>();
-        }
         return orders;
     }
 
     public void addOrder(Carorder order) {
-        if (orders == null) {
-            orders = new ArrayList<>();
-        }
         orders.add(Objects.requireNonNull(order));
     }
 
@@ -134,19 +128,19 @@ public class Account {
         this.email = email;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
-    public int getCountryCode() {
+    public String getCountryCode() {
         return countryCode;
     }
 
-    public void setCountryCode(int countryCode) {
+    public void setCountryCode(String countryCode) {
         this.countryCode = countryCode;
     }
 
@@ -190,16 +184,16 @@ public class Account {
         this.streetno = streetno;
     }
 
-    public Role getAccrole() {
-        return accrole;
+    public Set<Authority> getAuthorities() {
+        return authorities;
     }
 
-    public void setAccrole(Role accrole) {
-        this.accrole = accrole;
+    public void setAuthorities(Set<Authority> authorities) {
+        this.authorities = authorities;
     }
 
     @Override
     public String toString() {
-        return "Account{" + "id=" + id + ", enabled=" + enabled + ", username=" + username + ", password=" + password + ", email=" + email + ", phone=" + phone + ", countryCode=" + countryCode + ", firstname=" + firstname + ", lastname=" + lastname + ", city=" + city + ", street=" + street + ", streetno=" + streetno + ", accrole=" + accrole + ", orders=" + orders + '}';
+        return "Account{" + "id=" + id + ", enabled=" + enabled + ", username=" + username + ", password=" + password + ", email=" + email + ", phone=" + phone + ", countryCode=" + countryCode + ", firstname=" + firstname + ", lastname=" + lastname + ", city=" + city + ", street=" + street + ", streetno=" + streetno + ", accroles=" + authorities + ", orders=" + orders + '}';
     }
 }

@@ -1,18 +1,19 @@
 package tygri.pujcovna.model;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import javax.persistence.*;
 
 @Entity
 @Table(name = "CARORDER")
-public class Carorder {
+public class Carorder implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @ManyToOne
-    private Account account;
+    private User account;
 
     @ManyToOne
     private Car car;
@@ -46,11 +47,11 @@ public class Carorder {
         this.paid = paid;
     }
 
-    public void setAccount(Account account) {
+    public void setAccount(User account) {
         this.account = account;
     }
 
-    public Account getAccount() {
+    public User getAccount() {
         return account;
     }
 

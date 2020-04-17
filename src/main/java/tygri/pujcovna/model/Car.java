@@ -1,12 +1,13 @@
 package tygri.pujcovna.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 
 @Entity
 @Table(name = "CAR")
-public class Car {
+public class Car implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

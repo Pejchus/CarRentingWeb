@@ -41,7 +41,7 @@ public abstract class BaseDao<T> {
         }
     }
 
-    public T update(T entity) {
+    public T updateEntity(T entity) {
         Objects.requireNonNull(entity, "You are trying to update a null object!");
         try {
             return em.merge(entity);
