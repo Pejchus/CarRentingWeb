@@ -25,30 +25,6 @@ public class CarDao extends BaseDao {
         return true;
     }
 
-    public List<Car> getCarsByColor(String color){
-        try {
-            return em.createQuery("SELECT e FROM Car e WHERE e.color=:color", Car.class).setParameter(color,color).getResultList();
-        } catch (RuntimeException e) {
-            throw new RuntimeException("No car with that color");
-        }
-    }
-
-    public List<Car> getCarsByBrand(String brand){
-        try {
-            return em.createQuery("SELECT e FROM Car e WHERE e.brand=:brand", Car.class).setParameter(brand,brand).getResultList();
-        } catch (RuntimeException e) {
-            throw new RuntimeException("No car from that manufacturer");
-        }
-    }
-
-    public List<Car> getCarsByPrice(double lowest, double highest){
-        try {
-            return em.createQuery("SELECT e FROM Car e WHERE e.brand BETWEEN :lowest AND :highest", Car.class).setParameter(String.valueOf(lowest),lowest).setParameter(String.valueOf(highest),highest).getResultList();
-        } catch (RuntimeException e) {
-            throw new RuntimeException("No car cost between"+lowest+" and "+highest);
-        }
-    }
-
     public boolean deleteCar (int id){
         try {
             Car toDelete = em.find(Car.class,id);
@@ -58,6 +34,15 @@ public class CarDao extends BaseDao {
             throw new RuntimeException("car with id "+id+" not found");
         }
         return true;
+    }
+    public List<Car> getFilteredCars(String color,String brand,double lowest, double highest){
+        color = "%"+color+"%";
+        brand ="%"+brand+"%";
+        try {
+            return em.createQuery("SELECT e FROM Car e WHERE e.color LIKE :color and e.brand LIKE :brand and e.baseprice between :lowest AND :highest", Car.class).setParameter("lowest",lowest).setParameter("highest",highest).setParameter("color",color).setParameter("brand",brand).getResultList();
+        } catch (RuntimeException e) {
+            throw new RuntimeException("No car with that color");
+        }
     }
 
 }

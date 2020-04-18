@@ -38,4 +38,19 @@ public class CarService {
             return false;
         }
     }
+    @Transactional
+    public List<Car> getFilteredCars(String color, String brand, String lowest,String highest ) {
+        double low;
+        double high;
+        try{
+            low = Double.valueOf(lowest);
+        } catch (Exception e){
+            low=0;
+        }try{
+            high = Double.valueOf(highest);
+        } catch (Exception e){
+            high = Double.MAX_VALUE;
+        }
+        return carDao.getFilteredCars(color,brand,low,high);
+    }
 }
