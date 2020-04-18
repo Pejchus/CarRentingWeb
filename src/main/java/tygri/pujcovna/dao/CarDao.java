@@ -31,7 +31,7 @@ public class CarDao extends BaseDao {
             super.remove(toDelete);
 
         } catch (Exception e){
-            throw new RuntimeException("car with id "+id+" not found");
+            return false;
         }
         return true;
     }
@@ -41,7 +41,7 @@ public class CarDao extends BaseDao {
         try {
             return em.createQuery("SELECT e FROM Car e WHERE e.color LIKE :color and e.brand LIKE :brand and e.baseprice between :lowest AND :highest", Car.class).setParameter("lowest",lowest).setParameter("highest",highest).setParameter("color",color).setParameter("brand",brand).getResultList();
         } catch (RuntimeException e) {
-            throw new RuntimeException("No car with that color");
+            return null;
         }
     }
 

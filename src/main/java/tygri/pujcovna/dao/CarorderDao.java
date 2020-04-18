@@ -1,5 +1,6 @@
 package tygri.pujcovna.dao;
 
+import org.hibernate.sql.Select;
 import org.springframework.stereotype.Repository;
 import tygri.pujcovna.model.Car;
 import tygri.pujcovna.model.Carorder;
@@ -17,7 +18,7 @@ public class CarorderDao extends BaseDao {
         super(Carorder.class);
     }
 
-    public List<Car> getAllCarorders() {
+    public List<Carorder> getAllCarorders() {
         return super.getAll();
     }
 
@@ -30,4 +31,39 @@ public class CarorderDao extends BaseDao {
         }
         return true;
     }
+
+    public List<Carorder> getUserOrderHistory(User u) {
+        try {
+            return em.createQuery("SELECT e FROM Carorder e where e.account=:user and e.paid = true").setParameter("user", u).getResultList();
+        } catch (Exception e){
+            return null;
+        }
+    }
+
+    public List<Carorder> getCarOrderHistory(Car c) {
+        try {
+            return em.createQuery("SELECT e FROM Carorder e where e.car=:car and e.paid=true").setParameter("car", c).getResultList();
+        } catch (Exception e){
+            return null;
+        }
+    }
+
+    public List<Carorder> getUserCurrentReservations(User u) {
+        try {
+            return em.createQuery("SELECT e FROM Carorder e where e.account=:user and e.enddate>:date").setParameter("date",new Timestamp(System.currentTimeMillis())).setParameter("user", u).getResultList();
+        } catch (Exception e){
+            return null;
+        }
+    }
+
+    public List<Carorder> getCarCurrentReservations(Car c) {
+        try {
+            return em.createQuery("SELECT e FROM Carorder e where e.car=:car and e.enddate>:date").setParameter("date",new Timestamp(System.currentTimeMillis())).setParameter("car", c).getResultList();
+        } catch (Exception e){
+            return null;
+        }
+    }
+
+
+
 }
