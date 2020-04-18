@@ -41,7 +41,12 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-taglibs</artifactId>
-        </dependency>   
+        </dependency>
+        <dependency>
+            <artifactId>org.eclipse.persistence.jpa.jpql</artifactId>
+            <groupId>org.eclipse.persistence</groupId>
+            <version>2.7.4</version>
+        </dependency>
     </dependencies>
     
     <build>
