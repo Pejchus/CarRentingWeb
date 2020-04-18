@@ -69,11 +69,11 @@
                     Sed gravida enim a pretium convallis. Vivamus vel nunc non risus fringilla suscipit vitae eget odio. Pellentesque vel auctor massa, ac dignissim dolor. In ac eros dui. Nullam scelerisque odio suscipit malesuada elementum. Morbi sed odio tortor. Curabitur tincidunt malesuada purus nec semper. Quisque consequat augue ac justo iaculis, ac lacinia purus tristique. Nam et leo sagittis, ornare purus at, vestibulum lectus. Phasellus et sapien nec elit volutpat efficitur. Sed varius in tellus in bibendum. Integer tincidunt, justo at sollicitudin efficitur, sapien odio eleifend lacus, rhoncus auctor nisi velit in est. Proin augue lorem, viverra at porttitor et, consequat vel neque. Aliquam dictum lectus eu magna scelerisque, id lobortis tellus faucibus.</p>
             </div>
             <h1>Auta V databazi</h1>
-            <p>${carData}</p>
+            ${carData}
 
-            <security:authorize access="hasAnyRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')">
+            <security:authorize access="hasAnyRole('ROLE_EMPLOYEE','ROLE_ADMIN')">
                 <h3>Add Car</h3>            
-                <form action="addCar">
+                <form method="POST" enctype="multipart/form-data" action="addCar">
                     <label>Model(string): </label><input type="text" name="model" required><br>
                     <label>Brand(string): </label><input type="text" name="brand" required><br>
                     <label>Baseprice(double): </label><input type="text" name="baseprice" required><br>
@@ -85,6 +85,7 @@
                     <label>Seats(int): </label><input type="text" name="seats" required><br>
                     <label>Consumption(double): </label><input type="text" name="consumption" required><br>
                     <label>Description(string): </label><input type="text" name="description" required><br>
+                    <label>Car photo: </label><input type="file" name="photo" required><br> 
                     <input type="submit"><br>
                 </form>
                 ${carAddedMessage}
@@ -93,25 +94,23 @@
             <h1>Users V databazi</h1>
             <p>${userData}</p>
 
-            <security:authorize access="hasAnyRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')">
-                <h3>Add User</h3>
-                <form action="addUser">
-                    <label>Username(string): </label><input type="text" name="username" required><br>
-                    <label>Password(string): </label><input type="text" name="password" required><br>
-                    <label>Email(string): </label><input type="text" name="email" required><br>
-                    <label>Enabled(true/false): </label><input type="text" name="enabled" required><br>
-                    <label>Phone(string): </label><input type="text" name="phone" required><br>
-                    <label>CountryCode(string): </label><input type="text" name="countryCode" required><br>
-                    <label>Firstname(string): </label><input type="text" name="firstname" required><br>
-                    <label>Lastname(string): </label><input type="text" name="lastname" required><br>
-                    <label>City(string): </label><input type="text" name="city" required><br>
-                    <label>Street(string): </label><input type="text" name="street" required><br>
-                    <label>StreetNo(string): </label><input type="text" name="streetNo" required><br>
-                    <label>Authority(CUSTOMER/EMPLOYEE/ADMIN): </label><input type="text" name="authority" required><br>
-                    <input type="submit"><br>
-                </form>
-                ${userAddedMessage}
-            </security:authorize>
+            <h3>Add User</h3>
+            <form action="addUser">
+                <label>Username(string): </label><input type="text" name="username" required><br>
+                <label>Password(string): </label><input type="text" name="password" required><br>
+                <label>Email(string): </label><input type="text" name="email" required><br>
+                <label>Enabled(true/false): </label><input type="text" name="enabled" required><br>
+                <label>Phone(string): </label><input type="text" name="phone" required><br>
+                <label>CountryCode(string): </label><input type="text" name="countryCode" required><br>
+                <label>Firstname(string): </label><input type="text" name="firstname" required><br>
+                <label>Lastname(string): </label><input type="text" name="lastname" required><br>
+                <label>City(string): </label><input type="text" name="city" required><br>
+                <label>Street(string): </label><input type="text" name="street" required><br>
+                <label>StreetNo(string): </label><input type="text" name="streetNo" required><br>
+                <label>Authority(CUSTOMER/EMPLOYEE/ADMIN): </label><input type="text" name="authority" required><br>
+                <input type="submit"><br>
+            </form>
+            ${userAddedMessage}
         </main>
 
         <!-- END OF MAIN SECTION -->

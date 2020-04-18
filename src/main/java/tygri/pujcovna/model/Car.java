@@ -57,6 +57,11 @@ public class Car implements Serializable {
     @Column(nullable = false)
     private String description;
 
+    @Basic(optional = false)
+    @Column(nullable = false)
+    @Lob
+    private Byte[] photo;
+
     @OneToMany(
             cascade = CascadeType.ALL,
             orphanRemoval = true
@@ -66,7 +71,7 @@ public class Car implements Serializable {
     public Car() {
     }
 
-    public Car(String model, String brand, double baseprice, String color, double power, int productionyear, double trunkvolume, boolean foldingrearseats, int seats, double consumption, String description) {
+    public Car(String model, String brand, double baseprice, String color, double power, int productionyear, double trunkvolume, boolean foldingrearseats, int seats, double consumption, String description, Byte[] photo) {
         this.model = model;
         this.brand = brand;
         this.baseprice = baseprice;
@@ -78,6 +83,7 @@ public class Car implements Serializable {
         this.seats = seats;
         this.consumption = consumption;
         this.description = description;
+        this.photo = photo;
     }
 
     public List<Carorder> getOrders() {
@@ -177,6 +183,14 @@ public class Car implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Byte[] photo) {
+        this.photo = photo;
     }
 
     @Override
