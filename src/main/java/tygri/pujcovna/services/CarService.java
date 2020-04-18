@@ -2,6 +2,7 @@ package tygri.pujcovna.services;
 
 import java.io.IOException;
 import java.util.Base64;
+import java.util.List;
 import tygri.pujcovna.dao.CarDao;
 import tygri.pujcovna.model.Car;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,19 +59,21 @@ public class CarService {
             return false;
         }
     }
+
     @Transactional
-    public List<Car> getFilteredCars(String color, String brand, String lowest,String highest ) {
+    public List<Car> getFilteredCars(String color, String brand, String lowest, String highest) {
         double low;
         double high;
-        try{
+        try {
             low = Double.valueOf(lowest);
-        } catch (Exception e){
-            low=0;
-        }try{
+        } catch (Exception e) {
+            low = 0;
+        }
+        try {
             high = Double.valueOf(highest);
-        } catch (Exception e){
+        } catch (Exception e) {
             high = Double.MAX_VALUE;
         }
-        return carDao.getFilteredCars(color,brand,low,high);
+        return carDao.getFilteredCars(color, brand, low, high);
     }
 }
