@@ -2,8 +2,11 @@ package tygri.pujcovna.dao;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.TypedQuery;
+
+import tygri.pujcovna.model.Car;
 import tygri.pujcovna.model.User;
 import org.springframework.stereotype.Repository;
 import tygri.pujcovna.model.Authority;
@@ -51,6 +54,36 @@ public class UserAndAuthorityDao extends BaseDao /*implements UserRepository*/ {
         } catch (RuntimeException e) {
             return false;
         }
+    }
+
+    public boolean deleteUserByUsername(String username){
+        try {
+           User toDelete = em.find(User.class,username);
+           super.remove(toDelete);
+        }catch (Exception e){
+            return false;
+        }
+        return true;
+    }
+
+    public List<User> getBannedUsers(){
+        try {
+            return em.createQuery("SELECT e FROM User e WHERE e.enabled =false", User.class).getResultList();
+        } catch (RuntimeException e) {
+            throw new RuntimeException("No banned user");
+        }
+    }
+
+    public boolean switchUserEnability(String username){
+        User toBan = getUserByUsername(username);
+        try {
+            Objects.requireNonNull(toBan,"trying to ban null object");
+            toBan.setEnabled(!toBan.isEnabled());
+            super.updateEntity(toBan);
+        }catch (Exception e){
+            return false;
+        }
+        return true;
     }
 
 }

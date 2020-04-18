@@ -20,4 +20,25 @@ public class CarDao extends BaseDao {
         }
         return true;
     }
+
+    public boolean deleteCar (int id){
+        try {
+            Car toDelete = em.find(Car.class,id);
+            super.remove(toDelete);
+
+        } catch (Exception e){
+            return false;
+        }
+        return true;
+    }
+    public List<Car> getFilteredCars(String color,String brand,double lowest, double highest){
+        color = "%"+color+"%";
+        brand ="%"+brand+"%";
+        try {
+            return em.createQuery("SELECT e FROM Car e WHERE e.color LIKE :color and e.brand LIKE :brand and e.baseprice between :lowest AND :highest", Car.class).setParameter("lowest",lowest).setParameter("highest",highest).setParameter("color",color).setParameter("brand",brand).getResultList();
+        } catch (RuntimeException e) {
+            return null;
+        }
+    }
+
 }
