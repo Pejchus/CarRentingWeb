@@ -30,6 +30,11 @@ public class MainController implements ErrorController {
         mv.addObject("carData", carService.getAllCars());
         mv.addObject("userData", userService.getAllUsers());
         mv.addObject("LoggedUser", session.getAttribute("userName"));
+        if (session.getAttribute("UserStatus") == null) {
+            mv.addObject("UserStatus", "Not logged in");
+        } else {
+            mv.addObject("UserStatus", "Logged in as: " + session.getAttribute("UserStatus"));
+        }
         return mv;
     }
 
@@ -49,7 +54,7 @@ public class MainController implements ErrorController {
 
     @RequestMapping("/addUser")
     public ModelAndView addUser(HttpSession session, @RequestParam String username, @RequestParam String password, @RequestParam String email, @RequestParam String enabled, @RequestParam String phone, @RequestParam String countryCode, @RequestParam String firstname, @RequestParam String lastname, @RequestParam String city, @RequestParam String street, @RequestParam String streetNo, @RequestParam String authority) {
-        ModelAndView mv = new ModelAndView("/index.jsp");
+        ModelAndView mv = new ModelAndView("redirect:/");
         if (userService.createUser(username, password, email, enabled, phone, countryCode, firstname, lastname, city, street, streetNo, authority)) {
             mv.addObject("userAddedMessage", "<p>User added!</p>");
         } else {

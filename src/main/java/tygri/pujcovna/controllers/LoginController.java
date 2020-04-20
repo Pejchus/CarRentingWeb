@@ -62,6 +62,7 @@ public class LoginController {
         ModelAndView mv = new ModelAndView("redirect:/");
         session.setAttribute("userId", loggedInUser.getId());
         session.setAttribute("userName", loggedInUser.getUsername());
+        session.setAttribute("UserStatus", loggedInUser.getAuthorities().iterator().next());
         mv.addObject("LoggedUser", session.getAttribute("userName"));
         mv.addObject("userData", userService.getAllUsers());
         mv.addObject("carData", carService.getAllCars());

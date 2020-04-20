@@ -31,18 +31,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Kontakty</a>
                             </li>
-                            <li class="nav-item">
-                                <security:authorize access="hasRole('ROLE_ADMIN')">
-                                    <p>logged in as ADMIN</p>
-                                </security:authorize>
-                                <security:authorize access="hasRole('ROLE_EMPLOYEE')">
-                                    <p>logged in as EMPLOYEE</p>
-                                </security:authorize>
-                                <security:authorize access="hasRole('ROLE_CUSTOMER')">
-                                    <p>logged in as CUSTOMER</p>
-                                </security:authorize>
-                                <security:authorize access="!hasAnyRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')">
-                                    <p>Not Logged in</p> 
+                            <li class="nav-item">                              
+                                <p>${UserStatus}</p>
+                                <security:authorize access="!hasAnyRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')">                                    
                                     <form action="login">
                                         <input type="submit" value="login">
                                     </form>
