@@ -31,18 +31,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Kontakty</a>
                             </li>
-                            <li class="nav-item">
-                                <security:authorize access="hasRole('ROLE_ADMIN')">
-                                    <p>logged in as ADMIN</p>
-                                </security:authorize>
-                                <security:authorize access="hasRole('ROLE_EMPLOYEE')">
-                                    <p>logged in as EMPLOYEE</p>
-                                </security:authorize>
-                                <security:authorize access="hasRole('ROLE_CUSTOMER')">
-                                    <p>logged in as CUSTOMER</p>
-                                </security:authorize>
-                                <security:authorize access="!hasAnyRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')">
-                                    <p>Not Logged in</p> 
+                            <li class="nav-item">                              
+                                <p>${UserStatus}</p>
+                                <security:authorize access="!hasAnyRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')">                                    
                                     <form action="login">
                                         <input type="submit" value="login">
                                     </form>
@@ -65,31 +56,27 @@
         <main class="main">
             
             <div class="container main_description">
-                <H1>Zákaznický účet</H1>
+                <H1>${session.role</H1>
                 <table class="user_profile_table">
                     <tr>
                         <td>Jméno a příjmení</td>
-                        <td>{$}</td>
-                    </tr>
-                    <tr>
-                        <td>Datum narození</td>
-                        <td></td>
+                        <td>${firstname} ${lastname}</td>
                     </tr>
                     <tr>
                         <td>Telefon</td>
-                        <td></td>
+                        <td>${phone}</td>
                     </tr>
                     <tr>
                         <td>Email</td>
-                        <td></td>
+                        <td>${email}</td>
                     </tr>
                     <tr>
                         <td>Adresa</td>
-                        <td></td>
+                        <td>${State} ${city} ${street} ${streetno}</td>
                     </tr>
                     <tr>
                         <td>Objednávky</td>
-                        <td></td>
+                        <td>${orders}</td>
                     </tr>
                     
                 </table>
