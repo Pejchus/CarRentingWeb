@@ -1,9 +1,6 @@
 package tygri.pujcovna.services;
 
 import java.util.List;
-import tygri.pujcovna.model.UserAuthoritiesWrapper;
-import tygri.pujcovna.model.User;
-//import tygri.pujcovna.dao.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tygri.pujcovna.dao.UserAndAuthorityDao;
 import tygri.pujcovna.model.AuthorityType;
+import tygri.pujcovna.model.User;
+import tygri.pujcovna.model.UserAuthoritiesWrapper;
 
 @Service
 public class UserService implements UserDetailsService {

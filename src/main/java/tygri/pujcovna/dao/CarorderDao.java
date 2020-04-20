@@ -22,9 +22,9 @@ public class CarorderDao extends BaseDao {
         return super.getAll();
     }
 
-    public boolean createCarorder(User customer, Timestamp begin,Timestamp end,Car car,double price,boolean paid ){
-        try{
-            Carorder order = new Carorder(car,begin,end,new Timestamp(System.currentTimeMillis()),price,paid);
+    public boolean createCarorder(User customer, Timestamp begin, Timestamp end, Car car, double price, boolean paid) {
+        try {
+            Carorder order = new Carorder(car, begin, end, new Timestamp(System.currentTimeMillis()), price, paid);
             persist(order);
         } catch (Exception e) {
             return false;
@@ -35,7 +35,7 @@ public class CarorderDao extends BaseDao {
     public List<Carorder> getUserOrderHistory(User u) {
         try {
             return em.createQuery("SELECT e FROM Carorder e where e.account=:user and e.paid = true").setParameter("user", u).getResultList();
-        } catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
@@ -43,27 +43,25 @@ public class CarorderDao extends BaseDao {
     public List<Carorder> getCarOrderHistory(Car c) {
         try {
             return em.createQuery("SELECT e FROM Carorder e where e.car=:car and e.paid=true").setParameter("car", c).getResultList();
-        } catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
 
     public List<Carorder> getUserCurrentReservations(User u) {
         try {
-            return em.createQuery("SELECT e FROM Carorder e where e.account=:user and e.enddate>:date").setParameter("date",new Timestamp(System.currentTimeMillis())).setParameter("user", u).getResultList();
-        } catch (Exception e){
+            return em.createQuery("SELECT e FROM Carorder e where e.account=:user and e.enddate>:date").setParameter("date", new Timestamp(System.currentTimeMillis())).setParameter("user", u).getResultList();
+        } catch (Exception e) {
             return null;
         }
     }
 
     public List<Carorder> getCarCurrentReservations(Car c) {
         try {
-            return em.createQuery("SELECT e FROM Carorder e where e.car=:car and e.enddate>:date").setParameter("date",new Timestamp(System.currentTimeMillis())).setParameter("car", c).getResultList();
-        } catch (Exception e){
+            return em.createQuery("SELECT e FROM Carorder e where e.car=:car and e.enddate>:date").setParameter("date", new Timestamp(System.currentTimeMillis())).setParameter("car", c).getResultList();
+        } catch (Exception e) {
             return null;
         }
     }
-
-
 
 }

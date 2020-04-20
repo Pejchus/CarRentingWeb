@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import tygri.pujcovna.model.CarCategory;
 
 @Service
 public class CarService {
@@ -38,7 +39,7 @@ public class CarService {
     }
 
     @Transactional
-    public boolean createCar(String model, String brand, String baseprice, String color, String power, String productionyear, String trunkvolume, String foldingrearseats, String seats, String consumption, String description, MultipartFile photo) {
+    public boolean createCar(String model, String brand, String baseprice, String color, String power, String productionyear, String trunkvolume, String foldingrearseats, String seats, String consumption, String description, MultipartFile photo, String carCategory) {
         try {
             boolean foldingseats;
             if ("yes".equals(foldingrearseats)) {
@@ -53,8 +54,8 @@ public class CarService {
             for (Byte b : photo.getBytes()) {
                 photoCopy[i++] = b;
             }
-            return carDao.CreateCar(model, brand, Double.valueOf(baseprice), color, Double.valueOf(power), Integer.valueOf(productionyear), Double.valueOf(trunkvolume), foldingseats, Integer.valueOf(seats), Double.valueOf(consumption), description, photoCopy);
-        } catch (NumberFormatException | IOException e) {
+            return carDao.CreateCar(model, brand, Double.valueOf(baseprice), color, Double.valueOf(power), Integer.valueOf(productionyear), Double.valueOf(trunkvolume), foldingseats, Integer.valueOf(seats), Double.valueOf(consumption), description, photoCopy, CarCategory.valueOf(carCategory));
+        } catch (IOException | IllegalArgumentException e) {
             System.out.println("Velky spatny");
             return false;
         }
