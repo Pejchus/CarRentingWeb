@@ -62,6 +62,11 @@ public class Car implements Serializable {
     @Lob
     private Byte[] photo;
 
+    @Basic(optional = false)
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private CarCategory carCategory;
+
     @OneToMany(
             cascade = CascadeType.ALL,
             orphanRemoval = true
@@ -71,7 +76,7 @@ public class Car implements Serializable {
     public Car() {
     }
 
-    public Car(String model, String brand, double baseprice, String color, double power, int productionyear, double trunkvolume, boolean foldingrearseats, int seats, double consumption, String description, Byte[] photo) {
+    public Car(String model, String brand, double baseprice, String color, double power, int productionyear, double trunkvolume, boolean foldingrearseats, int seats, double consumption, String description, Byte[] photo, CarCategory carCategory) {
         this.model = model;
         this.brand = brand;
         this.baseprice = baseprice;
@@ -84,6 +89,7 @@ public class Car implements Serializable {
         this.consumption = consumption;
         this.description = description;
         this.photo = photo;
+        this.carCategory = carCategory;
     }
 
     public List<Carorder> getOrders() {
@@ -193,9 +199,16 @@ public class Car implements Serializable {
         this.photo = photo;
     }
 
-    @Override
-    public String toString() {
-        return "Car{" + "id=" + id + ", model=" + model + ", brand=" + brand + ", baseprice=" + baseprice + ", color=" + color + ", power=" + power + ", productionyear=" + productionyear + ", trunkvolume=" + trunkvolume + ", foldingrearseats=" + foldingrearseats + ", seats=" + seats + ", consumption=" + consumption + '}';
+    public CarCategory getCarCategory() {
+        return carCategory;
     }
 
+    public void setCarCategory(CarCategory carCategory) {
+        this.carCategory = carCategory;
+    }
+
+    @Override
+    public String toString() {
+        return "Car{" + "id=" + id + ", model=" + model + ", brand=" + brand + ", baseprice=" + baseprice + ", color=" + color + ", power=" + power + ", productionyear=" + productionyear + ", trunkvolume=" + trunkvolume + ", foldingrearseats=" + foldingrearseats + ", seats=" + seats + ", consumption=" + consumption + ", description=" + description + ", carCategory=" + carCategory + '}';
+    }
 }

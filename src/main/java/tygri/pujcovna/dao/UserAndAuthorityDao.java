@@ -56,17 +56,17 @@ public class UserAndAuthorityDao extends BaseDao /*implements UserRepository*/ {
         }
     }
 
-    public boolean deleteUserByUsername(String username){
+    public boolean deleteUserByUsername(String username) {
         try {
-           User toDelete = em.find(User.class,username);
-           super.remove(toDelete);
-        }catch (Exception e){
+            User toDelete = em.find(User.class, username);
+            super.remove(toDelete);
+        } catch (Exception e) {
             return false;
         }
         return true;
     }
 
-    public List<User> getBannedUsers(){
+    public List<User> getBannedUsers() {
         try {
             return em.createQuery("SELECT e FROM User e WHERE e.enabled =false", User.class).getResultList();
         } catch (RuntimeException e) {
@@ -74,13 +74,13 @@ public class UserAndAuthorityDao extends BaseDao /*implements UserRepository*/ {
         }
     }
 
-    public boolean switchUserEnability(String username){
+    public boolean switchUserEnability(String username) {
         User toBan = getUserByUsername(username);
         try {
-            Objects.requireNonNull(toBan,"trying to ban null object");
+            Objects.requireNonNull(toBan, "trying to ban null object");
             toBan.setEnabled(!toBan.isEnabled());
             super.updateEntity(toBan);
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
         return true;
