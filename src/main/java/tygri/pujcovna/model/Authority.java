@@ -40,7 +40,12 @@ public class Authority implements Serializable {
 
     @Override
     public String toString() {
-        return name.toString();
+        if (name == AuthorityType.ROLE_ADMIN) {
+            return "Admin";
+        } else if (name == AuthorityType.ROLE_EMPLOYEE) {
+            return "Employee";
+        } else {
+            return "Customer";
+        }
     }
-
 }

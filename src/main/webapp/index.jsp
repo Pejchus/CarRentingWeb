@@ -36,6 +36,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Kontakty</a>
                             </li>
+<<<<<<< HEAD
                             <security:authorize access="hasAnyRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')">
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">Muj Ucet</a>
@@ -44,6 +45,14 @@
                             <li class="nav-item">
                                 <security:authorize access="!hasAnyRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')">
                                     <a class="nav-link" href="login.jsp">Prihlasit</a>
+=======
+                            <li class="nav-item">                              
+                                <p>${UserStatus}</p>
+                                <security:authorize access="!hasAnyRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')">                                    
+                                    <form action="login">
+                                        <input type="submit" value="login">
+                                    </form>
+>>>>>>> ca81cfa17d9e755c90a24182bc92f3db48d15a36
                                 </security:authorize>
                                 <security:authorize access="hasAnyRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')">
                                     <a class="nav-link" href="/doLogout">Odhlasit</a>
@@ -81,6 +90,7 @@
                     <label>Consumption(double): </label><input type="text" name="consumption" required><br>
                     <label>Description(string): </label><input type="text" name="description" required><br>
                     <label>Car photo: </label><input type="file" name="photo" required><br> 
+                    <label>Car category(SEDAN/COMBI/SUV/HATCHBACK/CABRIOLET/PICKUP/VAN): </label><input type="string" name="carcategory" required><br> 
                     <input type="submit"><br>
                 </form>
                 ${carAddedMessage}

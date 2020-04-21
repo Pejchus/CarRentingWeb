@@ -61,10 +61,17 @@ public class LoginController {
         User loggedInUser = ((UserAuthoritiesWrapper) authentication.getPrincipal()).getUserDetails();
         ModelAndView mv = new ModelAndView("redirect:/");
         session.setAttribute("userId", loggedInUser.getId());
-        session.setAttribute("userName", loggedInUser.getUsername());
-        mv.addObject("LoggedUser", session.getAttribute("userName"));
-        mv.addObject("userData", userService.getAllUsers());
-        mv.addObject("carData", carService.getAllCars());
+        session.setAttribute("firstname", loggedInUser.getFirstname());
+        session.setAttribute("lastname", loggedInUser.getLastname());
+        session.setAttribute("phone", loggedInUser.getPhone());
+        session.setAttribute("email", loggedInUser.getEmail());
+        session.setAttribute("coountrycode", loggedInUser.getCountryCode());
+        session.setAttribute("city", loggedInUser.getCity());
+        session.setAttribute("street", loggedInUser.getStreet());
+        session.setAttribute("streetno", loggedInUser.getStreetno());
+
+        session.setAttribute("UserStatus", loggedInUser.getAuthorities().iterator().next());
+        
         return mv;
     }
 
