@@ -62,7 +62,7 @@ public class LoginController {
         ModelAndView mv = new ModelAndView("redirect:/");
         session.setAttribute("userId", loggedInUser.getId());
         session.setAttribute("firstname", loggedInUser.getFirstname());
-        session.setAttribute("secondname", loggedInUser.getLastname());
+        session.setAttribute("lastname", loggedInUser.getLastname());
         session.setAttribute("phone", loggedInUser.getPhone());
         session.setAttribute("email", loggedInUser.getEmail());
         session.setAttribute("coountrycode", loggedInUser.getCountryCode());

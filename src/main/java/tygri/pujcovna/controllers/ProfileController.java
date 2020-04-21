@@ -26,6 +26,7 @@ public class ProfileController implements ErrorController {
     public ModelAndView profile(HttpSession session) {
         ModelAndView mv = new ModelAndView("/profile.jsp");
         mv.addObject("firstname", session.getAttribute("firstname"));
+        mv.addObject("lastname", session.getAttribute("lastname"));
         mv.addObject("phone", session.getAttribute("phone"));
         mv.addObject("email", session.getAttribute("email"));
         mv.addObject("countrycode", session.getAttribute("countrycode"));
