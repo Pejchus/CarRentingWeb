@@ -22,7 +22,7 @@ public class ProfileController implements ErrorController {
 
 
     @PreAuthorize("hasAnyRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')")
-    @RequestMapping("/profile")
+    @RequestMapping(value = "/profile",method = RequestMethod.GET)
     public ModelAndView profile(HttpSession session) {
         ModelAndView mv = new ModelAndView("/profile.jsp");
         mv.addObject("firstname", session.getAttribute("firstname"));

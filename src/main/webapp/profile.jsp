@@ -56,7 +56,7 @@
         <main class="main">
             
             <div class="container main_description">
-                <H1>${session.role</H1>
+                <H1>${session.role}</H1>
                 <table class="user_profile_table">
                     <tr>
                         <td>Jméno a příjmení</td>
