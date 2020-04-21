@@ -40,6 +40,14 @@
     margin-top: 20px;
 }
 
+/* CAR PROFILE */
+.car_profile{
+    flex: auto;
+}
+.car_information_table{
+
+}
+
 /* FOOTER */
 .footer_content{
     padding: 20px 20px 20px 20px;
