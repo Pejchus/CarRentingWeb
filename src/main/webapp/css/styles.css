@@ -1,4 +1,11 @@
 /* HEADER */
+.info_bar {
+    background: lightblue;
+    color: orangered;
+}
+.info_bar p{
+    margin-left: 95%;
+}
 .header_title {
     font-weight: bold;
     font-size: 2rem;
@@ -9,6 +16,7 @@
     height: 100px;
 }
 .navbar {
+    margin-top: -16px;
     padding: .8rem;
 }
 .nav-link{
@@ -16,11 +24,6 @@
 }
 .nav-item{
     font-size: 20px;
-}
-.nav-item:hover{
-    background-color: #af9f9f;
-    /* padding-top: 20px;
-    padding-bottom: 20px; */
 }
 
 /*  MAIN SECTION */

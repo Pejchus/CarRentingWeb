@@ -13,6 +13,11 @@
     <body>
         <!-- HEADER -->
         <header>
+            <div class="info_bar">
+                <security:authorize access="hasAnyRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')">
+                    <p>${LoggedUser}</p>
+                </security:authorize>
+            </div>
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="#"><img class="logo_icon" src="css/images/logo_icon.png"></a>
@@ -31,27 +36,17 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Kontakty</a>
                             </li>
+                            <security:authorize access="hasAnyRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Muj Ucet</a>
+                                </li>
+                            </security:authorize>
                             <li class="nav-item">
-                                <security:authorize access="hasRole('ROLE_ADMIN')">
-                                    <p>logged in as ADMIN</p>
-                                </security:authorize>
-                                <security:authorize access="hasRole('ROLE_EMPLOYEE')">
-                                    <p>logged in as EMPLOYEE</p>
-                                </security:authorize>
-                                <security:authorize access="hasRole('ROLE_CUSTOMER')">
-                                    <p>logged in as CUSTOMER</p>
-                                </security:authorize>
                                 <security:authorize access="!hasAnyRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')">
-                                    <p>Not Logged in</p> 
-                                    <form action="login">
-                                        <input type="submit" value="login">
-                                    </form>
+                                    <a class="nav-link" href="login.jsp">Prihlasit</a>
                                 </security:authorize>
                                 <security:authorize access="hasAnyRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')">
-                                    <p>Username: ${LoggedUser}</p>
-                                    <form action="doLogout">
-                                        <input type="submit" value="logout">
-                                    </form>
+                                    <a class="nav-link" href="/doLogout">Odhlasit</a>
                                 </security:authorize>
                             </li>
                         </ul>

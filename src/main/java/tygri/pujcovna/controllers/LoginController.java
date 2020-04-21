@@ -47,8 +47,8 @@ public class LoginController {
         System.out.println("Logout");
         SecurityContextHolder.getContext().setAuthentication(null);
         session.setComplete();//clears session
-        ModelAndView mv = new ModelAndView("/login.jsp");
-        mv.addObject("errorMsg", "<p>You successfully logged out</p>");
+        ModelAndView mv = new ModelAndView("/");
+//        mv.addObject("errorMsg", "<p>You successfully logged out</p>");
         return mv;
     }
 
