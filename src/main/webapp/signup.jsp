@@ -13,6 +13,7 @@
     <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 </head>
 <body>
+
 <!-- HEADER -->
 <header>
     <div class="info_bar">
@@ -48,7 +49,7 @@
                             <a class="nav-link" href="login.jsp">Prihlasit</a>
                         </security:authorize>
                         <security:authorize access="hasAnyRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')">
-                            <a class="nav-link" href="${pageContext.request.contextPath}/doLogout">Odhlasit</a>
+                            <a class="nav-link" href="/doLogout">Odhlasit</a>
                         </security:authorize>
                     </li>
                 </ul>
@@ -58,60 +59,23 @@
 </header>
 <!-- END OF HEADER -->
 
-<main class="formBackground">
-    <div class="container">
-        <div class="d-flex justify-content-center h-100">
-            <div class="card">
-                <div class="card-header">
-                    <h3>Prihlasit se</h3>
-                </div>
-                <div class="card-body">
-                    <form action="doLogin" method="post">
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-user"></i></span>
-                            </div>
-                            <input type="text" class="form-control" name='username' placeholder="Uzivatelske jmeno">
-                        </div>
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-key"></i></span>
-                            </div>
-                            <input type="password" class="form-control" name='password' placeholder="Heslo">
-                        </div>
-                        <span class="loginErrorMsg">${errorMsg}</span>
-                        <div class="row align-items-center remember">
-                            <input type="checkbox">Remember Me
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="Login" class="float-right login_btn">
-                        </div>
-                    </form>
-                </div>
-                <div class="card-footer">
-                    <div class="d-flex justify-content-center links">
-                        Nemate jeste ucet?<a href="signup.jsp">Zaregistrovat se</a>
-                    </div>
-                    <div class="d-flex justify-content-center">
-                        <a href="#">Zapomneli jste heslo?</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-<%--    <div class="panel-body">--%>
-<%--        <form action="doLogin" method="post">--%>
-<%--            <fieldset>--%>
-<%--                <legend>Please sign in, admin credentials: 'admin', password: 'admin'</legend>--%>
-<%--                ${errorMsg}--%>
-<%--                <input placeholder="User Name" name='username' type="text">--%>
-<%--                <input placeholder="Password" name='password' type="password" value="">--%>
-<%--                <input type="submit" value="Login">--%>
-<%--            </fieldset>--%>
-<%--        </form>--%>
-<%--    </div>--%>
-<%--    <a href="/"> Back to Homepage</a>--%>
-</main>
+<h3>Add User</h3>
+<form action="addUser">
+    <label>Username(string): </label><input type="text" name="username" required><br>
+    <label>Password(string): </label><input type="text" name="password" required><br>
+    <label>Email(string): </label><input type="text" name="email" required><br>
+    <label>Enabled(true/false): </label><input type="text" name="enabled" required><br>
+    <label>Phone(string): </label><input type="text" name="phone" required><br>
+    <label>CountryCode(string): </label><input type="text" name="countryCode" required><br>
+    <label>Firstname(string): </label><input type="text" name="firstname" required><br>
+    <label>Lastname(string): </label><input type="text" name="lastname" required><br>
+    <label>City(string): </label><input type="text" name="city" required><br>
+    <label>Street(string): </label><input type="text" name="street" required><br>
+    <label>StreetNo(string): </label><input type="text" name="streetNo" required><br>
+    <label>Authority(CUSTOMER/EMPLOYEE/ADMIN): </label><input type="text" name="authority" required><br>
+    <input type="submit"><br>
+</form>
+${userAddedMessage}
 
 <!-- FOOTER -->
 <footer>
