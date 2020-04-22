@@ -21,21 +21,16 @@ public class CarProfileController implements ErrorController {
         this.carService = carService;
     }
 
-
-    @RequestMapping(value = "/carProfile",method = RequestMethod.GET)
+    @RequestMapping(value = "/carProfile", method = RequestMethod.GET)
     public ModelAndView carProfile(HttpSession session) {
         ModelAndView mv = new ModelAndView("/carProfile.jsp");
 
-
-
         return mv;
     }
-
 
     @Override
     public String getErrorPath() {
         return "/error";
     }
-
 
 }

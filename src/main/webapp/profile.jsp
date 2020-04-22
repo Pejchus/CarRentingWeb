@@ -82,13 +82,17 @@
                         <td>Profile Photo</td>
                         <td>${profilePhoto}</td>
                     </tr>
-                    <a href="/uploadPhoto"> Zmenit fotku </a>
+
                     <tr>
                         <td>Objednavky</td>
                         <td>${orders}</td>
                     </tr>
-
                 </table>
+                <form method="POST" enctype="multipart/form-data" action="setProfilePhoto">
+                    <label>Zmenit profilovou fotku: </label><input type="file" name="photo" required><br>
+                    <input type="submit"><br>
+                </form>
+                ${profilePhotoChangeMsg}
             </div>
 
         </main>

@@ -86,4 +86,15 @@ public class UserAndAuthorityDao extends BaseDao /*implements UserRepository*/ {
         return true;
     }
 
+    public boolean setPhoto(Byte[] photo, String username) {
+        User user = getUserByUsername(username);
+        user.setPhoto(photo);
+        try {
+            em.merge(user);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }

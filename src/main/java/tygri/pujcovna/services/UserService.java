@@ -1,13 +1,15 @@
 package tygri.pujcovna.services;
 
+import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import tygri.pujcovna.dao.UserAndAuthorityDao;
 import tygri.pujcovna.model.AuthorityType;
 import tygri.pujcovna.model.User;
@@ -16,20 +18,20 @@ import tygri.pujcovna.model.UserAuthoritiesWrapper;
 @Service
 public class UserService implements UserDetailsService {
 
-    private final UserAndAuthorityDao userRepository;
+    private final UserAndAuthorityDao userAndAuthorityDao;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserService(UserAndAuthorityDao userRepository) {
-        this.userRepository = userRepository;
+        this.userAndAuthorityDao = userRepository;
     }
 
     @Transactional
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.getUserByUsername(username);
+    public UserAuthoritiesWrapper loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userAndAuthorityDao.getUserByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("User not found.");
         }
@@ -39,7 +41,7 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public List<User> getAllUsers() {
-        return userRepository.getAll();
+        return userAndAuthorityDao.getAll();
     }
 
     @Transactional
@@ -64,13 +66,41 @@ public class UserService implements UserDetailsService {
                 throw new NumberFormatException("Authority must be CUSTOMER/EMPLOYEE/ADMIN");
             }
             String encodedPassword = passwordEncoder.encode(password);
-            return userRepository.create(username, encodedPassword, email, booleanEnabled, phone, countryCode, firstname, lastname, city, street, streetNo, AUTHORITYTYPE);
+            return userAndAuthorityDao.create(username, encodedPassword, email, booleanEnabled, phone, countryCode, firstname, lastname, city, street, streetNo, AUTHORITYTYPE);
         } catch (NumberFormatException e) {
             return false;
         }
     }
 
     public boolean createAuthority(AuthorityType type) {
-        return userRepository.createAuthority(type);
+        return userAndAuthorityDao.createAuthority(type);
+    }
+
+    public boolean setPhoto(MultipartFile photo, String username) {
+        try {
+            Byte[] photoCopy = new Byte[photo.getBytes().length];
+            int i = 0;
+            for (Byte b : photo.getBytes()) {
+                photoCopy[i++] = b;
+            }
+            return userAndAuthorityDao.setPhoto(photoCopy, username);
+        } catch (IOException e) {
+            System.out.println("photo upload fail");
+            return false;
+        }
+    }
+
+    public String getPhoto(String userName) {
+        Byte[] photo = loadUserByUsername(userName).getUserDetails().getPhoto();
+        if (photo == null) {
+            return "</p><img src=\"data:image/png;base64," + " " + "\" alt=\"Profilove foto\" height=\"100\" width=\"100\"/>";
+        }
+        byte[] photobytes = new byte[photo.length];
+        int i = 0;
+        for (Byte b : photo) {
+            photobytes[i++] = b;
+        }
+        String photoData = Base64.getEncoder().encodeToString(photobytes);
+        return "</p><img src=\"data:image/png;base64," + photoData + "\" alt=\"Profilove foto\" height=\"100\" width=\"100\"/>";
     }
 }

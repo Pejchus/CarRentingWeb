@@ -60,6 +60,9 @@ public class User implements Serializable {
     @Column(nullable = false)
     private String streetno;
 
+    @Lob
+    private Byte[] photo;
+
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Carorder> orders;
 
@@ -190,6 +193,14 @@ public class User implements Serializable {
 
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
+    }
+
+    public Byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Byte[] photo) {
+        this.photo = photo;
     }
 
     @Override
