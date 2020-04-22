@@ -22,7 +22,7 @@
     </div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/index.jsp"><img class="logo_icon" src="css/images/logo_icon.png"></a>
+            <a class="navbar-brand" href="/"><img class="logo_icon" src="css/images/logo_icon.png"></a>
             <h1 class="header_title">Tygri Pujcovna</h1>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
                 <span class="navbar-toggler-icon"></span>
@@ -30,7 +30,7 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="/index.jsp">Domu</a>
+                        <a class="nav-link" href="/">Domu</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Nabidka aut</a>
@@ -40,15 +40,15 @@
                     </li>
                     <security:authorize access="hasAnyRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')">
                         <li class="nav-item">
-                            <a class="nav-link" href="/profile.jsp">Muj Ucet</a>
+                            <a class="nav-link" href="/profile">Muj Ucet</a>
                         </li>
                     </security:authorize>
                     <li class="nav-item">
                         <security:authorize access="!hasAnyRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')">
-                            <a class="nav-link" href="login.jsp">Prihlasit</a>
+                            <a class="nav-link" href="/login">Prihlasit</a>
                         </security:authorize>
                         <security:authorize access="hasAnyRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')">
-                            <a class="nav-link" href="${pageContext.request.contextPath}/doLogout">Odhlasit</a>
+                            <a class="nav-link" href="/doLogout">Odhlasit</a>
                         </security:authorize>
                     </li>
                 </ul>
@@ -90,7 +90,7 @@
                 </div>
                 <div class="card-footer">
                     <div class="d-flex justify-content-center links">
-                        Nemate jeste ucet?<a href="signup.jsp">Zaregistrovat se</a>
+                        Nemate jeste ucet?<a href="/signUp">Zaregistrovat se</a>
                     </div>
                     <div class="d-flex justify-content-center">
                         <a href="#">Zapomneli jste heslo?</a>
