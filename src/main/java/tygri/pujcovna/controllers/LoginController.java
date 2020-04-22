@@ -37,7 +37,7 @@ public class LoginController {
     public ModelAndView loginError() {
         System.out.println("Login attempt failed");
         ModelAndView mv = new ModelAndView("/login.jsp");
-        mv.addObject("errorMsg", "<p>Login failed!</p>");
+        mv.addObject("errorMsg", "Nespravne jmeno nebo heslo!");
         return mv;
     }
 
@@ -61,6 +61,7 @@ public class LoginController {
         User loggedInUser = ((UserAuthoritiesWrapper) authentication.getPrincipal()).getUserDetails();
         ModelAndView mv = new ModelAndView("redirect:/");
         session.setAttribute("userId", loggedInUser.getId());
+        session.setAttribute("userName", loggedInUser.getUsername());
         session.setAttribute("firstname", loggedInUser.getFirstname());
         session.setAttribute("lastname", loggedInUser.getLastname());
         session.setAttribute("phone", loggedInUser.getPhone());

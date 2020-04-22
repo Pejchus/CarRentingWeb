@@ -113,7 +113,7 @@
 
 <!-- FOOTER -->
 <footer>
-    <div class="footer container-fluid bg-dark">
+    <div class="footer bottom container-fluid bg-dark">
         <div class="footer_content">
             <h3 class="footer_title">Kontakty</h3>
             <table class="footer_table">
