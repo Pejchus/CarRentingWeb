@@ -41,7 +41,7 @@ public class MainController implements ErrorController {
 
     @RequestMapping(value = "/doAddCar", method = RequestMethod.POST)
     @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE','ROLE_ADMIN')")
-    public ModelAndView doAddCar(HttpSession session, @RequestParam String model, @RequestParam String brand, @RequestParam String baseprice, @RequestParam String color, @RequestParam String power, @RequestParam String productionyear, @RequestParam String trunkvolume, @RequestParam String foldingrearseats, @RequestParam String seats, @RequestParam String consumption, @RequestParam String description, @RequestParam MultipartFile photo, @RequestParam String carcategory) {
+    public ModelAndView doAddCar(HttpSession session, @RequestParam("model") String model, @RequestParam("brand") String brand, @RequestParam("baseprice") String baseprice, @RequestParam("color") String color, @RequestParam("power") String power, @RequestParam("productionyear") String productionyear, @RequestParam("trunkvolume") String trunkvolume, @RequestParam("foldingrearseats") String foldingrearseats, @RequestParam("seats") String seats, @RequestParam("consumption") String consumption, @RequestParam("description") String description, @RequestParam("photo") MultipartFile photo, @RequestParam("carcategory") String carcategory) {
         ModelAndView mv = new ModelAndView("/addCar.jsp");
         if (carService.createCar(model, brand, baseprice, color, power, productionyear, trunkvolume, foldingrearseats, seats, consumption, description, photo, carcategory)) {
             mv.addObject("carAddedMessage", "<p>Car added!</p>");
@@ -57,7 +57,7 @@ public class MainController implements ErrorController {
     @RequestMapping("/doAddUser")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ModelAndView doAddUser(HttpSession session, @RequestParam String username, @RequestParam String password, @RequestParam String email, @RequestParam String enabled, @RequestParam String phone, @RequestParam String countryCode, @RequestParam String firstname, @RequestParam String lastname, @RequestParam String city, @RequestParam String street, @RequestParam String streetNo, @RequestParam String authority) {
-        ModelAndView mv = new ModelAndView("addUser.jsp");
+        ModelAndView mv = new ModelAndView("/addUser.jsp");
         if (userService.createUser(username, password, email, enabled, phone, countryCode, firstname, lastname, city, street, streetNo, authority)) {
             mv.addObject("userAddedMessage", "<p>User added!</p>");
         } else {

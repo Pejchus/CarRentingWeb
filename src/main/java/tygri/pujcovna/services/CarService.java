@@ -54,9 +54,11 @@ public class CarService {
             for (Byte b : photo.getBytes()) {
                 photoCopy[i++] = b;
             }
+
             return carDao.CreateCar(model, brand, Double.valueOf(baseprice), color, Double.valueOf(power), Integer.valueOf(productionyear), Double.valueOf(trunkvolume), foldingseats, Integer.valueOf(seats), Double.valueOf(consumption), description, photoCopy, CarCategory.valueOf(carCategory));
         } catch (IOException | IllegalArgumentException e) {
-            System.out.println("Velky spatny");
+            System.out.println("Velky spatny: ");
+            e.printStackTrace();
             return false;
         }
     }

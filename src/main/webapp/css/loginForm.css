@@ -50,12 +50,12 @@ input:focus{
     margin-right: 5px;
 }
 .login_btn{
-     color: black;
-     background: yellow;
-     border: solid 1px;
-     border-radius: 5px;
-     padding: 5px;
-     width: 100px;
+    color: black;
+    background: yellow;
+    border: solid 1px;
+    border-radius: 5px;
+    padding: 5px;
+    width: 100px;
 }
 .signup_btn{
     color: black;
@@ -83,16 +83,16 @@ input:focus{
     color: yellow;
 }
 
-  
-    .error {
-        display: none;
-        background-color: hsla(0, 50%, 70%, 1);
-        padding: 3px 10px;
-        border-radius: 5px;
-        font: normal 12px/1 Sans-Serif;
-    }
 
-   
-    input:invalid + .error {
-        display: inline;
-    }
+.error {
+    display: none;
+    background-color: hsla(0, 50%, 70%, 1);
+    padding: 3px 10px;
+    border-radius: 5px;
+    font: normal 12px/1 Sans-Serif;
+}
+
+
+input:invalid + .error {
+    display: inline;
+}

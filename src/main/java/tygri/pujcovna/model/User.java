@@ -2,15 +2,20 @@ package tygri.pujcovna.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 import javax.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name = "USER")
-public class User implements Serializable {
+public class User implements Serializable, UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -67,7 +72,7 @@ public class User implements Serializable {
     private List<Carorder> orders;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Authority> authorities = new HashSet<>();
+    private Set<Authority> userAuthorities = new HashSet<>();
 
     public User() {
     }
@@ -187,12 +192,12 @@ public class User implements Serializable {
         this.streetno = streetno;
     }
 
-    public Set<Authority> getAuthorities() {
-        return authorities;
+    public Set<Authority> getUserAuthorities() {
+        return userAuthorities;
     }
 
-    public void setAuthorities(Set<Authority> authorities) {
-        this.authorities = authorities;
+    public void setUserAuthorities(Set<Authority> authorities) {
+        this.userAuthorities = authorities;
     }
 
     public Byte[] getPhoto() {
@@ -205,6 +210,26 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "Account{" + "id=" + id + ", enabled=" + enabled + ", username=" + username + ", password=" + password + ", email=" + email + ", phone=" + phone + ", countryCode=" + countryCode + ", firstname=" + firstname + ", lastname=" + lastname + ", city=" + city + ", street=" + street + ", streetno=" + streetno + ", accroles=" + authorities + ", orders=" + orders + '}';
+        return "Account{" + "id=" + id + ", enabled=" + enabled + ", username=" + username + ", password=" + password + ", email=" + email + ", phone=" + phone + ", countryCode=" + countryCode + ", firstname=" + firstname + ", lastname=" + lastname + ", city=" + city + ", street=" + street + ", streetno=" + streetno + ", accroles=" + userAuthorities + ", orders=" + orders + '}';
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getUserAuthorities().stream().map(authority -> new SimpleGrantedAuthority(authority.getName().toString())).collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return enabled;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return enabled;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return enabled;
     }
 }

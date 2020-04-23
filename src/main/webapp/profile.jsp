@@ -27,17 +27,17 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarResponsive">
                         <ul class="navbar-nav ml-auto">
-                            <li class="nav-item">
+                            <li class="nav-item active">
                                 <a class="nav-link" href="/">Domu</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Nabidka aut</a>
+                                <a class="nav-link" href="/offers">Nabidka aut</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Kontakty</a>
                             </li>
                             <security:authorize access="hasAnyRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')">
-                                <li class="nav-item active">
+                                <li class="nav-item">
                                     <a class="nav-link" href="/profile">Muj Ucet</a>
                                 </li>
                             </security:authorize>
@@ -60,7 +60,6 @@
         <main class="main">
 
             <div class="container main_description">
-                <H1>${session.role}</H1>
                 <table class="user_profile_table">
                     <tr>
                         <td>Jmeno a Prijmeni</td>
@@ -90,10 +89,9 @@
                 </table>
                 <form method="POST" enctype="multipart/form-data" action="setProfilePhoto">
                     <label>Zmenit profilovou fotku: </label><input type="file" name="photo" required><br>
-                    <input type="submit"><br>
+                    <input type="submit" value="Vybrat foto"><br>
                 </form>
                 ${profilePhotoChangeMsg}
-                <%=session.getAttribute("userName")%>
             </div>
 
         </main>

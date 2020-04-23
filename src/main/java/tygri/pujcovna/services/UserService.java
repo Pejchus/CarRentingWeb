@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 import tygri.pujcovna.dao.UserAndAuthorityDao;
 import tygri.pujcovna.model.AuthorityType;
 import tygri.pujcovna.model.User;
-import tygri.pujcovna.model.UserAuthoritiesWrapper;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -30,24 +29,24 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     @Override
-    public UserAuthoritiesWrapper loadUserByUsername(String username) throws UsernameNotFoundException {
+    public User loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userAndAuthorityDao.getUserByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("User not found.");
         }
         System.out.println("loadUserByUsername() : " + username);
-        return new UserAuthoritiesWrapper(user);
+        return user;
     }
 
     @Transactional
     public List<User> getAllUsers() {
         return userAndAuthorityDao.getAll();
     }
-    
+
     @Transactional
-    public boolean isUniqueUsername(String username){
+    public boolean isUniqueUsername(String username) {
         User user = userAndAuthorityDao.getUserByUsername(username);
-        return user==null;
+        return user == null;
     }
 
     @Transactional
@@ -97,7 +96,7 @@ public class UserService implements UserDetailsService {
     }
 
     public String getPhoto(String userName) {
-        Byte[] photo = loadUserByUsername(userName).getUserDetails().getPhoto();
+        Byte[] photo = loadUserByUsername(userName).getPhoto();
         if (photo == null) {
             return "</p><img src=\"data:image/png;base64," + " " + "\" alt=\"Profilove foto\" height=\"100\" width=\"100\"/>";
         }

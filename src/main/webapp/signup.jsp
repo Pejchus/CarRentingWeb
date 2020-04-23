@@ -13,7 +13,6 @@
         <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
     </head>
     <body>
-
         <!-- HEADER -->
         <header>
             <div class="info_bar">
@@ -34,7 +33,7 @@
                                 <a class="nav-link" href="/">Domu</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Nabidka aut</a>
+                                <a class="nav-link" href="/offers">Nabidka aut</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Kontakty</a>

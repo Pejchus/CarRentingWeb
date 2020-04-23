@@ -1,20 +1,17 @@
 package tygri.pujcovna.controllers;
 
+import javax.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-import javax.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import tygri.pujcovna.model.Authority;
-import tygri.pujcovna.model.AuthorityType;
-import tygri.pujcovna.model.UserAuthoritiesWrapper;
 import tygri.pujcovna.model.User;
 import tygri.pujcovna.services.CarService;
 import tygri.pujcovna.services.UserService;
@@ -84,7 +81,7 @@ public class LoginController {
         // read principal out of security context and set it to session
         UsernamePasswordAuthenticationToken authentication = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         validatePrinciple(authentication.getPrincipal());
-        User loggedInUser = ((UserAuthoritiesWrapper) authentication.getPrincipal()).getUserDetails();
+        User loggedInUser = (User) authentication.getPrincipal();
         ModelAndView mv = new ModelAndView("redirect:/");
         session.setAttribute("userId", loggedInUser.getId());
         session.setAttribute("userName", loggedInUser.getUsername());
@@ -97,13 +94,13 @@ public class LoginController {
         session.setAttribute("street", loggedInUser.getStreet());
         session.setAttribute("streetno", loggedInUser.getStreetno());
 
-        session.setAttribute("UserStatus", loggedInUser.getAuthorities().iterator().next());
+        session.setAttribute("UserStatus", loggedInUser.getUserAuthorities().iterator().next());
 
         return mv;
     }
 
     private void validatePrinciple(Object principal) {
-        if (!(principal instanceof UserAuthoritiesWrapper)) {
+        if (!(principal instanceof User)) {
             throw new IllegalArgumentException("Principal can not be null!");
         }
     }

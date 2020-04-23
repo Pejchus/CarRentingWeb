@@ -27,17 +27,17 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarResponsive">
                         <ul class="navbar-nav ml-auto">
-                            <li class="nav-item">
+                            <li class="nav-item active">
                                 <a class="nav-link" href="/">Domu</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Nabidka aut</a>
+                                <a class="nav-link" href="/offers">Nabidka aut</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Kontakty</a>
                             </li>
                             <security:authorize access="hasAnyRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')">
-                                <li class="nav-item active">
+                                <li class="nav-item">
                                     <a class="nav-link" href="/profile">Muj Ucet</a>
                                 </li>
                             </security:authorize>
@@ -60,7 +60,7 @@
         <main class="main">
 
             <div class="container main_description">
-                  <h1>Users V databazi</h1>
+                <h1>Users V databazi</h1>
                 <p>${userData}</p>
                 <h3>Add User</h3>
                 <form action="doAddUser">
@@ -76,7 +76,7 @@
                     <label>Street(string): </label><input type="text" name="street" required><br>
                     <label>StreetNo(string): </label><input type="text" name="streetNo" required><br>
                     <label>Authority(CUSTOMER/EMPLOYEE/ADMIN): </label><input type="text" name="authority" required><br>
-                    <input type="submit"><br>
+                    <input type="submit" value="Pridat uzivatele"><br>
                 </form>
                 ${userAddedMessage}
             </div>
@@ -86,23 +86,7 @@
         <!-- END OF MAIN SECTION -->
 
 
-        <!-- FOOTER -->
-        <footer>
-            <div class="footer bottom container-fluid bg-dark fixedBottom">
-                <div class="footer_content">
-                    <h3 class="footer_title">Kontakty</h3>
-                    <table class="footer_table">
-                        <tr>
-                            <td>Info linka: 800 66 55 66</td>
-                        </tr>
-                        <tr>
-                            <td>Adresa: Tygri 888, Praha</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </footer>
-        <!-- END OF FOOTER -->
+
 
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

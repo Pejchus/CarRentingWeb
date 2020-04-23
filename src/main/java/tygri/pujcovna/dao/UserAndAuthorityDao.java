@@ -5,12 +5,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.TypedQuery;
-
-import tygri.pujcovna.model.Car;
-import tygri.pujcovna.model.User;
 import org.springframework.stereotype.Repository;
 import tygri.pujcovna.model.Authority;
 import tygri.pujcovna.model.AuthorityType;
+import tygri.pujcovna.model.User;
 
 @Repository
 public class UserAndAuthorityDao extends BaseDao /*implements UserRepository*/ {
@@ -35,7 +33,7 @@ public class UserAndAuthorityDao extends BaseDao /*implements UserRepository*/ {
             query.setParameter("name", AUTHORITYTYPE);
             User user = new User(booleanEnabled, username, password, email, phone, countryCode, firstname, lastname, city, street, streetNo);
             Set<Authority> authorities = Collections.singleton(query.getSingleResult());
-            user.setAuthorities(authorities);
+            user.setUserAuthorities(authorities);
             persist(user);
         } catch (Exception e) {
             return false;
