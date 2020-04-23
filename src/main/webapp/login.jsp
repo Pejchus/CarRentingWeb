@@ -58,6 +58,7 @@
         </header>
         <!-- END OF HEADER -->
 
+        <!-- MAIN -->
         <main class="formBackground">
             <div class="container">
                 <div class="d-flex justify-content-center h-100">
@@ -81,7 +82,7 @@
                                 </div>
                                 <span class="loginErrorMsg">${errorMsg}</span>
                                 <div class="row align-items-center remember">
-                                    <input type="checkbox">Remember Me
+                                    <input type="checkbox">Zapamatovat heslo
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" value="Login" class="float-right login_btn">
@@ -92,26 +93,15 @@
                             <div class="d-flex justify-content-center links">
                                 Nemate jeste ucet?<a href="/signUp">Zaregistrovat se</a>
                             </div>
-                            <div class="d-flex justify-content-center">
+                            <div class="d-flex justify-content-center links">
                                 <a href="#">Zapomneli jste heslo?</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <%--    <div class="panel-body">--%>
-            <%--        <form action="doLogin" method="post">--%>
-            <%--            <fieldset>--%>
-            <%--                <legend>Please sign in, admin credentials: 'admin', password: 'admin'</legend>--%>
-            <%--                ${errorMsg}--%>
-            <%--                <input placeholder="User Name" name='username' type="text">--%>
-            <%--                <input placeholder="Password" name='password' type="password" value="">--%>
-            <%--                <input type="submit" value="Login">--%>
-            <%--            </fieldset>--%>
-            <%--        </form>--%>
-            <%--    </div>--%>
-            <%--    <a href="/"> Back to Homepage</a>--%>
         </main>
+        <!-- END OF MAIN -->
 
         <!-- FOOTER -->
         <footer>

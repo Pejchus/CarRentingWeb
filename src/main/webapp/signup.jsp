@@ -59,21 +59,105 @@
         </header>
         <!-- END OF HEADER -->
 
-        <h3>Register</h3>
-        <form action="doSignUp">
-            <label>Username(string): </label><input type="text" name="username" required><br>
-            <label>Password(string): </label><input type="text" name="password" required><br>
-            <label>Email(string): </label><input type="text" name="email" required><br>
-            <label>Phone(string): </label><input type="text" name="phone" required><br>
-            <label>CountryCode(string): </label><input type="text" name="countryCode" required><br>
-            <label>Firstname(string): </label><input type="text" name="firstname" required><br>
-            <label>Lastname(string): </label><input type="text" name="lastname" required><br>
-            <label>City(string): </label><input type="text" name="city" required><br>
-            <label>Street(string): </label><input type="text" name="street" required><br>
-            <label>StreetNo(string): </label><input type="text" name="streetNo" required><br>
-            <input type="submit"><br>
-        </form>
-        ${registerMessage}
+        <!-- MAIN -->
+        <main class="formBackground">
+            <div class="container">
+                <div class="d-flex justify-content-center h-100">
+                    <div class="card-signup">
+                        <div class="card-header">
+                            <h3>Vytvorit ucet</h3>
+                        </div>
+                        <div class="card-body">
+                            <form action="doSignUp" method="get">
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" name="username" placeholder="Uzivatelske jmeno" required>
+                                </div>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" name="firstname" placeholder="Jmeno" required>
+                                </div>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" name="lastname" placeholder="Prijmeni" required>
+                                </div>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-city"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" name='city' placeholder="Mesto" required>
+                                </div>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-road"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" name='street' placeholder="Ulice" required>
+                                </div>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-road"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" name='streetNo' placeholder="Cislo popisne" required>
+                                </div>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" name="email" placeholder="E-mail" required>
+                                </div>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-phone-square-alt"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" name="phone" placeholder="Telefonni cislo" required>
+                                </div>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-globe"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" name="countryCode" placeholder="Mezinarodni predvolba" required>
+                                </div>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                    </div>
+                                    <input type="password" class="form-control" name='password' placeholder="Heslo" required>
+                                </div>
+                                <div class="row align-items-center remember">
+                                    <input type="checkbox" required>Souhlasim s obchodnim podminkami
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Zaregistrovat" class="float-right signup_btn">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- END OF MAIN -->
+
+<%--        <h3>Register</h3>--%>
+<%--        <form action="doSignUp">--%>
+<%--            <label>Username(string): </label><input type="text" name="username" required><br>--%>
+<%--            <label>Password(string): </label><input type="text" name="password" required><br>--%>
+<%--            <label>Email(string): </label><input type="text" name="email" required><br>--%>
+<%--            <label>Phone(string): </label><input type="text" name="phone" required><br>--%>
+<%--            <label>CountryCode(string): </label><input type="text" name="countryCode" required><br>--%>
+<%--            <label>Firstname(string): </label><input type="text" name="firstname" required><br>--%>
+<%--            <label>Lastname(string): </label><input type="text" name="lastname" required><br>--%>
+<%--            <label>City(string): </label><input type="text" name="city" required><br>--%>
+<%--            <label>Street(string): </label><input type="text" name="street" required><br>--%>
+<%--            <label>StreetNo(string): </label><input type="text" name="streetNo" required><br>--%>
+<%--            <input type="submit"><br>--%>
+<%--        </form>--%>
+<%--        ${registerMessage}--%>
 
         <!-- FOOTER -->
         <footer>

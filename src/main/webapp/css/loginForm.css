@@ -4,7 +4,7 @@
 }
 .formBackground{
     background-image: url("images/index_car.jpg");
-    background-size: cover;
+    background-size: auto;
     background-repeat: no-repeat;
 }
 .container{
@@ -13,16 +13,22 @@
 }
 .card{
     height: 370px;
-    margin-top: 10%;
-    margin-bottom: 10%;
+    margin-top: 15%;
+    margin-bottom: 15%;
     width: 400px;
     background-color: rgba(0,0,0,0.5) !important;
 }
-
+.card-signup{
+    height: 675px;
+    margin-top: 7%;
+    margin-bottom: 7%;
+    width: 400px;
+    border-radius: 5px;
+    background-color: rgba(0,0,0,0.5) !important;
+}
 .card-header h3{
     color: white;
 }
-
 .input-group-prepend span{
     width: 50px;
     background-color: #FFC312;
@@ -44,12 +50,20 @@ input:focus{
     margin-right: 5px;
 }
 .login_btn{
+     color: black;
+     background: yellow;
+     border: solid 1px;
+     border-radius: 5px;
+     padding: 5px;
+     width: 100px;
+}
+.signup_btn{
     color: black;
     background: yellow;
     border: solid 1px;
     border-radius: 5px;
     padding: 5px;
-    width: 100px;
+    width: 150px;
 }
 .login_btn:hover{
     color: black;
@@ -59,7 +73,11 @@ input:focus{
     color: white;
 }
 .links a{
+    color: yellow;
     margin-left: 4px;
+}
+.links a:hover{
+    color: white;
 }
 .loginErrorMsg{
     color: yellow;
