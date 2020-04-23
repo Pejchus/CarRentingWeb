@@ -142,23 +142,6 @@
             </div>
         </main>
         <!-- END OF MAIN -->
-
-<%--        <h3>Register</h3>--%>
-<%--        <form action="doSignUp">--%>
-<%--            <label>Username(string): </label><input type="text" name="username" required><br>--%>
-<%--            <label>Password(string): </label><input type="text" name="password" required><br>--%>
-<%--            <label>Email(string): </label><input type="text" name="email" required><br>--%>
-<%--            <label>Phone(string): </label><input type="text" name="phone" required><br>--%>
-<%--            <label>CountryCode(string): </label><input type="text" name="countryCode" required><br>--%>
-<%--            <label>Firstname(string): </label><input type="text" name="firstname" required><br>--%>
-<%--            <label>Lastname(string): </label><input type="text" name="lastname" required><br>--%>
-<%--            <label>City(string): </label><input type="text" name="city" required><br>--%>
-<%--            <label>Street(string): </label><input type="text" name="street" required><br>--%>
-<%--            <label>StreetNo(string): </label><input type="text" name="streetNo" required><br>--%>
-<%--            <input type="submit"><br>--%>
-<%--        </form>--%>
-<%--        ${registerMessage}--%>
-
         <!-- FOOTER -->
         <footer>
             <div class="footer bottom container-fluid bg-dark">

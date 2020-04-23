@@ -93,6 +93,7 @@
                     <input type="submit"><br>
                 </form>
                 ${profilePhotoChangeMsg}
+                <%=session.getAttribute("userName")%>
             </div>
 
         </main>
