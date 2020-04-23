@@ -55,7 +55,7 @@ public class LoginController {
     @RequestMapping(value = "/doSignUp", method = RequestMethod.GET)
     public ModelAndView signUpFinish(@RequestParam String username, @RequestParam String password, @RequestParam String email, @RequestParam String phone, @RequestParam String countryCode, @RequestParam String firstname, @RequestParam String lastname, @RequestParam String city, @RequestParam String street, @RequestParam String streetNo) {
         ModelAndView mv;
-        if (userService.isUsernameOK(username)) {
+        if(!userService.isUniqueUsername){
             mv = new ModelAndView("/signup.jsp");
             mv.addObject("registerMessage", "<p>Username obsazeno</p>");
         } else if (userService.createUser(username, password, email, "true", phone, countryCode, firstname, lastname, city, street, streetNo, "CUSTOMER")) {
