@@ -39,9 +39,10 @@ public class MainController implements ErrorController {
         return mv;
     }
 
-    @RequestMapping(value = "/addCar", method = RequestMethod.POST)
-    public ModelAndView addCar(HttpSession session, @RequestParam String model, @RequestParam String brand, @RequestParam String baseprice, @RequestParam String color, @RequestParam String power, @RequestParam String productionyear, @RequestParam String trunkvolume, @RequestParam String foldingrearseats, @RequestParam String seats, @RequestParam String consumption, @RequestParam String description, @RequestParam MultipartFile photo, @RequestParam String carcategory) {
-        ModelAndView mv = new ModelAndView("/index.jsp");
+    @RequestMapping(value = "/doAddCar", method = RequestMethod.POST)
+    @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE','ROLE_ADMIN')")
+    public ModelAndView doAddCar(HttpSession session, @RequestParam String model, @RequestParam String brand, @RequestParam String baseprice, @RequestParam String color, @RequestParam String power, @RequestParam String productionyear, @RequestParam String trunkvolume, @RequestParam String foldingrearseats, @RequestParam String seats, @RequestParam String consumption, @RequestParam String description, @RequestParam MultipartFile photo, @RequestParam String carcategory) {
+        ModelAndView mv = new ModelAndView("/addCar.jsp");
         if (carService.createCar(model, brand, baseprice, color, power, productionyear, trunkvolume, foldingrearseats, seats, consumption, description, photo, carcategory)) {
             mv.addObject("carAddedMessage", "<p>Car added!</p>");
         } else {
@@ -53,15 +54,35 @@ public class MainController implements ErrorController {
         return mv;
     }
 
-    @RequestMapping("/addUser")
+    @RequestMapping("/doAddUser")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ModelAndView addUser(HttpSession session, @RequestParam String username, @RequestParam String password, @RequestParam String email, @RequestParam String enabled, @RequestParam String phone, @RequestParam String countryCode, @RequestParam String firstname, @RequestParam String lastname, @RequestParam String city, @RequestParam String street, @RequestParam String streetNo, @RequestParam String authority) {
-        ModelAndView mv = new ModelAndView("redirect:/");
+    public ModelAndView doAddUser(HttpSession session, @RequestParam String username, @RequestParam String password, @RequestParam String email, @RequestParam String enabled, @RequestParam String phone, @RequestParam String countryCode, @RequestParam String firstname, @RequestParam String lastname, @RequestParam String city, @RequestParam String street, @RequestParam String streetNo, @RequestParam String authority) {
+        ModelAndView mv = new ModelAndView("addUser.jsp");
         if (userService.createUser(username, password, email, enabled, phone, countryCode, firstname, lastname, city, street, streetNo, authority)) {
             mv.addObject("userAddedMessage", "<p>User added!</p>");
         } else {
             mv.addObject("userAddedMessage", "<p>User not added!</p>");
         }
+        mv.addObject("userData", userService.getAllUsers());
+        mv.addObject("carData", carService.getAllCars());
+        mv.addObject("LoggedUser", session.getAttribute("userName"));
+        return mv;
+    }
+
+    @RequestMapping(value = "/addCar")
+    @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE','ROLE_ADMIN')")
+    public ModelAndView addCar(HttpSession session) {
+        ModelAndView mv = new ModelAndView("/addCar.jsp");
+        mv.addObject("carData", carService.getAllCars());
+        mv.addObject("userData", userService.getAllUsers());
+        mv.addObject("LoggedUser", session.getAttribute("userName"));
+        return mv;
+    }
+
+    @RequestMapping("/addUser")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ModelAndView addUser(HttpSession session) {
+        ModelAndView mv = new ModelAndView("addUser.jsp");
         mv.addObject("userData", userService.getAllUsers());
         mv.addObject("carData", carService.getAllCars());
         mv.addObject("LoggedUser", session.getAttribute("userName"));

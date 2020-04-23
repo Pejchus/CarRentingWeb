@@ -8,19 +8,14 @@
         <link rel="stylesheet" href="css/styles.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <!-- Potreba ve vsech .jsp kde pouzivame security:authorize tagy -->
-        <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+        <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %> 
     </head>
     <body>
         <!-- HEADER -->
         <header>
-            <div class="info_bar">
-                <security:authorize access="hasAnyRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')">
-                    <p>${userName}</p>
-                </security:authorize>
-            </div>
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="/"><img class="logo_icon" src="css/images/logo_icon.png"></a>
+                    <a class="navbar-brand" href="#"><img class="logo_icon" src="css/images/logo_icon.png"></a>
                     <h1 class="header_title">Tygri Pujcovna</h1>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
                         <span class="navbar-toggler-icon"></span>
@@ -28,7 +23,7 @@
                     <div class="collapse navbar-collapse" id="navbarResponsive">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item active">
-                                <a class="nav-link" href="/">Domu</a>
+                                <a class="nav-link" href="#">Domu</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Nabidka aut</a>
@@ -36,17 +31,27 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Kontakty</a>
                             </li>
-                            <security:authorize access="hasAnyRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/profile">Muj Ucet</a>
-                                </li>
-                            </security:authorize>
                             <li class="nav-item">
+                                <security:authorize access="hasRole('ROLE_ADMIN')">
+                                    <p>logged in as ADMIN</p>
+                                </security:authorize>
+                                <security:authorize access="hasRole('ROLE_EMPLOYEE')">
+                                    <p>logged in as EMPLOYEE</p>
+                                </security:authorize>
+                                <security:authorize access="hasRole('ROLE_CUSTOMER')">
+                                    <p>logged in as CUSTOMER</p>
+                                </security:authorize>
                                 <security:authorize access="!hasAnyRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')">
-                                    <a class="nav-link" href="/login">Prihlasit</a>
+                                    <p>Not Logged in</p> 
+                                    <form action="login">
+                                        <input type="submit" value="login">
+                                    </form>
                                 </security:authorize>
                                 <security:authorize access="hasAnyRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')">
-                                    <a class="nav-link" href="/doLogout">Odhlasit</a>
+                                    <p>Username: ${LoggedUser}</p>
+                                    <form action="doLogout">
+                                        <input type="submit" value="logout">
+                                    </form>
                                 </security:authorize>
                             </li>
                         </ul>
@@ -58,20 +63,21 @@
 
         <!-- MAIN SECTION -->
         <main class="main">
-            <img class="index-car-image" src="css/images/index_car.jpg">
+            
             <div class="container main_description">
+                
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rutrum dui eget dignissim posuere. Integer tempor enim id enim mattis dapibus. Vestibulum non feugiat orci, sit amet congue lacus. Aenean at purus quis purus laoreet egestas. Praesent felis urna, rutrum eu molestie ac, lobortis quis ex. Suspendisse pellentesque sagittis tellus. Nullam non nisi a lacus vehicula sollicitudin. Donec sed consectetur sapien. Maecenas egestas ullamcorper ex, id auctor tellus molestie quis. Suspendisse sollicitudin, diam sagittis luctus volutpat, nisl neque posuere mi, ut pulvinar risus eros at libero. Suspendisse suscipit sollicitudin enim ac tincidunt. Nunc viverra imperdiet massa sed porttitor. Mauris eu diam lobortis, viverra eros in, consectetur risus. Curabitur et posuere risus. Mauris auctor varius placerat. Mauris et libero facilisis, cursus enim vitae, consectetur dolor.
                     Sed gravida enim a pretium convallis. Vivamus vel nunc non risus fringilla suscipit vitae eget odio. Pellentesque vel auctor massa, ac dignissim dolor. In ac eros dui. Nullam scelerisque odio suscipit malesuada elementum. Morbi sed odio tortor. Curabitur tincidunt malesuada purus nec semper. Quisque consequat augue ac justo iaculis, ac lacinia purus tristique. Nam et leo sagittis, ornare purus at, vestibulum lectus. Phasellus et sapien nec elit volutpat efficitur. Sed varius in tellus in bibendum. Integer tincidunt, justo at sollicitudin efficitur, sapien odio eleifend lacus, rhoncus auctor nisi velit in est. Proin augue lorem, viverra at porttitor et, consequat vel neque. Aliquam dictum lectus eu magna scelerisque, id lobortis tellus faucibus.</p>
+            
             </div>
-            <a href="/addCar">Pridat auto do databaze</a>
-            <a href="/addUser">Pridat uzivatele do databaze</a>
+            
         </main>
 
         <!-- END OF MAIN SECTION -->
 
         <!-- FOOTER -->
         <footer>
-            <div class="footer bottom container-fluid bg-dark">
+            <div class="container-fluid bg-dark">
                 <div class="footer_content">
                     <h3 class="footer_title">Kontakty</h3>
                     <table class="footer_table">

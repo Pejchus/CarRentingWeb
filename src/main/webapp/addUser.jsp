@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Tygri Pujcovna</title>
+        <title>Pridat uzivatele</title>
 
         <link rel="stylesheet" href="css/styles.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -27,7 +27,7 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarResponsive">
                         <ul class="navbar-nav ml-auto">
-                            <li class="nav-item active">
+                            <li class="nav-item">
                                 <a class="nav-link" href="/">Domu</a>
                             </li>
                             <li class="nav-item">
@@ -37,7 +37,7 @@
                                 <a class="nav-link" href="#">Kontakty</a>
                             </li>
                             <security:authorize access="hasAnyRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')">
-                                <li class="nav-item">
+                                <li class="nav-item active">
                                     <a class="nav-link" href="/profile">Muj Ucet</a>
                                 </li>
                             </security:authorize>
@@ -58,20 +58,37 @@
 
         <!-- MAIN SECTION -->
         <main class="main">
-            <img class="index-car-image" src="css/images/index_car.jpg">
+
             <div class="container main_description">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rutrum dui eget dignissim posuere. Integer tempor enim id enim mattis dapibus. Vestibulum non feugiat orci, sit amet congue lacus. Aenean at purus quis purus laoreet egestas. Praesent felis urna, rutrum eu molestie ac, lobortis quis ex. Suspendisse pellentesque sagittis tellus. Nullam non nisi a lacus vehicula sollicitudin. Donec sed consectetur sapien. Maecenas egestas ullamcorper ex, id auctor tellus molestie quis. Suspendisse sollicitudin, diam sagittis luctus volutpat, nisl neque posuere mi, ut pulvinar risus eros at libero. Suspendisse suscipit sollicitudin enim ac tincidunt. Nunc viverra imperdiet massa sed porttitor. Mauris eu diam lobortis, viverra eros in, consectetur risus. Curabitur et posuere risus. Mauris auctor varius placerat. Mauris et libero facilisis, cursus enim vitae, consectetur dolor.
-                    Sed gravida enim a pretium convallis. Vivamus vel nunc non risus fringilla suscipit vitae eget odio. Pellentesque vel auctor massa, ac dignissim dolor. In ac eros dui. Nullam scelerisque odio suscipit malesuada elementum. Morbi sed odio tortor. Curabitur tincidunt malesuada purus nec semper. Quisque consequat augue ac justo iaculis, ac lacinia purus tristique. Nam et leo sagittis, ornare purus at, vestibulum lectus. Phasellus et sapien nec elit volutpat efficitur. Sed varius in tellus in bibendum. Integer tincidunt, justo at sollicitudin efficitur, sapien odio eleifend lacus, rhoncus auctor nisi velit in est. Proin augue lorem, viverra at porttitor et, consequat vel neque. Aliquam dictum lectus eu magna scelerisque, id lobortis tellus faucibus.</p>
+                  <h1>Users V databazi</h1>
+                <p>${userData}</p>
+                <h3>Add User</h3>
+                <form action="doAddUser">
+                    <label>Username(string): </label><input type="text" name="username" required><br>
+                    <label>Password(string): </label><input type="text" name="password" required><br>
+                    <label>Email(string): </label><input type="text" name="email" required><br>
+                    <label>Enabled(true/false): </label><input type="text" name="enabled" required><br>
+                    <label>Phone(string): </label><input type="text" name="phone" required><br>
+                    <label>CountryCode(string): </label><input type="text" name="countryCode" required><br>
+                    <label>Firstname(string): </label><input type="text" name="firstname" required><br>
+                    <label>Lastname(string): </label><input type="text" name="lastname" required><br>
+                    <label>City(string): </label><input type="text" name="city" required><br>
+                    <label>Street(string): </label><input type="text" name="street" required><br>
+                    <label>StreetNo(string): </label><input type="text" name="streetNo" required><br>
+                    <label>Authority(CUSTOMER/EMPLOYEE/ADMIN): </label><input type="text" name="authority" required><br>
+                    <input type="submit"><br>
+                </form>
+                ${userAddedMessage}
             </div>
-            <a href="/addCar">Pridat auto do databaze</a>
-            <a href="/addUser">Pridat uzivatele do databaze</a>
+
         </main>
 
         <!-- END OF MAIN SECTION -->
 
+
         <!-- FOOTER -->
         <footer>
-            <div class="footer bottom container-fluid bg-dark">
+            <div class="footer bottom container-fluid bg-dark fixedBottom">
                 <div class="footer_content">
                     <h3 class="footer_title">Kontakty</h3>
                     <table class="footer_table">
