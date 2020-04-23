@@ -45,7 +45,7 @@ public class UserService implements UserDetailsService {
     }
     
     @Transactional
-    public boolean isUsernameOK(String username){
+    public boolean isUniqueUsername(String username){
         User user = userAndAuthorityDao.getUserByUsername(username);
         return user==null;
     }
