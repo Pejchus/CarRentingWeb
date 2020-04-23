@@ -68,22 +68,21 @@
 
             <security:authorize access="hasAnyRole('ROLE_EMPLOYEE','ROLE_ADMIN')">
                 <h3>Add Car</h3>
-                <form method="POST" enctype="multipart/form-data" action="addCar">
-                    <label>Model(string): </label><input type="text" name="model" required><br>
-                    <label>Brand(string): </label><input type="text" name="brand" required><br>
-                    <label>Baseprice(double): </label><input type="text" name="baseprice" required><br>
-                    <label>Color(string): </label><input type="text" name="color" required><br>
-                    <label>Power(double): </label><input type="text" name="power" required><br>
-                    <label>Productionyear(int): </label><input type="text" name="productionyear" required><br>
-                    <label>Trunkvolume(double): </label><input type="text" name="trunkvolume" required><br>
-                    <label>Foldingrearseats(yes/no): </label><input type="text" name="foldingrearseats" required><br>
-                    <label>Seats(int): </label><input type="text" name="seats" required><br>
-                    <label>Consumption(double): </label><input type="text" name="consumption" required><br>
-                    <label>Description(string): </label><input type="text" name="description" required><br>
-                    <label>Car photo: </label><input type="file" name="photo" required><br>
-                    <label>Car category(SEDAN/COMBI/SUV/HATCHBACK/CABRIOLET/PICKUP/VAN): </label><input type="string" name="carcategory" required><br>
-                    <input type="submit"><br>
-                </form>
+                <form action="addUser">
+                <label>Username(string): </label><input type="text" name="username" required><br>
+                <label>Password(string): </label><input type="text" name="password" required><br>
+                <label>Email(string): <input type="text" name="email" required pattern="^([a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3})$"><span class="error">Please provide a valid telephone or email</span><br></label>
+                <label>Enabled(true/false): </label><input type="text" name="enabled" required><br>
+                <label>Phone(string): <input type="text" name="phone" required pattern="^([0-9]{9})$"><span class="error">Please provide a valid telephone or email</span><br></label>
+                <label>CountryCode(string): </label><input type="text" name="countryCode" required><br>
+                <label>Firstname(string): </label><input type="text" name="firstname" required><br>
+                <label>Lastname(string): </label><input type="text" name="lastname" required><br>
+                <label>City(string): </label><input type="text" name="city" required><br>
+                <label>Street(string): </label><input type="text" name="street" required><br>
+                <label>StreetNo(string): </label><input type="text" name="streetNo" required><br>
+                <label>Authority(CUSTOMER/EMPLOYEE/ADMIN): </label><input type="text" name="authority" required><br>
+                <input type="submit"><br>
+            </form>
                 ${carAddedMessage}
             </security:authorize>
 
