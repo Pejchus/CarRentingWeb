@@ -43,6 +43,12 @@ public class UserService implements UserDetailsService {
     public List<User> getAllUsers() {
         return userAndAuthorityDao.getAll();
     }
+    
+    @Transactional
+    public boolean isUsernameOK(String username){
+        User user = userAndAuthorityDao.getUserByUsername(username);
+        return user==null;
+    }
 
     @Transactional
     public boolean createUser(String username, String password, String email, String enabled, String phone, String countryCode, String firstname, String lastname, String city, String street, String streetNo, String authority) {
