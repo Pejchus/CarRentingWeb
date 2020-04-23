@@ -7,54 +7,12 @@
 
         <link rel="stylesheet" href="css/styles.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <script src="https://kit.fontawesome.com/cf89d56701.js" crossorigin="anonymous"></script>
         <!-- Potreba ve vsech .jsp kde pouzivame security:authorize tagy -->
         <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %> 
     </head>
     <body>
-        <!-- HEADER -->
-        <header>
-            <div class="info_bar">
-                <security:authorize access="hasAnyRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')">
-                    <p>${userName}</p>
-                </security:authorize>
-            </div>
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="/"><img class="logo_icon" src="css/images/logo_icon.png"></a>
-                    <h1 class="header_title">Tygri Pujcovna</h1>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarResponsive">
-                        <ul class="navbar-nav ml-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" href="/">Domu</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Nabidka aut</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Kontakty</a>
-                            </li>
-                            <security:authorize access="hasAnyRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')">
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="/profile">Muj Ucet</a>
-                                </li>
-                            </security:authorize>
-                            <li class="nav-item">
-                                <security:authorize access="!hasAnyRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')">
-                                    <a class="nav-link" href="/login">Prihlasit</a>
-                                </security:authorize>
-                                <security:authorize access="hasAnyRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')">
-                                    <a class="nav-link" href="/doLogout">Odhlasit</a>
-                                </security:authorize>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </header>
-        <!-- END OF HEADER -->
+    <%@include file="components/header.jsp" %>
 
         <!-- MAIN SECTION -->
         <main class="main">
