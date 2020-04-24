@@ -23,6 +23,16 @@ public class CarDao extends BaseDao {
         return true;
     }
 
+    public boolean CreateCar(String model, String brand, double baseprice, String color, double power, int productionyear, double trunkvolume, boolean foldingrearseats, int seats, double consumption, String description, CarCategory carCategory) {
+        try {
+            Car car = new Car(model, brand, baseprice, color, power, productionyear, trunkvolume, foldingrearseats, seats, consumption, description, carCategory);
+            persist(car);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
     public boolean deleteCar(int id) {
         try {
             Car toDelete = em.find(Car.class, id);

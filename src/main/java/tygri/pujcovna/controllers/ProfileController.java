@@ -75,7 +75,7 @@ public class ProfileController {
     @RequestMapping(value = "/doAddCar", method = RequestMethod.POST)
     @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE','ROLE_ADMIN')")
     public ModelAndView doAddCar(HttpSession session, @RequestParam("model") String model, @RequestParam("brand") String brand, @RequestParam("baseprice") String baseprice, @RequestParam("color") String color, @RequestParam("power") String power, @RequestParam("productionyear") String productionyear, @RequestParam("trunkvolume") String trunkvolume, @RequestParam("foldingrearseats") String foldingrearseats, @RequestParam("seats") String seats, @RequestParam("consumption") String consumption, @RequestParam("description") String description, @RequestParam("photo") MultipartFile photo, @RequestParam("carcategory") String carcategory) {
-        ModelAndView mv = new ModelAndView("/adminPage.jsp");
+        ModelAndView mv = new ModelAndView("/adminPage.jsp");        
         if (carService.createCar(model, brand, baseprice, color, power, productionyear, trunkvolume, foldingrearseats, seats, consumption, description, photo, carcategory)) {
             mv.addObject("carAddedMessage", "<p>Car added!</p>");
         } else {

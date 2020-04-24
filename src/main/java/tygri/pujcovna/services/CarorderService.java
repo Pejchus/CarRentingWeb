@@ -33,11 +33,8 @@ public class CarorderService {
         }
         Date startDate = null;
         Date endDate = null;
-        if ("".equals(carcompany) || "vsechny".equals(carcompany)) {
-            carcompany = "*";
-        }
-        if ("".equals(modelsearch)) {
-            modelsearch = "*";
+        if ("vsechny".equals(carcompany)) {
+            carcompany = "";
         }
         if (!"".equals(tripstart)) {
             startDate = new Date(tripstart);
@@ -49,7 +46,7 @@ public class CarorderService {
         List<Car> filteredCars = carDao.getFilteredCars(modelsearch, carcompany, lowPrice, highPrice);
         List<Car> freeCars = new ArrayList<>();
         for (Car car : filteredCars) {
-            if (!isFree(car, startDate, endDate)) {
+            if (isFree(car, startDate, endDate)) {
                 freeCars.add(car);
             }
         }

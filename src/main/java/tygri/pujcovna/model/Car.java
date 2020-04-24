@@ -57,8 +57,6 @@ public class Car implements Serializable {
     @Column(nullable = false)
     private String description;
 
-    @Basic(optional = false)
-    @Column(nullable = false)
     @Lob
     private Byte[] photo;
 
@@ -89,6 +87,21 @@ public class Car implements Serializable {
         this.consumption = consumption;
         this.description = description;
         this.photo = photo;
+        this.carCategory = carCategory;
+    }
+
+    public Car(String model, String brand, double baseprice, String color, double power, int productionyear, double trunkvolume, boolean foldingrearseats, int seats, double consumption, String description, CarCategory carCategory) {
+        this.model = model;
+        this.brand = brand;
+        this.baseprice = baseprice;
+        this.color = color;
+        this.power = power;
+        this.productionyear = productionyear;
+        this.trunkvolume = trunkvolume;
+        this.foldingrearseats = foldingrearseats;
+        this.seats = seats;
+        this.consumption = consumption;
+        this.description = description;
         this.carCategory = carCategory;
     }
 

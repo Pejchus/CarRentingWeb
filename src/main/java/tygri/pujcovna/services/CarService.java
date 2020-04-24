@@ -27,12 +27,16 @@ public class CarService {
         StringBuilder sb = new StringBuilder(10000);
         for (Object obj : carDao.getAll()) {
             Car car = (Car) obj;
-            byte[] photobytes = new byte[car.getPhoto().length];
-            int i = 0;
-            for (Byte b : car.getPhoto()) {
-                photobytes[i++] = b;
+            Byte[] carPhoto = car.getPhoto();
+            String photoData = "";
+            if (carPhoto != null) {
+                byte[] photobytes = new byte[carPhoto.length];
+                int i = 0;
+                for (Byte b : carPhoto) {
+                    photobytes[i++] = b;
+                }
+                photoData = Base64.getEncoder().encodeToString(photobytes);
             }
-            String photoData = Base64.getEncoder().encodeToString(photobytes);
             sb.append("<p>").append(car.toString()).append("</p><img src=\"data:image/png;base64,").append(photoData).append("\" alt=\"Foto auta\" height=\"100\" width=\"100\"/><br>");
         }
         return sb.toString();
@@ -49,16 +53,20 @@ public class CarService {
             } else {
                 return false;
             }
-            Byte[] photoCopy = new Byte[photo.getBytes().length];
-            int i = 0;
-            for (Byte b : photo.getBytes()) {
-                photoCopy[i++] = b;
-            }
+            if (photo != null) {
 
-            return carDao.CreateCar(model, brand, Double.valueOf(baseprice), color, Double.valueOf(power), Integer.valueOf(productionyear), Double.valueOf(trunkvolume), foldingseats, Integer.valueOf(seats), Double.valueOf(consumption), description, photoCopy, CarCategory.valueOf(carCategory));
+                Byte[] photoCopy = new Byte[photo.getBytes().length];
+                int i = 0;
+                for (Byte b : photo.getBytes()) {
+                    photoCopy[i++] = b;
+                }
+                return carDao.CreateCar(model, brand, Double.valueOf(baseprice), color, Double.valueOf(power), Integer.valueOf(productionyear), Double.valueOf(trunkvolume), foldingseats, Integer.valueOf(seats), Double.valueOf(consumption), description, photoCopy, CarCategory.valueOf(carCategory));
+            } else {
+                return carDao.CreateCar(model, brand, Double.valueOf(baseprice), color, Double.valueOf(power), Integer.valueOf(productionyear), Double.valueOf(trunkvolume), foldingseats, Integer.valueOf(seats), Double.valueOf(consumption), description, CarCategory.valueOf(carCategory));
+            }
         } catch (IOException | IllegalArgumentException e) {
             System.out.println("Velky spatny: ");
-            e.printStackTrace();
+            System.out.println(e);
             return false;
         }
     }
@@ -69,12 +77,12 @@ public class CarService {
         double high;
         try {
             low = Double.valueOf(lowest);
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             low = 0;
         }
         try {
             high = Double.valueOf(highest);
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             high = Double.MAX_VALUE;
         }
         return carDao.getFilteredCars(color, brand, low, high);

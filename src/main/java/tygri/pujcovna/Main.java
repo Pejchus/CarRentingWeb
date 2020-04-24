@@ -5,6 +5,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.multipart.MultipartFile;
 import tygri.pujcovna.model.AuthorityType;
 import tygri.pujcovna.services.CarService;
 import tygri.pujcovna.services.CarorderService;
@@ -30,5 +31,7 @@ public class Main {
         userService.createUser("admin", "admin", "admin@admin.com", "true", "777777777", "25101", "admin", "vonAdmin", "Praha", "Parizska", "4", "ADMIN");
         userService.createUser("zamestnanec", "zamestnanec", "zamestnanec@zamestnanec.com", "true", "666666666", "069", "zamestnanec", "vonZamestnanec", "Ricany", "Sokolska", "5", "EMPLOYEE");
         userService.createUser("zakaznik", "zakaznik", "zakaznik@zakaznik.com", "true", "555555555", "05689", "zakaznik", "vonZakaznik", "Ricany", "U nadrazi", "6", "CUSTOMER");
+        carService.createCar("Felicia", "Skoda", "1000", "blue", "120", "1999", "420", "yes", "5", "4.5", "nic moc", null, "SEDAN");
+        carService.createCar("A4", "Audi", "2000", "green", "2000", "2012", "425", "yes", "5", "6.5", "docela dobry", null, "SEDAN");
     }
 }

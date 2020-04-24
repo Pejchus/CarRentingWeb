@@ -32,7 +32,7 @@
                         <label>Seats(int): </label><input type="text" name="seats" required><br>
                         <label>Consumption(double): </label><input type="text" name="consumption" required><br>
                         <label>Description(string): </label><input type="text" name="description" required><br>
-                        <label>Car photo: </label><input type="file" name="photo" required><br>
+                        <label>Car photo: </label><input type="file" name="photo"><br>
                         <label>Car category(SEDAN/COMBI/SUV/HATCHBACK/CABRIOLET/PICKUP/VAN): </label><input type="string" name="carcategory" required><br>
                         <input type="submit"><br>
                     </form>
