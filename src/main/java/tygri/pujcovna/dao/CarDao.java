@@ -2,6 +2,7 @@ package tygri.pujcovna.dao;
 
 import tygri.pujcovna.model.Car;
 import java.util.List;
+import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 import tygri.pujcovna.model.CarCategory;
 
@@ -33,11 +34,12 @@ public class CarDao extends BaseDao {
         return true;
     }
 
-    public List<Car> getFilteredCars(String color, String brand, double lowest, double highest) {
-        color = "%" + color + "%";
+    public List<Car> getFilteredCars(String model, String brand, double lowest, double highest) {
+        model = "%" + model + "%";
         brand = "%" + brand + "%";
         try {
-            return em.createQuery("SELECT e FROM Car e WHERE e.color LIKE :color and e.brand LIKE :brand and e.baseprice between :lowest AND :highest", Car.class).setParameter("lowest", lowest).setParameter("highest", highest).setParameter("color", color).setParameter("brand", brand).getResultList();
+            TypedQuery<Car> q = em.createQuery("SELECT e FROM Car e WHERE e.model LIKE :model and e.brand LIKE :brand and e.baseprice between :lowest AND :highest", Car.class);
+            return q.setParameter("lowest", lowest).setParameter("highest", highest).setParameter("model", model).setParameter("brand", brand).getResultList();
         } catch (RuntimeException e) {
             return null;
         }

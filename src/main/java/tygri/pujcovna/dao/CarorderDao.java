@@ -64,4 +64,49 @@ public class CarorderDao extends BaseDao {
         }
     }
 
+    /**
+     * Get reservations intersecting in dates (startDate, endDate) interval
+     *
+     * @param car
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    public List<Carorder> getReservations(Car car, Date startDate, Date endDate) {
+        try {
+            return em.createQuery("SELECT e FROM Carorder e where e.car=:car and (e.enddate>:startDate or e.begindate<:endDate)").setParameter("startDate", startDate).setParameter("endDate", endDate).setParameter("car", car).getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /**
+     * Get reservations that end after startDate
+     *
+     * @param car
+     * @param startDate
+     * @return
+     */
+    public List<Carorder> getReservationsFrom(Car car, Date startDate) {
+        try {
+            return em.createQuery("SELECT e FROM Carorder e where e.car=:car and e.enddate>:startDate").setParameter("startDate", startDate).setParameter("car", car).getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /**
+     * Get reservations that begin before endDate
+     *
+     * @param car
+     * @param endDate
+     * @return
+     */
+    public List<Carorder> getReservationsUpTo(Car car, Date endDate) {
+        try {
+            return em.createQuery("SELECT e FROM Carorder e where e.car=:car and e.begindate<:endDate").setParameter("endDate", endDate).setParameter("car", car).getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

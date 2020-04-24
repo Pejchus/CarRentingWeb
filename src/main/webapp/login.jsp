@@ -13,7 +13,7 @@
         <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
     </head>
     <body>
-    <%@include file="components/header.jsp" %>
+        <%@include file="components/header.jsp" %>
 
         <!-- MAIN -->
         <main class="formBackground">

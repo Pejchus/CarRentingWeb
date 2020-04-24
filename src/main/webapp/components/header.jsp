@@ -29,7 +29,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="/profile">
                                 <i class="fa fa-fw fa-user"></i>
-                                    ${userName}</a>
+                                ${userName}</a>
                             <div class="dropdown-menu">
                                 <security:authorize access="hasRole('ROLE_CUSTOMER')">
                                     <a class="dropdown-item" href="/profile">Muj Ucet</a>
@@ -38,7 +38,7 @@
 
                                 <security:authorize access="hasAnyRole('ROLE_EMPLOYEE','ROLE_ADMIN')">
                                     <a class="dropdown-item" href="/profile">Muj Ucet</a>
-                                    <a class="dropdown-item" href="/getAdminPage">Sprava Aplikace</a>
+                                    <a class="dropdown-item" href="/adminPage">Sprava Aplikace</a>
                                     <a class="dropdown-item" href="/doLogout">Odhlasit</a>
                                 </security:authorize>
                             </div>
