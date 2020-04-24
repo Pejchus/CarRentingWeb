@@ -23,7 +23,7 @@ public class Car implements Serializable {
 
     @Basic(optional = false)
     @Column(nullable = false)
-    private double baseprice;
+    private Double baseprice;
 
     @Basic(optional = false)
     @Column(nullable = false)
@@ -31,15 +31,15 @@ public class Car implements Serializable {
 
     @Basic(optional = false)
     @Column(nullable = false)
-    private double power;
+    private Double power;
 
     @Basic(optional = false)
     @Column(nullable = false)
-    private int productionyear;
+    private Integer productionyear;
 
     @Basic(optional = false)
     @Column(nullable = false)
-    private double trunkvolume;
+    private Double trunkvolume;
 
     @Basic(optional = false)
     @Column(nullable = false)
@@ -47,11 +47,11 @@ public class Car implements Serializable {
 
     @Basic(optional = false)
     @Column(nullable = false)
-    private int seats;
+    private Integer seats;
 
     @Basic(optional = false)
     @Column(nullable = false)
-    private double consumption;
+    private Double consumption;
 
     @Basic(optional = false)
     @Column(nullable = false)
@@ -74,7 +74,7 @@ public class Car implements Serializable {
     public Car() {
     }
 
-    public Car(String model, String brand, double baseprice, String color, double power, int productionyear, double trunkvolume, boolean foldingrearseats, int seats, double consumption, String description, Byte[] photo, CarCategory carCategory) {
+    public Car(String model, String brand, Double baseprice, String color, Double power, Integer productionyear, Double trunkvolume, boolean foldingrearseats, Integer seats, Double consumption, String description, Byte[] photo, CarCategory carCategory) {
         this.model = model;
         this.brand = brand;
         this.baseprice = baseprice;
@@ -90,7 +90,7 @@ public class Car implements Serializable {
         this.carCategory = carCategory;
     }
 
-    public Car(String model, String brand, double baseprice, String color, double power, int productionyear, double trunkvolume, boolean foldingrearseats, int seats, double consumption, String description, CarCategory carCategory) {
+    public Car(String model, String brand, Double baseprice, String color, Double power, Integer productionyear, Double trunkvolume, boolean foldingrearseats, Integer seats, Double consumption, String description, CarCategory carCategory) {
         this.model = model;
         this.brand = brand;
         this.baseprice = baseprice;
@@ -132,11 +132,11 @@ public class Car implements Serializable {
         this.brand = brand;
     }
 
-    public double getBaseprice() {
+    public Double getBaseprice() {
         return baseprice;
     }
 
-    public void setBaseprice(double baseprice) {
+    public void setBaseprice(Double baseprice) {
         this.baseprice = baseprice;
     }
 
@@ -148,19 +148,19 @@ public class Car implements Serializable {
         this.color = color;
     }
 
-    public double getPower() {
+    public Double getPower() {
         return power;
     }
 
-    public void setPower(double power) {
+    public void setPower(Double power) {
         this.power = power;
     }
 
-    public int getProductionyear() {
+    public Integer getProductionyear() {
         return productionyear;
     }
 
-    public void setProductionyear(int productionyear) {
+    public void setProductionyear(Integer productionyear) {
         this.productionyear = productionyear;
     }
 
@@ -168,7 +168,7 @@ public class Car implements Serializable {
         return trunkvolume;
     }
 
-    public void setTrunkvolume(double trunkvolume) {
+    public void setTrunkvolume(Double trunkvolume) {
         this.trunkvolume = trunkvolume;
     }
 
@@ -180,11 +180,11 @@ public class Car implements Serializable {
         this.foldingrearseats = foldingrearseats;
     }
 
-    public int getSeats() {
+    public Integer getSeats() {
         return seats;
     }
 
-    public void setSeats(int seats) {
+    public void setSeats(Integer seats) {
         this.seats = seats;
     }
 

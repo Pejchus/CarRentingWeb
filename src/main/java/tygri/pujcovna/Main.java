@@ -5,7 +5,6 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.web.multipart.MultipartFile;
 import tygri.pujcovna.model.AuthorityType;
 import tygri.pujcovna.services.CarService;
 import tygri.pujcovna.services.CarorderService;

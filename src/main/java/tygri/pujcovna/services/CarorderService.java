@@ -16,6 +16,9 @@ public class CarorderService {
     private CarorderDao carOrderDao;
 
     @Autowired
+    private CarService carService;
+
+    @Autowired
     private CarDao carDao;
 
     public String getOffers(String modelsearch, String carcompany, String tripstart, String tripend, String range1a, String range1b) {
@@ -50,7 +53,7 @@ public class CarorderService {
                 freeCars.add(car);
             }
         }
-        return freeCars.toString();
+        return carService.getCarsPreviews(freeCars);
     }
 
     private boolean isFree(Car car, Date startDate, Date endDate) {

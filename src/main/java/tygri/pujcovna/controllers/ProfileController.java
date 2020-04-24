@@ -66,7 +66,7 @@ public class ProfileController {
     @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE','ROLE_ADMIN')")
     public ModelAndView getAdminPage(HttpSession session) {
         ModelAndView mv = new ModelAndView("/adminPage.jsp");
-        mv.addObject("carData", carService.getAllCars());
+        mv.addObject("carData", carService.getAllCarsPreviews());
         mv.addObject("userData", userService.getAllUsers());
         mv.addObject("LoggedUser", session.getAttribute("userName"));
         return mv;
@@ -75,13 +75,13 @@ public class ProfileController {
     @RequestMapping(value = "/doAddCar", method = RequestMethod.POST)
     @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE','ROLE_ADMIN')")
     public ModelAndView doAddCar(HttpSession session, @RequestParam("model") String model, @RequestParam("brand") String brand, @RequestParam("baseprice") String baseprice, @RequestParam("color") String color, @RequestParam("power") String power, @RequestParam("productionyear") String productionyear, @RequestParam("trunkvolume") String trunkvolume, @RequestParam("foldingrearseats") String foldingrearseats, @RequestParam("seats") String seats, @RequestParam("consumption") String consumption, @RequestParam("description") String description, @RequestParam("photo") MultipartFile photo, @RequestParam("carcategory") String carcategory) {
-        ModelAndView mv = new ModelAndView("/adminPage.jsp");        
+        ModelAndView mv = new ModelAndView("/adminPage.jsp");
         if (carService.createCar(model, brand, baseprice, color, power, productionyear, trunkvolume, foldingrearseats, seats, consumption, description, photo, carcategory)) {
             mv.addObject("carAddedMessage", "<p>Car added!</p>");
         } else {
             mv.addObject("carAddedMessage", "<p>Car not added!</p>");
         }
-        mv.addObject("carData", carService.getAllCars());
+        mv.addObject("carData", carService.getAllCarsPreviews());
         mv.addObject("userData", userService.getAllUsers());
         mv.addObject("LoggedUser", session.getAttribute("userName"));
         return mv;
@@ -97,7 +97,7 @@ public class ProfileController {
             mv.addObject("userAddedMessage", "<p>User not added!</p>");
         }
         mv.addObject("userData", userService.getAllUsers());
-        mv.addObject("carData", carService.getAllCars());
+        mv.addObject("carData", carService.getAllCarsPreviews());
         mv.addObject("LoggedUser", session.getAttribute("userName"));
         return mv;
     }

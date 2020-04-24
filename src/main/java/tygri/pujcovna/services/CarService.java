@@ -3,29 +3,38 @@ package tygri.pujcovna.services;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
-import tygri.pujcovna.dao.CarDao;
-import tygri.pujcovna.model.Car;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import tygri.pujcovna.dao.CarDao;
+import tygri.pujcovna.model.Car;
 import tygri.pujcovna.model.CarCategory;
+import tygri.pujcovna.other.Constants;
 
 @Service
 public class CarService {
 
     private final CarDao carDao;
+    private final Constants constants;
 
     @Autowired
-    public CarService(CarDao carDao) {
+    public CarService(CarDao carDao, Constants constants) {
         this.carDao = carDao;
+        this.constants = constants;
     }
 
     //osklive, predelat jestli bude cas
     @Transactional
-    public String getAllCars() {
+    public String getAllCarsPreviews() {
+        return getCarsPreviews(carDao.getAll());
+    }
+
+    @Transactional
+    public String getCarsPreviews(List<Car> cars) {
         StringBuilder sb = new StringBuilder(10000);
-        for (Object obj : carDao.getAll()) {
+        for (Object obj : cars) {
+            String previewString = constants.getCarPreview();
             Car car = (Car) obj;
             Byte[] carPhoto = car.getPhoto();
             String photoData = "";
@@ -37,7 +46,13 @@ public class CarService {
                 }
                 photoData = Base64.getEncoder().encodeToString(photobytes);
             }
-            sb.append("<p>").append(car.toString()).append("</p><img src=\"data:image/png;base64,").append(photoData).append("\" alt=\"Foto auta\" height=\"100\" width=\"100\"/><br>");
+            previewString = previewString.replaceAll(";carProfileLink;", "carProfile?id=" + car.getId());
+            previewString = previewString.replaceFirst(";carModel;", car.getModel());
+            previewString = previewString.replaceFirst(";carCompany;", car.getBrand());
+            previewString = previewString.replaceFirst(";carSeatNumber;", car.getSeats().toString());
+            previewString = previewString.replaceFirst(";carPrice;", car.getBaseprice().toString());
+            previewString = previewString.replaceFirst(";carPhotoData;", photoData);
+            sb.append(previewString);
         }
         return sb.toString();
     }

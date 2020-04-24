@@ -21,7 +21,6 @@
 
         <!-- MAIN SECTION -->
         <main class="main">
-
             <div class="container main_description">
                 <div class="filter">
                     <div class="horni-filter">
@@ -107,111 +106,6 @@
                 <div ng-model="carsHtml" id="carsHtml">
                     <div class="row">
                         <p>${offers}</p>
-                        <div class="col-md-3 col-md-offset-1" >
-                            <div class="cclient">
-                                <a href="/DetailAuta/3/Audi-A4-Avant">
-                                    <h3>Audi - <strong>A4 Avant</strong></h3>
-                                    <div class="cimage">
-                                        <img >
-                                    </div>
-                                </a>
-                                <div class="cmatter">
-                                    <a href="/DetailAuta/3/Audi-A4-Avant">
-                                        <div class="row">
-                                            <div class="col-sm-5 detailLeftTd">Počet míst: <b>5</b>
-                                            </div>
-                                            <div class="col-sm-7">Třída: <b>St&#x159;edn&#xED; t&#x159;&#xED;da</b>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-5 detailLeftTd">Palivo: <b>Nafta</b>
-                                            </div>
-                                            <div class="col-sm-7">Převodovka: <b>Automat</b>
-                                            </div>
-
-                                        </div>
-                                        <div class="btn btn-price rezervovatDetailBtn">
-                                            od <strong>799,- Kč / den</strong>
-                                        </div>
-                                    </a>
-
-                                    <div class="button">
-                                        <a href="/DetailAuta/3/Audi-A4-Avant">Prohlédnout vůz</a>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 " >
-                            <div class="cclient">
-                                <a href="/DetailAuta/5/Audi-A6-Allroad">
-                                    <h3>Audi - <strong>A6 Allroad</strong></h3>
-                                    <div class="cimage">
-                                        <img>
-                                    </div>
-                                </a>
-                                <div class="cmatter">
-                                    <a href="/DetailAuta/5/Audi-A6-Allroad">
-                                        <div class="row">
-                                            <div class="col-sm-5 detailLeftTd">Počet míst: <b>5</b>
-                                            </div>
-                                            <div class="col-sm-7">Třída: <b>St&#x159;edn&#xED; t&#x159;&#xED;da</b>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-5 detailLeftTd">Palivo: <b>Nafta</b>
-                                            </div>
-                                            <div class="col-sm-7">Převodovka: <b>Manu&#xE1;l</b>
-                                            </div>
-
-                                        </div>
-                                        <div class="btn btn-price rezervovatDetailBtn">
-                                            od <strong>899,- Kč / den</strong>
-                                        </div>
-                                    </a>
-
-                                    <div class="button">
-                                        <a href="/DetailAuta/5/Audi-A6-Allroad">Prohlédnout vůz</a>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 " >
-                            <div class="cclient">
-                                <a href="/DetailAuta/51/Audi-A6-Avant">
-                                    <h3>Audi - <strong>A6 Avant</strong></h3>
-                                    <div class="cimage">
-                                        <img >
-                                    </div>
-                                </a>
-                                <div class="cmatter">
-                                    <a href="/DetailAuta/51/Audi-A6-Avant">
-                                        <div class="row">
-                                            <div class="col-sm-5 detailLeftTd">Počet míst: <b>5</b>
-                                            </div>
-                                            <div class="col-sm-7">Třída: <b>St&#x159;edn&#xED; t&#x159;&#xED;da</b>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-5 detailLeftTd">Palivo: <b>Nafta</b>
-                                            </div>
-                                            <div class="col-sm-7">Převodovka: <b>Automat</b>
-                                            </div>
-
-                                        </div>
-                                        <div class="btn btn-price rezervovatDetailBtn">
-                                            od <strong>999,- Kč / den</strong>
-                                        </div>
-                                    </a>
-
-                                    <div class="button">
-                                        <a href="/DetailAuta/51/Audi-A6-Avant">Prohlédnout vůz</a>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
