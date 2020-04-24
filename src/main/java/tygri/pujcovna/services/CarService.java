@@ -1,6 +1,7 @@
 package tygri.pujcovna.services;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,5 +102,43 @@ public class CarService {
             high = Double.MAX_VALUE;
         }
         return carDao.getFilteredCars(color, brand, low, high);
+    }
+
+    public Car getCarById(String id) {
+        try {
+            return carDao.getCarById(Integer.valueOf(id));
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
+
+    public String getPhoto(Car car) {
+        Byte[] photo = car.getPhoto();
+        if (photo == null) {
+            return "<img src=\"data:image/png;base64," + " " + "\" alt=\"Foto auta\" height=\"100\" width=\"100\"/>";
+        }
+        byte[] photobytes = new byte[photo.length];
+        int i = 0;
+        for (Byte b : photo) {
+            photobytes[i++] = b;
+        }
+        String photoData = Base64.getEncoder().encodeToString(photobytes);
+        return "<img src=\"data:image/png;base64," + photoData + "\" alt=\"Foto auta\" height=\"100\" width=\"100\"/>";
+    }
+
+    public boolean setPhoto(Car car, MultipartFile photo) {
+        try {
+            Byte[] photoCopy = new Byte[photo.getBytes().length];
+            int i = 0;
+            for (Byte b : photo.getBytes()) {
+                photoCopy[i++] = b;
+            }
+            System.out.println(car);
+            System.out.println(Arrays.toString(photoCopy));
+            return carDao.setPhoto(photoCopy, car);
+        } catch (IOException e) {
+            System.out.println("photo upload fail");
+            return false;
+        }
     }
 }

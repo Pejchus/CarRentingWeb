@@ -55,4 +55,22 @@ public class CarDao extends BaseDao {
         }
     }
 
+    public Car getCarById(Integer id) {
+        try {
+            return (Car) find(id);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public boolean setPhoto(Byte[] photo, Car car) {
+        car.setPhoto(photo);
+        try {
+            em.merge(car);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }

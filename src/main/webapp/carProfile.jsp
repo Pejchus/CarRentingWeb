@@ -59,6 +59,14 @@
                     <div class="car_description">
                         ${description}
                     </div>
+                    <fieldset ${disabled}>
+                        <form method="POST" enctype="multipart/form-data" action="setCarProfilePhoto">
+                            <label>Zmenit fotku auta: </label><input type="file" name="photo" required><br>
+                            <input type="hidden" name="carid" value="${carId}">
+                            <input type="submit" value="Vybrat foto"><br>
+                        </form>  
+                        ${carProfilePhotoChangeMsg}
+                    </fieldset>
                 </div>
             </div>
 

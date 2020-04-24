@@ -126,7 +126,7 @@ public class UserService implements UserDetailsService {
     public String getPhoto(String userName) {
         Byte[] photo = loadUserByUsername(userName).getPhoto();
         if (photo == null) {
-            return "</p><img src=\"data:image/png;base64," + " " + "\" alt=\"Profilove foto\" height=\"100\" width=\"100\"/>";
+            return "<img src=\"data:image/png;base64," + " " + "\" alt=\"Profilove foto\" height=\"100\" width=\"100\"/>";
         }
         byte[] photobytes = new byte[photo.length];
         int i = 0;
@@ -134,7 +134,7 @@ public class UserService implements UserDetailsService {
             photobytes[i++] = b;
         }
         String photoData = Base64.getEncoder().encodeToString(photobytes);
-        return "</p><img src=\"data:image/png;base64," + photoData + "\" alt=\"Profilove foto\" height=\"100\" width=\"100\"/>";
+        return "<img src=\"data:image/png;base64," + photoData + "\" alt=\"Profilove foto\" height=\"100\" width=\"100\"/>";
     }
 
     @Transactional
