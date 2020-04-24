@@ -1,11 +1,14 @@
 package tygri.pujcovna;
 
+import java.sql.Timestamp;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import tygri.pujcovna.model.AuthorityType;
+import tygri.pujcovna.model.Car;
+import tygri.pujcovna.model.User;
 import tygri.pujcovna.services.CarService;
 import tygri.pujcovna.services.CarorderService;
 import tygri.pujcovna.services.UserService;
@@ -32,5 +35,9 @@ public class Main {
         userService.createUser("zakaznik", "zakaznik", "zakaznik@zakaznik.com", "true", "555555555", "05689", "zakaznik", "vonZakaznik", "Ricany", "U nadrazi", "6", "CUSTOMER");
         carService.createCar("Felicia", "Skoda", "1000", "blue", "120", "1999", "420", "yes", "5", "4.5", "nic moc", null, "SEDAN");
         carService.createCar("A4", "Audi", "2000", "green", "2000", "2012", "425", "yes", "5", "6.5", "docela dobry", null, "SEDAN");
+        carService.createCar("nakejSaab", "Saab", "2000", "green", "2000", "2012", "425", "yes", "5", "6.5", "docela ujde", null, "CABRIOLET");
+        Car car = carService.getACar();
+        User user = userService.loadUserByUsername("zakaznik");
+        carorderService.createOrder(user, car, new Timestamp(System.currentTimeMillis() + 86400000), new Timestamp(System.currentTimeMillis() + 86400000 * 8));
     }
 }

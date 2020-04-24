@@ -141,4 +141,8 @@ public class CarService {
             return false;
         }
     }
+
+    public Car getACar() {
+        return (Car) carDao.getAll().get(0);
+    }
 }

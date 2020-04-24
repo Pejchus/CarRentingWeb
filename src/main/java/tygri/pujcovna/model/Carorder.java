@@ -38,7 +38,11 @@ public class Carorder implements Serializable {
     @Column(nullable = false)
     private boolean paid;
 
-    public Carorder(Car car, Timestamp begindate, Timestamp enddate, Timestamp createDate, double price, boolean paid) {
+    public Carorder() {
+    }
+
+    public Carorder(User account, Car car, Timestamp begindate, Timestamp enddate, Timestamp createDate, double price, boolean paid) {
+        this.account = account;
         this.car = car;
         this.begindate = begindate;
         this.enddate = enddate;
@@ -109,6 +113,6 @@ public class Carorder implements Serializable {
 
     @Override
     public String toString() {
-        return "Carorder{" + "id=" + id + ", car=" + car + ", begin=" + begindate + ", end=" + enddate + ", createDate=" + createDate + ", price=" + price + ", paid=" + paid + '}';
+        return "Carorder{" + "id=" + id + ", account=" + account + ", car=" + car + ", begindate=" + begindate + ", enddate=" + enddate + ", createDate=" + createDate + ", price=" + price + ", paid=" + paid + '}';
     }
 }

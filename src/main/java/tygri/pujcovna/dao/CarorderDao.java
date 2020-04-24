@@ -1,15 +1,12 @@
 package tygri.pujcovna.dao;
 
-import org.hibernate.sql.Select;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
 import org.springframework.stereotype.Repository;
 import tygri.pujcovna.model.Car;
 import tygri.pujcovna.model.Carorder;
 import tygri.pujcovna.model.User;
-
-import java.sql.Timestamp;
-import java.time.DateTimeException;
-import java.util.List;
-import java.util.Date;
 
 @Repository
 public class CarorderDao extends BaseDao {
@@ -24,7 +21,7 @@ public class CarorderDao extends BaseDao {
 
     public boolean createCarorder(User customer, Timestamp begin, Timestamp end, Car car, double price, boolean paid) {
         try {
-            Carorder order = new Carorder(car, begin, end, new Timestamp(System.currentTimeMillis()), price, paid);
+            Carorder order = new Carorder(customer, car, begin, end, new Timestamp(System.currentTimeMillis()), price, paid);
             persist(order);
         } catch (Exception e) {
             return false;
@@ -34,7 +31,7 @@ public class CarorderDao extends BaseDao {
 
     public List<Carorder> getUserOrderHistory(User u) {
         try {
-            return em.createQuery("SELECT e FROM Carorder e where e.account=:user and e.paid = true").setParameter("user", u).getResultList();
+            return em.createQuery("SELECT e FROM Carorder e where e.account=:user").setParameter("user", u).getResultList();
         } catch (Exception e) {
             return null;
         }

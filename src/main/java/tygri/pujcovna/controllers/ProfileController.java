@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import tygri.pujcovna.model.User;
 import tygri.pujcovna.services.CarService;
+import tygri.pujcovna.services.CarorderService;
 import tygri.pujcovna.services.UserService;
 
 @Controller
@@ -18,11 +19,13 @@ public class ProfileController {
 
     private final UserService userService;
     private final CarService carService;
+    private final CarorderService carorderService;
 
     @Autowired
-    public ProfileController(UserService userService, CarService carService) {
+    public ProfileController(UserService userService, CarService carService, CarorderService carorderService) {
         this.userService = userService;
         this.carService = carService;
+        this.carorderService = carorderService;
     }
 
     @PreAuthorize("hasAnyRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')")
@@ -38,6 +41,7 @@ public class ProfileController {
         mv.addObject("street", session.getAttribute("street"));
         mv.addObject("streetno", session.getAttribute("streetno"));
         mv.addObject("profilePhoto", userService.getPhoto(session.getAttribute("userName").toString()));
+        mv.addObject("orders", carorderService.getAllOrders(userService.loadUserByUsername(session.getAttribute("userName").toString())));
         mv.addObject("disabled", "");
         return mv;
     }
@@ -57,6 +61,7 @@ public class ProfileController {
             mv.addObject("street", user.getStreet());
             mv.addObject("streetno", user.getStreetno());
             mv.addObject("profilePhoto", userService.getPhoto(user.getUsername()));
+            mv.addObject("orders", carorderService.getAllOrders(user));
         } else {
             mv.addObject("firstname", "User does not exist");
             mv.addObject("lastname", "User does not exist");
@@ -90,6 +95,7 @@ public class ProfileController {
         mv.addObject("street", session.getAttribute("street"));
         mv.addObject("streetno", session.getAttribute("streetno"));
         mv.addObject("profilePhoto", userService.getPhoto(session.getAttribute("userName").toString()));
+        mv.addObject("orders", carorderService.getAllOrders(userService.loadUserByUsername(session.getAttribute("userName").toString())));
         mv.addObject("disabled", "");
         return mv;
     }

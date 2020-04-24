@@ -1,5 +1,6 @@
 package tygri.pujcovna.services;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -8,6 +9,8 @@ import org.springframework.stereotype.Service;
 import tygri.pujcovna.dao.CarDao;
 import tygri.pujcovna.dao.CarorderDao;
 import tygri.pujcovna.model.Car;
+import tygri.pujcovna.model.Carorder;
+import tygri.pujcovna.model.User;
 
 @Service
 public class CarorderService {
@@ -73,6 +76,14 @@ public class CarorderService {
             }
         }
         return false;
+    }
+
+    public boolean createOrder(User user, Car car, Timestamp begin, Timestamp end) {
+        return carOrderDao.createCarorder(user, begin, end, car, car.getBaseprice(), true);
+    }
+
+    public List<Carorder> getAllOrders(User user) {
+        return carOrderDao.getUserOrderHistory(user);
     }
 
 }
