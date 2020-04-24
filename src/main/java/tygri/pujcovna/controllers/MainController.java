@@ -69,6 +69,17 @@ public class MainController implements ErrorController {
         return mv;
     }
 
+    // navrh misto tech dvou metod pod touhle a pak tam zobrazovat jenom veci podle toho co maj za prava
+    @RequestMapping(value = "/getAdminPage")
+    @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE','ROLE_ADMIN')")
+    public ModelAndView getAdminPage(HttpSession session) {
+        ModelAndView mv = new ModelAndView("/adminPage.jsp");
+        mv.addObject("carData", carService.getAllCars());
+        mv.addObject("userData", userService.getAllUsers());
+        mv.addObject("LoggedUser", session.getAttribute("userName"));
+        return mv;
+    }
+
     @RequestMapping(value = "/addCar")
     @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE','ROLE_ADMIN')")
     public ModelAndView addCar(HttpSession session) {
