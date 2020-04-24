@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import tygri.pujcovna.model.User;
 import tygri.pujcovna.services.CarService;
 import tygri.pujcovna.services.UserService;
 
@@ -38,6 +39,37 @@ public class ProfileController {
         mv.addObject("street", session.getAttribute("street"));
         mv.addObject("streetno", session.getAttribute("streetno"));
         mv.addObject("profilePhoto", userService.getPhoto(session.getAttribute("userName").toString()));
+        mv.addObject("disabled", "");
+        return mv;
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RequestMapping(value = "/adminProfileView", method = RequestMethod.GET)
+    public ModelAndView adminProfileView(HttpSession session, @RequestParam String id) {
+        ModelAndView mv = new ModelAndView("/profile.jsp");
+        User user = userService.loadUserById(id);
+        if (user != null) {
+            mv.addObject("firstname", user.getFirstname());
+            mv.addObject("lastname", user.getLastname());
+            mv.addObject("phone", user.getPhone());
+            mv.addObject("email", user.getEmail());
+            mv.addObject("countrycode", user.getCountryCode());
+            mv.addObject("city", user.getCity());
+            mv.addObject("street", user.getStreet());
+            mv.addObject("streetno", user.getStreetno());
+            mv.addObject("profilePhoto", userService.getPhoto(user.getUsername()));
+        } else {
+            mv.addObject("firstname", "User does not exist");
+            mv.addObject("lastname", "User does not exist");
+            mv.addObject("phone", "User does not exist");
+            mv.addObject("email", "User does not exist");
+            mv.addObject("countrycode", "User does not exist");
+            mv.addObject("city", "User does not exist");
+            mv.addObject("street", "User does not exist");
+            mv.addObject("streetno", "User does not exist");
+            mv.addObject("profilePhoto", "User does not exist");
+        }
+        mv.addObject("disabled", "hidden");
         return mv;
     }
 
@@ -59,6 +91,7 @@ public class ProfileController {
         mv.addObject("street", session.getAttribute("street"));
         mv.addObject("streetno", session.getAttribute("streetno"));
         mv.addObject("profilePhoto", userService.getPhoto(session.getAttribute("userName").toString()));
+        mv.addObject("disabled", "");
         return mv;
     }
 
@@ -67,7 +100,7 @@ public class ProfileController {
     public ModelAndView getAdminPage(HttpSession session) {
         ModelAndView mv = new ModelAndView("/adminPage.jsp");
         mv.addObject("carData", carService.getAllCarsPreviews());
-        mv.addObject("userData", userService.getAllUsers());
+        mv.addObject("userData", userService.getAllUsersPreviews());
         mv.addObject("LoggedUser", session.getAttribute("userName"));
         return mv;
     }
@@ -82,7 +115,7 @@ public class ProfileController {
             mv.addObject("carAddedMessage", "<p>Car not added!</p>");
         }
         mv.addObject("carData", carService.getAllCarsPreviews());
-        mv.addObject("userData", userService.getAllUsers());
+        mv.addObject("userData", userService.getAllUsersPreviews());
         mv.addObject("LoggedUser", session.getAttribute("userName"));
         return mv;
     }
@@ -96,7 +129,7 @@ public class ProfileController {
         } else {
             mv.addObject("userAddedMessage", "<p>User not added!</p>");
         }
-        mv.addObject("userData", userService.getAllUsers());
+        mv.addObject("userData", userService.getAllUsersPreviews());
         mv.addObject("carData", carService.getAllCarsPreviews());
         mv.addObject("LoggedUser", session.getAttribute("userName"));
         return mv;

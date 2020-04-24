@@ -95,4 +95,12 @@ public class UserAndAuthorityDao extends BaseDao /*implements UserRepository*/ {
         }
     }
 
+    public User getUserById(Integer id) {
+        try {
+            return (User) find(id);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 }

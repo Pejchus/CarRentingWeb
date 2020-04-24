@@ -45,11 +45,13 @@
                         <td>${orders}</td>
                     </tr>
                 </table>
-                <form method="POST" enctype="multipart/form-data" action="setProfilePhoto">
-                    <label>Zmenit profilovou fotku: </label><input type="file" name="photo" required><br>
-                    <input type="submit" value="Vybrat foto"><br>
-                </form>
-                ${profilePhotoChangeMsg}
+                <fieldset ${disabled}>
+                    <form method="POST" enctype="multipart/form-data" action="setProfilePhoto">
+                        <label>Zmenit profilovou fotku: </label><input type="file" name="photo" required><br>
+                        <input type="submit" value="Vybrat foto"><br>
+                    </form>
+                    ${profilePhotoChangeMsg}
+                </fieldset>
             </div>
 
         </main>

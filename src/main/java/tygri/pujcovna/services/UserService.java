@@ -13,18 +13,21 @@ import org.springframework.web.multipart.MultipartFile;
 import tygri.pujcovna.dao.UserAndAuthorityDao;
 import tygri.pujcovna.model.AuthorityType;
 import tygri.pujcovna.model.User;
+import tygri.pujcovna.other.Constants;
 
 @Service
 public class UserService implements UserDetailsService {
 
     private final UserAndAuthorityDao userAndAuthorityDao;
+    private final Constants constants;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserAndAuthorityDao userRepository) {
+    public UserService(UserAndAuthorityDao userRepository, Constants constants) {
         this.userAndAuthorityDao = userRepository;
+        this.constants = constants;
     }
 
     @Transactional
@@ -39,8 +42,33 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public List<User> getAllUsers() {
-        return userAndAuthorityDao.getAll();
+    public String getAllUsersPreviews() {
+        return getUsersPreviews(userAndAuthorityDao.getAll());
+    }
+
+    @Transactional
+    public String getUsersPreviews(List<User> users) {
+        StringBuilder sb = new StringBuilder(10000);
+        for (Object obj : users) {
+            String previewString = constants.getUserPreview();
+            User user = (User) obj;
+            Byte[] carPhoto = user.getPhoto();
+            String photoData = "";
+            if (carPhoto != null) {
+                byte[] photobytes = new byte[carPhoto.length];
+                int i = 0;
+                for (Byte b : carPhoto) {
+                    photobytes[i++] = b;
+                }
+                photoData = Base64.getEncoder().encodeToString(photobytes);
+            }
+            previewString = previewString.replaceAll(";userProfileLink;", "adminProfileView?id=" + user.getId());
+            previewString = previewString.replaceFirst(";userName;", user.getUsername());
+            previewString = previewString.replaceFirst(";userType;", user.getAuthorities().iterator().next().toString());
+            previewString = previewString.replaceFirst(";userPhotoData;", photoData);
+            sb.append(previewString);
+        }
+        return sb.toString();
     }
 
     @Transactional
@@ -107,5 +135,14 @@ public class UserService implements UserDetailsService {
         }
         String photoData = Base64.getEncoder().encodeToString(photobytes);
         return "</p><img src=\"data:image/png;base64," + photoData + "\" alt=\"Profilove foto\" height=\"100\" width=\"100\"/>";
+    }
+
+    @Transactional
+    public User loadUserById(String id) {
+        try {
+            return userAndAuthorityDao.getUserById(Integer.valueOf(id));
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 }

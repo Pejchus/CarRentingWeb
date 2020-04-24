@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 public class Constants {
 
     private String carPreview;
+    private String userPreview;
 
     public Constants() {
         try {
@@ -50,10 +51,28 @@ public class Constants {
                     + "";
             System.out.println("Couldnt load carPreview.jsp");
         }
+        try {
+            userPreview = String.join("", Files.readAllLines(Paths.get(new File("").getAbsolutePath() + "\\src\\main\\webapp\\components\\userPreview.jsp"))); //doesnt work on heroku probably
+        } catch (IOException e) {
+            userPreview = "<div class=\"user-container\" >\n"
+                    + "    <a href=\";userProfileLink;\">\n"
+                    + "        <h3>;userName;</h3>\n"
+                    + "        <h2>;userType;</h2>\n"
+                    + "        <div class=\"userimage\">\n"
+                    + "            <img src=\"data:image/png;base64,;userPhotoData;\" alt=\"Foto uzivatele\" height=\"100\" width=\"100\"/>;\n"
+                    + "        </div>\n"
+                    + "    </a>\n"
+                    + "</div>";
+            System.out.println("Couldnt load userPreview.jsp");
+        }
     }
 
     public String getCarPreview() {
         return carPreview;
+    }
+
+    public String getUserPreview() {
+        return userPreview;
     }
 
 }

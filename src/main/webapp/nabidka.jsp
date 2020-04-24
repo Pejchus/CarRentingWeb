@@ -105,7 +105,7 @@
                 <h2 class="nabidka-nadpis">Nabidka vozidel:</h2>
                 <div ng-model="carsHtml" id="carsHtml">
                     <div class="row">
-                        <p>${offers}</p>
+                        ${offers}
                     </div>
                 </div>
             </div>

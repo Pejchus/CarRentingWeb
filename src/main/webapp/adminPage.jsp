@@ -44,9 +44,9 @@
         <main class="main">
 
             <div class="container main_description">
-                <h1>Users V databazi</h1>
-                <p>${userData}</p>
                 <security:authorize access="hasAnyRole('ROLE_ADMIN')">
+                    <h1>Users V databazi</h1>
+                    ${userData}
                     <h3>Add User</h3>
                     <form action="doAddUser">
                         <label>Username(string): </label><input type="text" name="username" required><br>
