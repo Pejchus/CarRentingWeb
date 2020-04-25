@@ -1,9 +1,13 @@
 package tygri.pujcovna.services;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tygri.pujcovna.dao.CarDao;
@@ -42,13 +46,20 @@ public class CarorderService {
         if ("vsechny".equals(carcompany)) {
             carcompany = "";
         }
-        if (!"".equals(tripstart)) {
-            startDate = new Date(tripstart);
+        try {
+            if (!"".equals(tripstart)) {
+                DateFormat format = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
+                startDate = format.parse(tripstart);
+            }
+            if (!"".equals(tripend)) {
+                DateFormat format = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
+                endDate = format.parse(tripend);
+            }
+        } catch (ParseException e) {
+            startDate = null;
+            endDate = null;
+            System.out.println("couldnt parse start/end date, showing all");
         }
-        if (!"".equals(tripend)) {
-            endDate = new Date(tripend);
-        }
-
         List<Car> filteredCars = carDao.getFilteredCars(modelsearch, carcompany, lowPrice, highPrice);
         List<Car> freeCars = new ArrayList<>();
         for (Car car : filteredCars) {

@@ -39,16 +39,16 @@
                             <div class="filter-inside">
                                 <select name="carcompany" id="cars">
                                     <option value="vsechny">Vsechny</option>
-                                    <option value="volvo">Volvo</option>
-                                    <option value="saab">Saab</option>
-                                    <option value="opel">Opel</option>
-                                    <option value="audi">Audi</option>
+                                    <option value="Volvo">Volvo</option>
+                                    <option value="Saab">Saab</option>
+                                    <option value="Opel">Opel</option>
+                                    <option value="Audi">Audi</option>
                                     <option value="BMW">BMW</option>
-                                    <option value="skoda">Skoda</option>
-                                    <option value="jaguar">Jaguar</option>
-                                    <option value="citroen">Citroen</option>
-                                    <option value="vw">Volkswagen</option>
-                                    <option value="hyundai">Hyundai</option>
+                                    <option value="Skoda">Skoda</option>
+                                    <option value="Jaguar">Jaguar</option>
+                                    <option value="Citroen">Citroen</option>
+                                    <option value="Vw">Volkswagen</option>
+                                    <option value="Hyundai">Hyundai</option>
                                 </select>
                             </div>
                             <label for="start">Zacatek pujcky:</label>
