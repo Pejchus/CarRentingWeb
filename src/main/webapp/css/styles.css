@@ -71,6 +71,7 @@
 form{
     flex-direction: column;
     align-items: center;
+    margin-bottom: 15px;
 }
 .filter-inside{
     width: 30em;
@@ -82,28 +83,56 @@ form{
     flex-direction: row;
     flex-wrap: wrap;
 }
-.filter-auto-container{
-    height:10em;
-    width: 15em;
-    margin:  0 1em 0 1em ;
-    align-content: center;
-    border-style: solid;
-    border-radius: 15px;
-}
-.filter-auto-container >  img{
-    margin: 2px auto auto;
-    display: block;
-}
+
 .break{
     width: 100%;
     height: 2.5em;
 }
-.second-row-filter-auto-container{
-    margin: 0 2em 0 4em ;
+.radio{
+    display: flex;
+    flex-direction: row;
+    margin:30px 0 5px 0;
+    max-width: 80%;
 }
-.sedan {
-    width: 16em;
+
+[type=radio] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
 }
+
+/* IMAGE STYLES */
+[type=radio] + img {
+    cursor: pointer;
+    width: 80%;
+    border-style: solid;
+    border-radius: 15px;
+}
+
+/* CHECKED STYLES */
+[type=radio]:checked + img {
+    /*outline: 2px solid orangered;*/
+    box-shadow: 0 0 3px orangered;
+}
+.filter-auto-container{
+    height:5em;
+    width: 8em;
+    margin:  0 0em 0 0em ;
+    align-content: center;
+    border-radius: 15px;
+    text-align: center;
+
+}
+.filter-auto-container >  img{
+    margin: 2px auto auto;
+    max-width: 100%;
+    max-height: 100%;
+    display: block; /* remove extra space below image */
+
+}
+
+
 /* NABIDKA */
 .nabidka-nadpis{
     text-align: center;
