@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 import tygri.pujcovna.model.Authority;
@@ -26,6 +27,36 @@ public class UserAndAuthorityDao extends BaseDao /*implements UserRepository*/ {
             return null;
         }
     }
+
+    public boolean uniqueEmail(String email){
+        try {
+            TypedQuery<User> query = em.createQuery("FROM User u where u.email=:email", User.class);
+            query.setParameter("email", email);
+            List results = query.getResultList();
+            if (results.isEmpty()) {
+                return true;
+            }
+        }catch (Exception e){
+            return false;
+        }
+           return false;
+
+    }
+
+    public boolean uniquePhone(String phone){
+        try {
+            TypedQuery<User> query = em.createQuery("FROM User u where u.phone=:phone", User.class);
+            query.setParameter("phone", phone);
+            List results = query.getResultList();
+            if (results.isEmpty()) return true;
+        } catch (Exception e){
+            return false;
+        }
+            return false;
+
+    }
+
+
 
     public boolean create(String username, String password, String email, boolean booleanEnabled, String phone, String countryCode, String firstname, String lastname, String city, String street, String streetNo, AuthorityType AUTHORITYTYPE) {
         try {
