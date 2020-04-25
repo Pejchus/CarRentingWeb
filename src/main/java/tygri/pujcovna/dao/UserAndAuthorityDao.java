@@ -28,7 +28,7 @@ public class UserAndAuthorityDao extends BaseDao /*implements UserRepository*/ {
         }
     }
 
-    public boolean uniqueEmail(String email){
+    public boolean uniqueEmail(String email) {
         try {
             TypedQuery<User> query = em.createQuery("FROM User u where u.email=:email", User.class);
             query.setParameter("email", email);
@@ -36,27 +36,27 @@ public class UserAndAuthorityDao extends BaseDao /*implements UserRepository*/ {
             if (results.isEmpty()) {
                 return true;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
-           return false;
+        return false;
 
     }
 
-    public boolean uniquePhone(String phone){
+    public boolean uniquePhone(String phone) {
         try {
             TypedQuery<User> query = em.createQuery("FROM User u where u.phone=:phone", User.class);
             query.setParameter("phone", phone);
             List results = query.getResultList();
-            if (results.isEmpty()) return true;
-        } catch (Exception e){
+            if (results.isEmpty()) {
+                return true;
+            }
+        } catch (Exception e) {
             return false;
         }
-            return false;
+        return false;
 
     }
-
-
 
     public boolean create(String username, String password, String email, boolean booleanEnabled, String phone, String countryCode, String firstname, String lastname, String city, String street, String streetNo, AuthorityType AUTHORITYTYPE) {
         try {

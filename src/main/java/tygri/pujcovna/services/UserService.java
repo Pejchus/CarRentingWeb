@@ -74,23 +74,22 @@ public class UserService implements UserDetailsService {
         return sb.toString();
     }
 
-   /* @Transactional
+    /* @Transactional
     public boolean isUniqueUsername(String username) {
         User user = userAndAuthorityDao.getUserByUsername(username);
         return user == null;
     }*/
-
     @Transactional
 
-    public String isOK(String username, String email,  String phone, String countryCode, String firstname, String lastname, String city, String street, String streetNo){
+    public String isOK(String username, String email, String phone, String countryCode, String firstname, String lastname, String city, String street, String streetNo) {
         Pattern pattern = Pattern.compile("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}");
         Matcher mat = pattern.matcher(email);
-        if(!mat.matches()){
+        if (!mat.matches()) {
             return "Invalid email";
         }
-        pattern=Pattern.compile("[0-9]{9}");
-        mat=pattern.matcher(phone);
-        if (!mat.matches()){
+        pattern = Pattern.compile("[0-9]{9}");
+        mat = pattern.matcher(phone);
+        if (!mat.matches()) {
             return "Invalid phone";
         }
         return null;
@@ -98,19 +97,17 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public String isUnique(String username, String email, String phone) {
-        if(userAndAuthorityDao.getUserByUsername(username)!=null){
-        return "<p>Username obsazeno</p>";
+        if (userAndAuthorityDao.getUserByUsername(username) != null) {
+            return "<p>Username obsazeno</p>";
         }
-        if(!userAndAuthorityDao.uniqueEmail(email)){
+        if (!userAndAuthorityDao.uniqueEmail(email)) {
             return "<p>Email již registrován</p>";
         }
-        if(!userAndAuthorityDao.uniquePhone(phone)){
+        if (!userAndAuthorityDao.uniquePhone(phone)) {
             return "<p>Telefon již registrován</p>";
         }
         return null;
     }
-
-
 
     @Transactional
     public boolean createUser(String username, String password, String email, String enabled, String phone, String countryCode, String firstname, String lastname, String city, String street, String streetNo, String authority) {
