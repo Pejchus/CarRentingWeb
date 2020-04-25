@@ -24,14 +24,10 @@
     <div class="container main_description">
         <div class="filter">
             <div class="horni-filter">
-                <!-- formular -->
-                <!--<link rel="stylesheet" href="https://demos.jquerymobile.com/1.4.2/css/themes/default/jquery.mobile-1.4.2.min.css"> -->
-                <script src="https://demos.jquerymobile.com/1.4.2/js/jquery.js"></script>
 
 
-                <!-- CO TO JE? rozmrda to vzdycky vsechno ostatni, nechtej vedet jak dlouho mi trvalo nez jsem na to prisel xd!!!-->
 
-                <!--<script src="https://demos.jquerymobile.com/1.4.2/js/jquery.mobile-1.4.2.min.js"></script>-->
+
 
 
                 <form class="filter-form" action="filterOffers">
@@ -83,7 +79,7 @@
                         </div>
                         <div class="filter-auto-container">
                             <label>
-                                <input type="radio" id="kupe" name="type" value="KABRIOLET">
+                                <input type="radio" id="CABRIOLET" name="type" value="CABRIOLET">
                                 <img class="car-icon" src="css/images/cabrio_kupe.png">
                             </label>
                         </div>
@@ -109,19 +105,19 @@
                             </label>
                         </div>
 
-                        <div class="filter-auto-container second-row-filter-auto-container">
+                        <div class="filter-auto-container ">
                             <label>
                                 <input type="radio" id="PICKUP" name="type" value="PICKUP">
                                 <img class="car-icon" src="css/images/pickup.png">
                             </label>
                         </div>
-                        <div class="filter-auto-container second-row-filter-auto-container sedan">
+                        <div class="filter-auto-container ">
                             <label>
                                 <input type="radio" id="SEDAN" name="type" value="SEDAN">
                                 <img class="car-icon" src="css/images/sedan.png">
                             </label>
                         </div>
-                        <div class="filter-auto-container second-row-filter-auto-container">
+                        <div class="filter-auto-container ">
                             <label>
                                 <input type="radio" id="SUV" name="type" value="SUV">
                                 <img class="car-icon" src="css/images/SUV.png">
@@ -133,8 +129,8 @@
             </div>
         </div>
         <h2 class="nabidka-nadpis">Nabidka vozidel:</h2>
-        <div ng-model="carsHtml" id="carsHtml">
-            <div class="row">
+        <div class="nabidka-container">
+            <div class="nabidka-row">
                 ${offers}
             </div>
         </div>
@@ -176,8 +172,6 @@
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
 
-<%--  SCRIPTY NA FORMULAR--%>
-<%--    <script src="https://demos.jquerymobile.com/1.4.2/js/jquery.js"></script>--%>
-<%--    <script src="https://demos.jquerymobile.com/1.4.2/js/jquery.mobile-1.4.2.min.js"></script>--%>
+
 </body>
 </html>
