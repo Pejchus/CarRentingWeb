@@ -93,4 +93,8 @@ public class CarorderService {
         return carOrderDao.getUserOrderHistory(user);
     }
 
+    public Object getAllOrders(Car car) {
+        return carOrderDao.getCarOrderHistory(car);
+    }
+
 }

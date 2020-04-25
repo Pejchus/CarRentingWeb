@@ -38,7 +38,7 @@ public class CarorderDao extends BaseDao {
 
     public List<Carorder> getCarOrderHistory(Car c) {
         try {
-            return em.createQuery("SELECT e FROM Carorder e where e.car=:car and e.paid=true").setParameter("car", c).getResultList();
+            return em.createQuery("SELECT e FROM Carorder e where e.car=:car").setParameter("car", c).getResultList();
         } catch (Exception e) {
             return null;
         }

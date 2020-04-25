@@ -57,10 +57,10 @@ public class LoginController {
 //            mv.addObject("registerMessage", "<p>Username obsazeno</p>");
 //        }
         String message;
-        if(((message=userService.isOK(username, email, phone, countryCode, firstname, lastname, city, street, streetNo))!=null)||(message=userService.isUnique(username, email, phone))!=null){
+        if (((message = userService.isOK(username, email, phone, countryCode, firstname, lastname, city, street, streetNo)) != null) || (message = userService.isUnique(username, email, phone)) != null) {
             mv = new ModelAndView("/signup.jsp");
             mv.addObject("registerMessage", message);
-        }else if (userService.createUser(username, password, email, "true", phone, countryCode, firstname, lastname, city, street, streetNo, "CUSTOMER")) {
+        } else if (userService.createUser(username, password, email, "true", phone, countryCode, firstname, lastname, city, street, streetNo, "CUSTOMER")) {
             mv = new ModelAndView("/login.jsp");
             mv.addObject("errorMsg", "Vas ucet byl vytvoren, muzete se prihlasit");
         } else {
@@ -98,9 +98,7 @@ public class LoginController {
         session.setAttribute("city", loggedInUser.getCity());
         session.setAttribute("street", loggedInUser.getStreet());
         session.setAttribute("streetno", loggedInUser.getStreetno());
-
         session.setAttribute("UserStatus", loggedInUser.getUserAuthorities().iterator().next());
-
         return mv;
     }
 

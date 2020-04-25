@@ -113,6 +113,6 @@ public class Carorder implements Serializable {
 
     @Override
     public String toString() {
-        return "Carorder{" + "id=" + id + ", account=" + account + ", car=" + car + ", begindate=" + begindate + ", enddate=" + enddate + ", createDate=" + createDate + ", price=" + price + ", paid=" + paid + '}';
+        return "Objednavka cislo " + id + ": objednavatel: " + account.getUsername() + ", auto: [" + car.getId() + "," + car.getBrand() + "," + car.getModel() + "], od " + begindate + " do " + enddate + ", price: " + price + ", zaplaceno: " + paid + ", vytvoreno: " + createDate;
     }
 }

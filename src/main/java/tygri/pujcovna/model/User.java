@@ -68,7 +68,7 @@ public class User implements Serializable, UserDetails {
     @Lob
     private Byte[] photo;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Carorder> orders;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -104,6 +104,7 @@ public class User implements Serializable, UserDetails {
         return id;
     }
 
+    @Override
     public boolean isEnabled() {
         return enabled;
     }
@@ -112,6 +113,7 @@ public class User implements Serializable, UserDetails {
         this.enabled = enabled;
     }
 
+    @Override
     public String getUsername() {
         return username;
     }
@@ -120,6 +122,7 @@ public class User implements Serializable, UserDetails {
         this.username = username;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }

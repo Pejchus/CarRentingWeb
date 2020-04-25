@@ -41,11 +41,11 @@ public class Authority implements Serializable {
     @Override
     public String toString() {
         if (name == AuthorityType.ROLE_ADMIN) {
-            return "Admin";
+            return "Administrator";
         } else if (name == AuthorityType.ROLE_EMPLOYEE) {
-            return "Employee";
+            return "Zamestnanec";
         } else {
-            return "Customer";
+            return "Zakaznik";
         }
     }
 }

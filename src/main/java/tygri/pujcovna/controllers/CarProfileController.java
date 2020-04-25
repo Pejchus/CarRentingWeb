@@ -12,15 +12,18 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import tygri.pujcovna.model.Car;
 import tygri.pujcovna.services.CarService;
+import tygri.pujcovna.services.CarorderService;
 
 @Controller
 public class CarProfileController implements ErrorController {
 
     private final CarService carService;
+    private final CarorderService carorderService;
 
     @Autowired
-    public CarProfileController(CarService carService) {
+    public CarProfileController(CarService carService, CarorderService carorderService) {
         this.carService = carService;
+        this.carorderService = carorderService;
     }
 
     @RequestMapping(value = "/carProfile", method = RequestMethod.GET)
@@ -38,6 +41,7 @@ public class CarProfileController implements ErrorController {
         mv.addObject("description", car.getDescription());
         mv.addObject("carId", id);
         if (session.getAttribute("UserStatus") != null && session.getAttribute("UserStatus") != "Customer") {
+            mv.addObject("orders", carorderService.getAllOrders(car));
             mv.addObject("disabled", "");
         } else {
             mv.addObject("disabled", "hidden");
@@ -64,6 +68,7 @@ public class CarProfileController implements ErrorController {
         mv.addObject("power", car.getPower());
         mv.addObject("baseprice", car.getBaseprice());
         mv.addObject("description", car.getDescription());
+        mv.addObject("orders", carorderService.getAllOrders(car));
         mv.addObject("disabled", "");
         return mv;
     }

@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import tygri.pujcovna.services.CarorderService;
 
 @Controller
-public class OrderController {
+public class CarorderController {
 
     @Autowired
     private CarorderService orderService;

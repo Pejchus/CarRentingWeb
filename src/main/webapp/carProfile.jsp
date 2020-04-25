@@ -66,6 +66,10 @@
                             <input type="submit" value="Vybrat foto"><br>
                         </form>  
                         ${carProfilePhotoChangeMsg}
+
+                        <td>Objednavky kde figuruje toto auto</td>
+                        <br>
+                        <td>${orders}</td>
                     </fieldset>
                 </div>
             </div>
