@@ -6,11 +6,11 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import tygri.pujcovna.dao.CarorderDao;
 import tygri.pujcovna.model.AuthorityType;
 import tygri.pujcovna.model.Car;
 import tygri.pujcovna.model.User;
 import tygri.pujcovna.services.CarService;
-import tygri.pujcovna.services.CarorderService;
 import tygri.pujcovna.services.UserService;
 
 @SpringBootApplication
@@ -21,12 +21,12 @@ public class Main {
     }
 
     @Bean
-    ApplicationRunner init(UserService userService, CarService carService, CarorderService carorderService) {
-        return (ApplicationArguments args) -> dataSetup(userService, carService, carorderService);
+    ApplicationRunner init(UserService userService, CarService carService, CarorderDao carorderDao) {
+        return (ApplicationArguments args) -> dataSetup(userService, carService, carorderDao);
     }
 
     //init db on launch, works only when db is empty
-    public void dataSetup(UserService userService, CarService carService, CarorderService carorderService) {
+    public void dataSetup(UserService userService, CarService carService, CarorderDao carorderDao) {
         userService.createAuthority(AuthorityType.ROLE_ADMIN);
         userService.createAuthority(AuthorityType.ROLE_CUSTOMER);
         userService.createAuthority(AuthorityType.ROLE_EMPLOYEE);
@@ -38,6 +38,6 @@ public class Main {
         carService.createCar("nakejSaab", "Saab", "2000", "green", "2000", "2012", "425", "yes", "5", "6.5", "docela ujde", null, "CABRIOLET");
         Car car = carService.getACar();
         User user = userService.loadUserByUsername("zakaznik");
-        carorderService.createOrder(user, car, new Timestamp(System.currentTimeMillis() + 86400000), new Timestamp(System.currentTimeMillis() + 86400000 * 8));
+        carorderDao.createCarorder(user, new Timestamp(System.currentTimeMillis() + 86400000), new Timestamp(System.currentTimeMillis() + 86400000 * 8), car, car.getBaseprice(), true);
     }
 }

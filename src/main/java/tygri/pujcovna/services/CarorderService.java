@@ -85,8 +85,18 @@ public class CarorderService {
         return false;
     }
 
-    public boolean createOrder(User user, Car car, Timestamp begin, Timestamp end) {
-        return carOrderDao.createCarorder(user, begin, end, car, car.getBaseprice(), true);
+    public boolean createOrder(User user, Car car, String begin, String end) {
+        try {
+            Timestamp beginDate = Timestamp.valueOf(begin + " 00:00:00");
+            Timestamp endDate = Timestamp.valueOf(end + " 00:00:00");
+            if (isFree(car, beginDate, endDate)) {
+                return carOrderDao.createCarorder(user, beginDate, endDate, car, car.getBaseprice(), true);
+            } else {
+                return false;
+            }
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
     }
 
     public List<Carorder> getAllOrders(User user) {

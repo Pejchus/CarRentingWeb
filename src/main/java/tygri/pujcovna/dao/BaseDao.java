@@ -1,12 +1,12 @@
 package tygri.pujcovna.dao;
 
-import org.springframework.transaction.annotation.Transactional;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
+import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 public abstract class BaseDao<T> {

@@ -1,9 +1,9 @@
 package tygri.pujcovna.dao;
 
-import tygri.pujcovna.model.Car;
 import java.util.List;
 import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
+import tygri.pujcovna.model.Car;
 import tygri.pujcovna.model.CarCategory;
 
 @Repository

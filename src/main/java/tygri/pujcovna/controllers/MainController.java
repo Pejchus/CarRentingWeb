@@ -24,12 +24,6 @@ public class MainController implements ErrorController {
     @RequestMapping("/")
     public ModelAndView index(HttpSession session) {
         ModelAndView mv = new ModelAndView("/index.jsp");
-        mv.addObject("LoggedUser", session.getAttribute("userName"));
-        if (session.getAttribute("UserStatus") == null) {
-            mv.addObject("UserStatus", "Not logged in");
-        } else {
-            mv.addObject("UserStatus", "Logged in as: " + session.getAttribute("UserStatus"));
-        }
         return mv;
     }
 

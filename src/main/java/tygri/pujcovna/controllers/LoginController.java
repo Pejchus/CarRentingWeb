@@ -98,7 +98,7 @@ public class LoginController {
         session.setAttribute("city", loggedInUser.getCity());
         session.setAttribute("street", loggedInUser.getStreet());
         session.setAttribute("streetno", loggedInUser.getStreetno());
-        session.setAttribute("UserStatus", loggedInUser.getUserAuthorities().iterator().next());
+        session.setAttribute("UserStatus", loggedInUser.getUserAuthorities().iterator().next().getName());
         return mv;
     }
 

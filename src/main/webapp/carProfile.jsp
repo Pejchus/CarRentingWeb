@@ -59,6 +59,20 @@
                     <div class="car_description">
                         ${description}
                     </div>
+                    <form action="makeOrder">
+                        <label for="start">Zacatek pujcky:</label>
+                        <div class="filter-inside">
+                            <input type="date" id="start" name="tripstart" value="" min="2020-01-01" max="2021-12-31">
+                        </div>
+                        <label for="end">Konec pujcky:</label>
+                        <div class="filter-inside">
+                            <input type="date" id="end" name="tripend" value="" min="2020-01-01" max="2021-12-31">
+                        </div>   
+                        <input type="hidden" name="carId" value="${carId}">
+                        <input type="submit" value="objednat na zvolene datum"> 
+                    </form>
+                    ${createOrderMsg}
+
                     <fieldset ${disabled}>
                         <form method="POST" enctype="multipart/form-data" action="setCarProfilePhoto">
                             <label>Zmenit fotku auta: </label><input type="file" name="photo" required><br>

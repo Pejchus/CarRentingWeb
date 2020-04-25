@@ -25,7 +25,6 @@ public class CarorderController {
         ModelAndView mv = new ModelAndView("/nabidka.jsp");
         String offers = orderService.getOffers(modelsearch, carcompany, tripstart, tripend, range1a, range1b, type);
         mv.addObject("offers", offers);
-        mv.addObject("LoggedUser", session.getAttribute("userName"));
         return mv;
     }
 }
