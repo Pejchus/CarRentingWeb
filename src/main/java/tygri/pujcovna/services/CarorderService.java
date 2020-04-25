@@ -41,24 +41,16 @@ public class CarorderService {
         } else {
             highPrice = Double.valueOf(range1b);
         }
-        Date startDate = null;
-        Date endDate = null;
+        Timestamp startDate = null;
+        Timestamp endDate = null;
         if ("vsechny".equals(carcompany)) {
             carcompany = "";
         }
-        try {
-            if (!"".equals(tripstart)) {
-                DateFormat format = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
-                startDate = format.parse(tripstart);
-            }
-            if (!"".equals(tripend)) {
-                DateFormat format = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
-                endDate = format.parse(tripend);
-            }
-        } catch (ParseException e) {
-            startDate = null;
-            endDate = null;
-            System.out.println("couldnt parse start/end date, showing all");
+        if (!"".equals(tripstart)) {
+            startDate = Timestamp.valueOf(tripstart + " 00:00:00");
+        }
+        if (!"".equals(tripend)) {
+            endDate = Timestamp.valueOf(tripend + " 00:00:00");
         }
         List<Car> filteredCars = carDao.getFilteredCars(modelsearch, carcompany, lowPrice, highPrice);
         List<Car> freeCars = new ArrayList<>();
@@ -70,19 +62,19 @@ public class CarorderService {
         return carService.getCarsPreviews(freeCars);
     }
 
-    private boolean isFree(Car car, Date startDate, Date endDate) {
+    private boolean isFree(Car car, Timestamp startDate, Timestamp endDate) {
         if (startDate == null && endDate == null) {
             return true;
         } else if (startDate == null) {
-            if (carOrderDao.getReservationsUpTo(car, endDate) == null) {
+            if (carOrderDao.getReservationsUpTo(car, endDate).isEmpty()) {
                 return true;
             }
         } else if (endDate == null) {
-            if (carOrderDao.getReservationsFrom(car, startDate) == null) {
+            if (carOrderDao.getReservationsFrom(car, startDate).isEmpty()) {
                 return true;
             }
         } else {
-            if (carOrderDao.getReservations(car, startDate, endDate) == null) {
+            if (carOrderDao.getReservations(car, startDate, endDate).isEmpty()) {
                 return true;
             }
         }
