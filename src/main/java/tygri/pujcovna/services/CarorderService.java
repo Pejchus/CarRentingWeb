@@ -1,18 +1,14 @@
 package tygri.pujcovna.services;
 
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tygri.pujcovna.dao.CarDao;
 import tygri.pujcovna.dao.CarorderDao;
 import tygri.pujcovna.model.Car;
+import tygri.pujcovna.model.CarCategory;
 import tygri.pujcovna.model.Carorder;
 import tygri.pujcovna.model.User;
 
@@ -28,7 +24,7 @@ public class CarorderService {
     @Autowired
     private CarDao carDao;
 
-    public String getOffers(String modelsearch, String carcompany, String tripstart, String tripend, String range1a, String range1b) {
+    public String getOffers(String modelsearch, String carcompany, String tripstart, String tripend, String range1a, String range1b, String type) {
         Double lowPrice;
         Double highPrice;
         if ("".equals(range1a)) {
@@ -52,7 +48,15 @@ public class CarorderService {
         if (!"".equals(tripend)) {
             endDate = Timestamp.valueOf(tripend + " 00:00:00");
         }
-        List<Car> filteredCars = carDao.getFilteredCars(modelsearch, carcompany, lowPrice, highPrice);
+        if ("all".equals(type)) {
+            type = "";
+        }
+        List<Car> filteredCars;
+        if (!"".equals(type)) {
+            filteredCars = carDao.getFilteredCars(modelsearch, carcompany, lowPrice, highPrice, CarCategory.valueOf(type));
+        } else {
+            filteredCars = carDao.getFilteredCars(modelsearch, carcompany, lowPrice, highPrice);
+        }
         List<Car> freeCars = new ArrayList<>();
         for (Car car : filteredCars) {
             if (isFree(car, startDate, endDate)) {

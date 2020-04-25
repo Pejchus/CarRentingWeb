@@ -1,7 +1,6 @@
 package tygri.pujcovna.dao;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 import org.springframework.stereotype.Repository;
 import tygri.pujcovna.model.Car;
