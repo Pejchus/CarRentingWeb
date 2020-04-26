@@ -57,6 +57,7 @@ public class Car implements Serializable {
     //edited by fantomas
 
     //sry za upravu
+    /*
     @Basic(optional = false)
     @Column(nullable = false)
     private String transmisson;
@@ -83,7 +84,7 @@ public class Car implements Serializable {
 
     @Basic(optional = false)
     @Column(nullable = false)
-    private String fuel;
+    private String fuel;*/
 
     @Basic(optional = false)
     @Column(nullable = false)
