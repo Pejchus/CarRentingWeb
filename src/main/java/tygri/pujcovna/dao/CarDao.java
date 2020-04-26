@@ -15,9 +15,9 @@ public class CarDao extends BaseDao {
         super(Car.class);
     }
 
-    public boolean CreateCar(String model, String brand, double baseprice, String color, double power, int productionyear, double trunkvolume, boolean foldingrearseats, int seats, double consumption, TransmissionType transimissionType, EngineType engineType, String description, Byte[] photo, CarCategory carCategory) {
+    public boolean CreateCar(String model, String brand, double baseprice, String color, double power, int productionyear, double trunkvolume, boolean enabled, int seats, double consumption, TransmissionType transimissionType, EngineType engineType, String description, Byte[] photo, CarCategory carCategory) {
         try {
-            Car car = new Car(model, brand, baseprice, color, power, productionyear, trunkvolume, foldingrearseats, seats, consumption, transimissionType, engineType, description, photo, carCategory);
+            Car car = new Car(model, brand, baseprice, color, power, productionyear, trunkvolume, enabled, seats, consumption, transimissionType, engineType, description, photo, carCategory);
             persist(car);
         } catch (Exception e) {
             return false;
@@ -25,9 +25,9 @@ public class CarDao extends BaseDao {
         return true;
     }
 
-    public boolean CreateCar(String model, String brand, double baseprice, String color, double power, int productionyear, double trunkvolume, boolean foldingrearseats, int seats, double consumption, TransmissionType transimissionType, EngineType engineType, String description, CarCategory carCategory) {
+    public boolean CreateCar(String model, String brand, double baseprice, String color, double power, int productionyear, double trunkvolume, boolean enabled, int seats, double consumption, TransmissionType transimissionType, EngineType engineType, String description, CarCategory carCategory) {
         try {
-            Car car = new Car(model, brand, baseprice, color, power, productionyear, trunkvolume, foldingrearseats, seats, consumption, transimissionType, engineType, description, carCategory);
+            Car car = new Car(model, brand, baseprice, color, power, productionyear, trunkvolume, enabled, seats, consumption, transimissionType, engineType, description, carCategory);
             persist(car);
         } catch (Exception e) {
             return false;
@@ -80,6 +80,27 @@ public class CarDao extends BaseDao {
         car.setPhoto(photo);
         try {
             em.merge(car);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean removeCar(Car car) {
+        try {
+            car.getOrderss().clear();
+            super.remove(car);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean setEnabled(boolean b, Integer id) {
+        try {
+            Car car = getCarById(id);
+            car.setEnabled(b);
+            super.updateEntity(car);
             return true;
         } catch (Exception e) {
             return false;

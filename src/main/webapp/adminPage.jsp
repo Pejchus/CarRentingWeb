@@ -28,7 +28,6 @@
                         <label>Power(double): </label><input type="text" name="power" required><br>
                         <label>Productionyear(int): </label><input type="text" name="productionyear" required><br>
                         <label>Trunkvolume(double): </label><input type="text" name="trunkvolume" required><br>
-                        <label>Foldingrearseats(yes/no): </label><input type="text" name="foldingrearseats" required><br>
                         <label>Seats(int): </label><input type="text" name="seats" required><br>
                         <label>Consumption(double): </label><input type="text" name="consumption" required><br>
                         <label>Transmissiontype(AUTOMATIC/MANUAL): </label><input type="text" name="transmissiontype" required><br>

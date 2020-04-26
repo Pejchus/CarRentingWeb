@@ -115,9 +115,9 @@ public class Carorder implements Serializable {
 
     @Override
     public String toString() {
-        String ret = "Objednavka cislo " + id + ": objednavatel:";
+        String ret = "Objednavka cislo " + id + ": objednavatel: ";
         if (account == null) {
-            ret += " smazan";
+            ret += "smazan";
         } else {
             ret += account.getUsername();
         }
@@ -127,7 +127,7 @@ public class Carorder implements Serializable {
         } else {
             ret += car.getId() + "," + car.getBrand() + "," + car.getModel();
         }
-        ret += "], od" + begindate + " do " + enddate + ", price: " + price + ", zaplaceno: " + paid + ", vytvoreno: " + createDate;
+        ret += "], od " + begindate + " do " + enddate + ", price: " + price + ", zaplaceno: " + paid + ", vytvoreno: " + createDate;
         return ret;
     }
 }

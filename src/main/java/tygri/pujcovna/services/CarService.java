@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import tygri.pujcovna.dao.CarDao;
+import tygri.pujcovna.dao.CarorderDao;
 import tygri.pujcovna.model.Car;
 import tygri.pujcovna.model.CarCategory;
+import tygri.pujcovna.model.Carorder;
 import tygri.pujcovna.model.EngineType;
 import tygri.pujcovna.model.TransmissionType;
 import tygri.pujcovna.other.Constants;
@@ -20,11 +22,13 @@ public class CarService {
 
     private final CarDao carDao;
     private final Constants constants;
+    private final CarorderDao carorderDao;
 
     @Autowired
-    public CarService(CarDao carDao, Constants constants) {
+    public CarService(CarDao carDao, Constants constants, CarorderDao carorderDao) {
         this.carDao = carDao;
         this.constants = constants;
+        this.carorderDao = carorderDao;
     }
 
     //osklive, predelat jestli bude cas
@@ -66,26 +70,18 @@ public class CarService {
     }
 
     @Transactional
-    public boolean createCar(String model, String brand, String baseprice, String color, String power, String productionyear, String trunkvolume, String foldingrearseats, String seats, String consumption, String transimissionType, String engineType, String description, MultipartFile photo, String carCategory) {
+    public boolean createCar(String model, String brand, String baseprice, String color, String power, String productionyear, String trunkvolume, String seats, String consumption, String transimissionType, String engineType, String description, MultipartFile photo, String carCategory) {
         try {
-            boolean foldingseats;
-            if ("yes".equals(foldingrearseats)) {
-                foldingseats = true;
-            } else if ("no".equals(foldingrearseats)) {
-                foldingseats = false;
-            } else {
-                return false;
-            }
+            boolean enabled = true;
             if (photo != null) {
-
                 Byte[] photoCopy = new Byte[photo.getBytes().length];
                 int i = 0;
                 for (Byte b : photo.getBytes()) {
                     photoCopy[i++] = b;
                 }
-                return carDao.CreateCar(model, brand, Double.valueOf(baseprice), color, Double.valueOf(power), Integer.valueOf(productionyear), Double.valueOf(trunkvolume), foldingseats, Integer.valueOf(seats), Double.valueOf(consumption), TransmissionType.valueOf(transimissionType), EngineType.valueOf(engineType), description, photoCopy, CarCategory.valueOf(carCategory));
+                return carDao.CreateCar(model, brand, Double.valueOf(baseprice), color, Double.valueOf(power), Integer.valueOf(productionyear), Double.valueOf(trunkvolume), enabled, Integer.valueOf(seats), Double.valueOf(consumption), TransmissionType.valueOf(transimissionType), EngineType.valueOf(engineType), description, photoCopy, CarCategory.valueOf(carCategory));
             } else {
-                return carDao.CreateCar(model, brand, Double.valueOf(baseprice), color, Double.valueOf(power), Integer.valueOf(productionyear), Double.valueOf(trunkvolume), foldingseats, Integer.valueOf(seats), Double.valueOf(consumption), TransmissionType.valueOf(transimissionType), EngineType.valueOf(engineType), description, CarCategory.valueOf(carCategory));
+                return carDao.CreateCar(model, brand, Double.valueOf(baseprice), color, Double.valueOf(power), Integer.valueOf(productionyear), Double.valueOf(trunkvolume), enabled, Integer.valueOf(seats), Double.valueOf(consumption), TransmissionType.valueOf(transimissionType), EngineType.valueOf(engineType), description, CarCategory.valueOf(carCategory));
             }
         } catch (IOException | IllegalArgumentException e) {
             System.out.println("Velky spatny: ");
@@ -151,5 +147,21 @@ public class CarService {
 
     public Car getACar() {
         return (Car) carDao.getAll().get(0);
+    }
+
+    public boolean deleteCar(Car car) {
+        for (Carorder order : car.getOrderss()) {
+            carorderDao.setOrdersCar(order, null);
+        }
+        return carDao.removeCar(car);
+    }
+
+    public boolean enable(Car car) {
+        return carDao.setEnabled(true, car.getId());
+
+    }
+
+    public boolean disable(Car car) {
+        return carDao.setEnabled(false, car.getId());
     }
 }

@@ -52,6 +52,13 @@ public class CarProfileController {
         if (session.getAttribute("UserStatus") != null && session.getAttribute("UserStatus") != AuthorityType.ROLE_CUSTOMER) {
             mv.addObject("orders", carorderService.getAllOrders(car));
             mv.addObject("disabled", "");
+            if (car.isEnabled()) {
+                mv.addObject("disableEnableCar", "hidden");
+                mv.addObject("disableDisableCar", "");
+            } else {
+                mv.addObject("disableEnableCar", "");
+                mv.addObject("disableDisableCar", "hidden");
+            }
         } else {
             mv.addObject("disabled", "hidden");
         }
@@ -83,6 +90,13 @@ public class CarProfileController {
         Date date = new Date();
         mv.addObject("minDate", formatter.format(date));
         mv.addObject("disabled", "");
+        if (car.isEnabled()) {
+            mv.addObject("disableEnableCar", "hidden");
+            mv.addObject("disableDisableCar", "");
+        } else {
+            mv.addObject("disableEnableCar", "");
+            mv.addObject("disableDisableCar", "hidden");
+        }
         return mv;
     }
 
@@ -113,9 +127,109 @@ public class CarProfileController {
         if (session.getAttribute("UserStatus") != AuthorityType.ROLE_CUSTOMER) {
             mv.addObject("orders", carorderService.getAllOrders(car));
             mv.addObject("disabled", "");
+            if (car.isEnabled()) {
+                mv.addObject("disableEnableCar", "hidden");
+                mv.addObject("disableDisableCar", "");
+            } else {
+                mv.addObject("disableEnableCar", "");
+                mv.addObject("disableDisableCar", "hidden");
+            }
         } else {
             mv.addObject("disabled", "hidden");
         }
+        return mv;
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE','ROLE_ADMIN')")
+    @RequestMapping(value = "/enableCar", method = RequestMethod.GET)
+    public ModelAndView enableCar(HttpSession session, @RequestParam String id) {
+        ModelAndView mv = new ModelAndView("/carProfile.jsp");
+        Car car = carService.getCarById(id);
+        if (carService.enable(car)) {
+            mv.addObject("carEnabledMsg", "Auto bylo odblokovano");
+        } else {
+            mv.addObject("carEnabledMsg", "Auto bylo odblokovano");
+        }
+        mv.addObject("brand", car.getBrand());
+        mv.addObject("name", car.getModel());
+        mv.addObject("foto", carService.getPhoto(car));
+        mv.addObject("productionyear", car.getProductionyear());
+        mv.addObject("seats", car.getSeats());
+        mv.addObject("consumption", car.getConsumption());
+        mv.addObject("power", car.getPower());
+        mv.addObject("baseprice", car.getBaseprice());
+        mv.addObject("description", car.getDescription());
+        mv.addObject("carId", car.getId());
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        mv.addObject("minDate", formatter.format(date));
+        if (session.getAttribute("UserStatus") != null && session.getAttribute("UserStatus") != AuthorityType.ROLE_CUSTOMER) {
+            mv.addObject("orders", carorderService.getAllOrders(car));
+            mv.addObject("disabled", "");
+            if (car.isEnabled()) {
+                mv.addObject("disableEnableCar", "hidden");
+                mv.addObject("disableDisableCar", "");
+            } else {
+                mv.addObject("disableEnableCar", "");
+                mv.addObject("disableDisableCar", "hidden");
+            }
+        } else {
+            mv.addObject("disabled", "hidden");
+        }
+        return mv;
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE','ROLE_ADMIN')")
+    @RequestMapping(value = "/disableCar", method = RequestMethod.GET)
+    public ModelAndView disableCar(HttpSession session, @RequestParam String id) {
+        ModelAndView mv = new ModelAndView("/carProfile.jsp");
+        Car car = carService.getCarById(id);
+        if (carService.disable(car)) {
+            mv.addObject("carEnabledMsg", "Auto bylo zablokovano");
+        } else {
+            mv.addObject("carEnabledMsg", "Auto nebylo zablokovano");
+        }
+        mv.addObject("brand", car.getBrand());
+        mv.addObject("name", car.getModel());
+        mv.addObject("foto", carService.getPhoto(car));
+        mv.addObject("productionyear", car.getProductionyear());
+        mv.addObject("seats", car.getSeats());
+        mv.addObject("consumption", car.getConsumption());
+        mv.addObject("power", car.getPower());
+        mv.addObject("baseprice", car.getBaseprice());
+        mv.addObject("description", car.getDescription());
+        mv.addObject("carId", car.getId());
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        mv.addObject("minDate", formatter.format(date));
+        if (session.getAttribute("UserStatus") != null && session.getAttribute("UserStatus") != AuthorityType.ROLE_CUSTOMER) {
+            mv.addObject("orders", carorderService.getAllOrders(car));
+            mv.addObject("disabled", "");
+            if (car.isEnabled()) {
+                mv.addObject("disableEnableCar", "hidden");
+                mv.addObject("disableDisableCar", "");
+            } else {
+                mv.addObject("disableEnableCar", "");
+                mv.addObject("disableDisableCar", "hidden");
+            }
+        } else {
+            mv.addObject("disabled", "hidden");
+        }
+        return mv;
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE','ROLE_ADMIN')")
+    @RequestMapping(value = "/deleteCar", method = RequestMethod.GET)
+    public ModelAndView deleteCar(HttpSession session, @RequestParam String id) {
+        ModelAndView mv = new ModelAndView("adminPage.jsp");
+        Car car = carService.getCarById(id);
+        if (carService.deleteCar(car)) {
+            mv.addObject("userAddedMessage", "Auto bylo smazano");
+        } else {
+            mv.addObject("userAddedMessage", "Auto nebylo smazano");
+        }
+        mv.addObject("carData", carService.getAllCarsPreviews());
+        mv.addObject("userData", userService.getAllUsersPreviews());
         return mv;
     }
 }
