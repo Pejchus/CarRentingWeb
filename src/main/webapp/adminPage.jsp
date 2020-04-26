@@ -46,7 +46,7 @@
         <main class="main">
 
             <div class="container main_description">
-                <security:authorize access="hasAnyRole('ROLE_ADMIN')">
+                <security:authorize access="hasRole('ROLE_ADMIN')">
                     <h1>Users V databazi</h1>
                     ${userData}
                     <h3>Add User</h3>
@@ -65,7 +65,7 @@
                         <label>Authority(CUSTOMER/EMPLOYEE/ADMIN): </label><input type="text" name="authority" required><br>
                         <input type="submit"><br>
                     </form>
-                    ${userAddedMessage}
+                    ${userAddedMessage}                    
                 </security:authorize>
             </div>
 

@@ -133,4 +133,15 @@ public class CarorderDao extends BaseDao {
         }
     }
 
+    public boolean setOrdersUser(Carorder order, User user) {
+        try {
+            System.out.println("remove");
+            order.setAccount(user);
+            updateEntity(order);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }

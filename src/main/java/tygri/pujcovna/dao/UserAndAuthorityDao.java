@@ -144,4 +144,14 @@ public class UserAndAuthorityDao extends BaseDao /*implements UserRepository*/ {
         }
     }
 
+    public boolean removeUser(User user) {
+        try {
+            user.getOrders().clear();
+            super.remove(user);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }

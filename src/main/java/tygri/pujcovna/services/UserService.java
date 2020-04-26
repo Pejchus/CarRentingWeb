@@ -14,14 +14,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import tygri.pujcovna.dao.CarorderDao;
 import tygri.pujcovna.dao.UserAndAuthorityDao;
 import tygri.pujcovna.model.AuthorityType;
+import tygri.pujcovna.model.Carorder;
 import tygri.pujcovna.model.User;
 import tygri.pujcovna.other.Constants;
 
 @Service
 public class UserService implements UserDetailsService {
 
+    private final CarorderDao carorderDao;
     private final UserAndAuthorityDao userAndAuthorityDao;
     private final Constants constants;
 
@@ -29,9 +32,10 @@ public class UserService implements UserDetailsService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserAndAuthorityDao userRepository, Constants constants) {
+    public UserService(UserAndAuthorityDao userRepository, Constants constants, CarorderDao carorderDao) {
         this.userAndAuthorityDao = userRepository;
         this.constants = constants;
+        this.carorderDao = carorderDao;
     }
 
     @Transactional
@@ -192,6 +196,17 @@ public class UserService implements UserDetailsService {
     public boolean disable(HttpSession session, User user) {
         if (session.getAttribute("userId") != user.getId()) {
             return userAndAuthorityDao.setEnabled(false, user.getId());
+        } else {
+            return false;
+        }
+    }
+
+    public boolean deleteUser(HttpSession session, User user) {
+        if (session.getAttribute("userId") != user.getId()) {
+            for (Carorder order : user.getOrders()) {
+                carorderDao.setOrdersUser(order, null);
+            }
+            return userAndAuthorityDao.removeUser(user);
         } else {
             return false;
         }

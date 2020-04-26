@@ -59,6 +59,7 @@
                     <fieldset ${disableEnableUser}>
                         <a href="enableUser?id=${userId}">Odblokovat uzivatele</a>
                     </fieldset>
+                    <a href="deleteUser?id=${userId}">Smazat uzivatele (nezrusi jeho objednavky)</a>
                     ${userEnabledMsg}
                 </security:authorize>
             </div>

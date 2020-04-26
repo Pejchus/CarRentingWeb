@@ -90,6 +90,21 @@ public class ProfileController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RequestMapping(value = "/deleteUser", method = RequestMethod.GET)
+    public ModelAndView deleteUser(HttpSession session, @RequestParam String id) {
+        ModelAndView mv = new ModelAndView("adminPage.jsp");
+        User user = userService.loadUserById(id);
+        if (userService.deleteUser(session, user)) {
+            mv.addObject("userAddedMessage", "Uzivatel byl smazan");
+        } else {
+            mv.addObject("userAddedMessage", "Uzivatel nebyl smazan");
+        }
+        mv.addObject("carData", carService.getAllCarsPreviews());
+        mv.addObject("userData", userService.getAllUsersPreviews());
+        return mv;
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/disableUser", method = RequestMethod.GET)
     public ModelAndView disableUser(HttpSession session, @RequestParam String id) {
         ModelAndView mv = new ModelAndView("/profile.jsp");
@@ -210,7 +225,6 @@ public class ProfileController {
         ModelAndView mv = new ModelAndView("/adminPage.jsp");
         mv.addObject("carData", carService.getAllCarsPreviews());
         mv.addObject("userData", userService.getAllUsersPreviews());
-        mv.addObject("LoggedUser", session.getAttribute("userName"));
         return mv;
     }
 

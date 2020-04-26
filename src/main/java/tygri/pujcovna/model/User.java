@@ -68,7 +68,11 @@ public class User implements Serializable, UserDetails {
     @Lob
     private Byte[] photo;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.EAGER,
+            mappedBy = "account")
     private List<Carorder> orders;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

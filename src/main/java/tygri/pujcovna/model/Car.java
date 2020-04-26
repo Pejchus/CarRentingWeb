@@ -77,9 +77,11 @@ public class Car implements Serializable {
 
     @OneToMany(
             cascade = CascadeType.ALL,
-            orphanRemoval = true
+            orphanRemoval = true,
+            fetch = FetchType.EAGER,
+            mappedBy = "car"
     )
-    private List<Carorder> orders;
+    private List<Carorder> orderss;
 
     public Car() {
     }
@@ -247,16 +249,16 @@ public class Car implements Serializable {
         this.carCategory = carCategory;
     }
 
-    public List<Carorder> getOrders() {
-        return orders;
+    public List<Carorder> getOrderss() {
+        return orderss;
     }
 
-    public void setOrders(List<Carorder> orders) {
-        this.orders = orders;
+    public void setOrderss(List<Carorder> orderss) {
+        this.orderss = orderss;
     }
 
     @Override
     public String toString() {
-        return "Car{" + "id=" + id + ", model=" + model + ", brand=" + brand + ", baseprice=" + baseprice + ", color=" + color + ", power=" + power + ", productionyear=" + productionyear + ", trunkvolume=" + trunkvolume + ", foldingrearseats=" + foldingrearseats + ", seats=" + seats + ", consumption=" + consumption + ", transimissionType=" + transimissionType + ", engineType=" + engineType + ", description=" + description + ", photo=" + photo + ", carCategory=" + carCategory + ", orders=" + orders + '}';
+        return "Car{" + "id=" + id + ", model=" + model + ", brand=" + brand + ", baseprice=" + baseprice + ", color=" + color + ", power=" + power + ", productionyear=" + productionyear + ", trunkvolume=" + trunkvolume + ", foldingrearseats=" + foldingrearseats + ", seats=" + seats + ", consumption=" + consumption + ", transimissionType=" + transimissionType + ", engineType=" + engineType + ", description=" + description + ", photo=" + photo + ", carCategory=" + carCategory + ", orders=" + orderss + '}';
     }
 }

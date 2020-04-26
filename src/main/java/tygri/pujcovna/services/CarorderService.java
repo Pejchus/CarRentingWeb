@@ -106,7 +106,9 @@ public class CarorderService {
         return carOrderDao.getUserOrderHistory(user);
     }
 
-    public Object getAllOrders(Car car) {
+    public List<Carorder> getAllOrders(Car car) {
+        System.out.println("****");
+        System.out.println(carOrderDao.getCarOrderHistory(car));
         return carOrderDao.getCarOrderHistory(car);
     }
 

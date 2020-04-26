@@ -13,9 +13,11 @@ public class Carorder implements Serializable {
     private Integer id;
 
     @ManyToOne
+    @JoinColumn(name = "orders")
     private User account;
 
     @ManyToOne
+    @JoinColumn(name = "orderss")
     private Car car;
 
     @Basic(optional = false)
@@ -113,6 +115,19 @@ public class Carorder implements Serializable {
 
     @Override
     public String toString() {
-        return "Objednavka cislo " + id + ": objednavatel: " + account.getUsername() + ", auto: [" + car.getId() + "," + car.getBrand() + "," + car.getModel() + "], od " + begindate + " do " + enddate + ", price: " + price + ", zaplaceno: " + paid + ", vytvoreno: " + createDate;
+        String ret = "Objednavka cislo " + id + ": objednavatel:";
+        if (account == null) {
+            ret += " smazan";
+        } else {
+            ret += account.getUsername();
+        }
+        ret += ", auto: [";
+        if (car == null) {
+            ret += "smazano";
+        } else {
+            ret += car.getId() + "," + car.getBrand() + "," + car.getModel();
+        }
+        ret += "], od" + begindate + " do " + enddate + ", price: " + price + ", zaplaceno: " + paid + ", vytvoreno: " + createDate;
+        return ret;
     }
 }

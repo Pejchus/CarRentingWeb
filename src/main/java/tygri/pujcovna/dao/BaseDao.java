@@ -52,10 +52,14 @@ public abstract class BaseDao<T> {
 
     public void remove(T entity) {
         Objects.requireNonNull(entity);
+        System.out.println("removing " + entity);
         try {
             final T toRemove = em.merge(entity);
             if (toRemove != null) {
                 em.remove(toRemove);
+                System.out.println("removed " + entity);
+            } else {
+                System.out.println("not removed " + entity);
             }
         } catch (RuntimeException e) {
             throw new PersistenceException(e);
