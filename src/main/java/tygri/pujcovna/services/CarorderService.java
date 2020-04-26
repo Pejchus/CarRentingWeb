@@ -66,19 +66,22 @@ public class CarorderService {
         return carService.getCarsPreviews(freeCars);
     }
 
+    /*
+    Zatim Lze objednavat alespon 0 hodin dopredu    
+     */
     private boolean isFree(Car car, Timestamp startDate, Timestamp endDate) {
         if (startDate == null && endDate == null) {
             return true;
         } else if (startDate == null) {
-            if (carOrderDao.getReservationsUpTo(car, endDate).isEmpty()) {
+            if (endDate.after(new Timestamp(System.currentTimeMillis() - 86400000)) && carOrderDao.getReservationsUpTo(car, endDate).isEmpty()) {
                 return true;
             }
         } else if (endDate == null) {
-            if (carOrderDao.getReservationsFrom(car, startDate).isEmpty()) {
+            if (startDate.after(new Timestamp(System.currentTimeMillis() - 86400000)) && carOrderDao.getReservationsFrom(car, startDate).isEmpty()) {
                 return true;
             }
         } else {
-            if (carOrderDao.getReservations(car, startDate, endDate).isEmpty()) {
+            if (startDate.after(new Timestamp(System.currentTimeMillis() - 86400000)) && endDate.after(new Timestamp(System.currentTimeMillis() - 86400000)) && carOrderDao.getReservations(car, startDate, endDate).isEmpty()) {
                 return true;
             }
         }

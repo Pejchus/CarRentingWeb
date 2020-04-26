@@ -52,6 +52,15 @@
                     </form>
                     ${profilePhotoChangeMsg}
                 </fieldset>
+                <security:authorize access="hasRole('ROLE_ADMIN')">
+                    <fieldset ${disableDisableUser}>
+                        <a href="disableUser?id=${userId}">Zablokovat uzivatele</a>
+                    </fieldset>
+                    <fieldset ${disableEnableUser}>
+                        <a href="enableUser?id=${userId}">Odblokovat uzivatele</a>
+                    </fieldset>
+                    ${userEnabledMsg}
+                </security:authorize>
             </div>
 
         </main>

@@ -1,5 +1,7 @@
 package tygri.pujcovna.controllers;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,9 @@ public class CarorderController {
         ModelAndView mv = new ModelAndView("/nabidka.jsp");
         String offers = orderService.getOffers(modelsearch, carcompany, tripstart, tripend, range1a, range1b, type);
         mv.addObject("offers", offers);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        mv.addObject("minDate", formatter.format(date));
         return mv;
     }
 }

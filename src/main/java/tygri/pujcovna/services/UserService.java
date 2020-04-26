@@ -5,7 +5,9 @@ import java.util.Base64;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -174,6 +176,24 @@ public class UserService implements UserDetailsService {
             return userAndAuthorityDao.getUserById(Integer.valueOf(id));
         } catch (NumberFormatException e) {
             return null;
+        }
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public boolean enable(HttpSession session, User user) {
+        if (session.getAttribute("userId") != user.getId()) {
+            return userAndAuthorityDao.setEnabled(true, user.getId());
+        } else {
+            return false;
+        }
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public boolean disable(HttpSession session, User user) {
+        if (session.getAttribute("userId") != user.getId()) {
+            return userAndAuthorityDao.setEnabled(false, user.getId());
+        } else {
+            return false;
         }
     }
 }

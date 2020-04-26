@@ -43,6 +43,8 @@ public class ProfileController {
         mv.addObject("profilePhoto", userService.getPhoto(session.getAttribute("userName").toString()));
         mv.addObject("orders", carorderService.getAllOrders(userService.loadUserByUsername(session.getAttribute("userName").toString())));
         mv.addObject("disabled", "");
+        mv.addObject("disableEnableUser", "hidden");
+        mv.addObject("disableDisableUser", "hidden");
         return mv;
     }
 
@@ -62,6 +64,13 @@ public class ProfileController {
             mv.addObject("streetno", user.getStreetno());
             mv.addObject("profilePhoto", userService.getPhoto(user.getUsername()));
             mv.addObject("orders", carorderService.getAllOrders(user));
+            if (user.isEnabled()) {
+                mv.addObject("disableEnableUser", "hidden");
+                mv.addObject("disableDisableUser", "");
+            } else {
+                mv.addObject("disableEnableUser", "");
+                mv.addObject("disableDisableUser", "hidden");
+            }
         } else {
             mv.addObject("firstname", "User does not exist");
             mv.addObject("lastname", "User does not exist");
@@ -72,7 +81,102 @@ public class ProfileController {
             mv.addObject("street", "User does not exist");
             mv.addObject("streetno", "User does not exist");
             mv.addObject("profilePhoto", "User does not exist");
+            mv.addObject("disableEnableUser", "");
+            mv.addObject("disableDisableUser", "");
         }
+        mv.addObject("userId", id);
+        mv.addObject("disabled", "hidden");
+        return mv;
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RequestMapping(value = "/disableUser", method = RequestMethod.GET)
+    public ModelAndView disableUser(HttpSession session, @RequestParam String id) {
+        ModelAndView mv = new ModelAndView("/profile.jsp");
+        User user = userService.loadUserById(id);
+        if (userService.disable(session, user)) {
+            mv.addObject("userEnabledMsg", "Uzivatel byl zablokovan");
+        } else {
+            mv.addObject("userEnabledMsg", "Uzivatel nebyl zablokovan");
+        }
+        if (user != null) {
+            mv.addObject("firstname", user.getFirstname());
+            mv.addObject("lastname", user.getLastname());
+            mv.addObject("phone", user.getPhone());
+            mv.addObject("email", user.getEmail());
+            mv.addObject("countrycode", user.getCountryCode());
+            mv.addObject("city", user.getCity());
+            mv.addObject("street", user.getStreet());
+            mv.addObject("streetno", user.getStreetno());
+            mv.addObject("profilePhoto", userService.getPhoto(user.getUsername()));
+            mv.addObject("orders", carorderService.getAllOrders(user));
+            if (user.isEnabled()) {
+                mv.addObject("disableEnableUser", "hidden");
+                mv.addObject("disableDisableUser", "");
+            } else {
+                mv.addObject("disableEnableUser", "");
+                mv.addObject("disableDisableUser", "hidden");
+            }
+        } else {
+            mv.addObject("firstname", "User does not exist");
+            mv.addObject("lastname", "User does not exist");
+            mv.addObject("phone", "User does not exist");
+            mv.addObject("email", "User does not exist");
+            mv.addObject("countrycode", "User does not exist");
+            mv.addObject("city", "User does not exist");
+            mv.addObject("street", "User does not exist");
+            mv.addObject("streetno", "User does not exist");
+            mv.addObject("profilePhoto", "User does not exist");
+            mv.addObject("disableEnableUser", "");
+            mv.addObject("disableDisableUser", "");
+        }
+        mv.addObject("userId", id);
+        mv.addObject("disabled", "hidden");
+        return mv;
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RequestMapping(value = "/enableUser", method = RequestMethod.GET)
+    public ModelAndView enableUser(HttpSession session, @RequestParam String id) {
+        ModelAndView mv = new ModelAndView("/profile.jsp");
+        User user = userService.loadUserById(id);
+        if (userService.enable(session, user)) {
+            mv.addObject("userEnabledMsg", "Uzivatel byl odblokovan");
+        } else {
+            mv.addObject("userEnabledMsg", "Uzivatel byl odblokovan");
+        }
+        if (user != null) {
+            mv.addObject("firstname", user.getFirstname());
+            mv.addObject("lastname", user.getLastname());
+            mv.addObject("phone", user.getPhone());
+            mv.addObject("email", user.getEmail());
+            mv.addObject("countrycode", user.getCountryCode());
+            mv.addObject("city", user.getCity());
+            mv.addObject("street", user.getStreet());
+            mv.addObject("streetno", user.getStreetno());
+            mv.addObject("profilePhoto", userService.getPhoto(user.getUsername()));
+            mv.addObject("orders", carorderService.getAllOrders(user));
+            if (user.isEnabled()) {
+                mv.addObject("disableEnableUser", "hidden");
+                mv.addObject("disableDisableUser", "");
+            } else {
+                mv.addObject("disableEnableUser", "");
+                mv.addObject("disableDisableUser", "hidden");
+            }
+        } else {
+            mv.addObject("firstname", "User does not exist");
+            mv.addObject("lastname", "User does not exist");
+            mv.addObject("phone", "User does not exist");
+            mv.addObject("email", "User does not exist");
+            mv.addObject("countrycode", "User does not exist");
+            mv.addObject("city", "User does not exist");
+            mv.addObject("street", "User does not exist");
+            mv.addObject("streetno", "User does not exist");
+            mv.addObject("profilePhoto", "User does not exist");
+            mv.addObject("disableEnableUser", "");
+            mv.addObject("disableDisableUser", "");
+        }
+        mv.addObject("userId", id);
         mv.addObject("disabled", "hidden");
         return mv;
     }

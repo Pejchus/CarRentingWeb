@@ -1,5 +1,7 @@
 package tygri.pujcovna.controllers;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
@@ -18,7 +20,7 @@ import tygri.pujcovna.services.CarorderService;
 import tygri.pujcovna.services.UserService;
 
 @Controller
-public class CarProfileController implements ErrorController {
+public class CarProfileController {
 
     private final CarService carService;
     private final CarorderService carorderService;
@@ -45,6 +47,9 @@ public class CarProfileController implements ErrorController {
         mv.addObject("baseprice", car.getBaseprice());
         mv.addObject("description", car.getDescription());
         mv.addObject("carId", id);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        mv.addObject("minDate", formatter.format(date));
         if (session.getAttribute("UserStatus") != null && session.getAttribute("UserStatus") != AuthorityType.ROLE_CUSTOMER) {
             mv.addObject("orders", carorderService.getAllOrders(car));
             mv.addObject("disabled", "");
@@ -75,6 +80,9 @@ public class CarProfileController implements ErrorController {
         mv.addObject("description", car.getDescription());
         mv.addObject("orders", carorderService.getAllOrders(car));
         mv.addObject("carId", id);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/mm/dd");
+        Date date = new Date();
+        mv.addObject("minDate", formatter.format(date));
         mv.addObject("disabled", "");
         return mv;
     }
@@ -100,6 +108,9 @@ public class CarProfileController implements ErrorController {
         mv.addObject("baseprice", car.getBaseprice());
         mv.addObject("description", car.getDescription());
         mv.addObject("carId", car.getId());
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/mm/dd");
+        Date date = new Date();
+        mv.addObject("minDate", formatter.format(date));
         if (session.getAttribute("UserStatus") != AuthorityType.ROLE_CUSTOMER) {
             mv.addObject("orders", carorderService.getAllOrders(car));
             mv.addObject("disabled", "");
@@ -108,10 +119,4 @@ public class CarProfileController implements ErrorController {
         }
         return mv;
     }
-
-    @Override
-    public String getErrorPath() {
-        return "/error";
-    }
-
 }

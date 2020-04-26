@@ -133,4 +133,15 @@ public class UserAndAuthorityDao extends BaseDao /*implements UserRepository*/ {
         }
     }
 
+    public boolean setEnabled(boolean b, Integer id) {
+        try {
+            User user = getUserById(id);
+            user.setEnabled(!user.isEnabled());
+            super.updateEntity(user);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }

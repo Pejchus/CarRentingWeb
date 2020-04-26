@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="css/styles.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
               integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <script src="https://kit.fontawesome.com/cf89d56701.js" crossorigin="anonymous"></script>
+        <script src="https://kit.fontawesome.com/cf89d56701.js" crossorigin="anonymous"></script>       
         <!-- Potreba ve vsech .jsp kde pouzivame security:authorize tagy -->
         <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
     </head>
@@ -62,11 +62,11 @@
                     <form action="makeOrder">
                         <label for="start">Zacatek pujcky:</label>
                         <div class="filter-inside">
-                            <input type="date" id="start" name="tripstart" value="" min="2020-01-01" max="2021-12-31">
+                            <input type="date" id="start" name="tripstart" value="" min="${minDate}" max="2021-12-31">
                         </div>
                         <label for="end">Konec pujcky:</label>
                         <div class="filter-inside">
-                            <input type="date" id="end" name="tripend" value="" min="2020-01-01" max="2021-12-31">
+                            <input type="date" id="end" name="tripend" value="" min="${minDate}" max="2021-12-31">
                         </div>   
                         <input type="hidden" name="carId" value="${carId}">
                         <input type="submit" value="objednat na zvolene datum"> 

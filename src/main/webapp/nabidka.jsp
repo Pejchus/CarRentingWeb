@@ -45,11 +45,11 @@
                             </div>
                             <label for="start">Zacatek pujcky:</label>
                             <div class="filter-inside">
-                                <input type="date" id="start" name="tripstart" value="" min="2020-01-01" max="2021-12-31">
+                                <input type="date" id="start" name="tripstart" value="" min="${minDate}" max="2021-12-31">
                             </div>
                             <label for="end">Konec pujcky:</label>
                             <div class="filter-inside">
-                                <input type="date" id="end" name="tripend" value="" min="2020-01-01" max="2021-12-31">
+                                <input type="date" id="end" name="tripend" value="" min="${minDate}" max="2021-12-31">
                             </div>
                             <div data-role="rangeslider" class="filter-inside">
                                 <label for="range1a">Cena za den:</label>
