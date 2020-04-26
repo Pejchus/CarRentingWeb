@@ -79,7 +79,7 @@ public class CarProfileController {
         mv.addObject("description", car.getDescription());
         mv.addObject("orders", carorderService.getAllOrders(car));
         mv.addObject("carId", id);
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/mm/dd");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         mv.addObject("minDate", formatter.format(date));
         mv.addObject("disabled", "");
@@ -107,7 +107,7 @@ public class CarProfileController {
         mv.addObject("baseprice", car.getBaseprice());
         mv.addObject("description", car.getDescription());
         mv.addObject("carId", car.getId());
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/mm/dd");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         mv.addObject("minDate", formatter.format(date));
         if (session.getAttribute("UserStatus") != AuthorityType.ROLE_CUSTOMER) {

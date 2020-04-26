@@ -92,7 +92,7 @@ public class CarorderService {
         try {
             Timestamp beginDate = Timestamp.valueOf(begin + " 00:00:00");
             Timestamp endDate = Timestamp.valueOf(end + " 00:00:00");
-            if (isFree(car, beginDate, endDate)) {
+            if (!beginDate.after(endDate) && isFree(car, beginDate, endDate)) {
                 return carOrderDao.createCarorder(user, beginDate, endDate, car, car.getBaseprice(), true);
             } else {
                 return false;
