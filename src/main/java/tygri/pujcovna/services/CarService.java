@@ -11,6 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 import tygri.pujcovna.dao.CarDao;
 import tygri.pujcovna.model.Car;
 import tygri.pujcovna.model.CarCategory;
+import tygri.pujcovna.model.EngineType;
+import tygri.pujcovna.model.TransmissionType;
 import tygri.pujcovna.other.Constants;
 
 @Service
@@ -53,13 +55,18 @@ public class CarService {
             previewString = previewString.replaceFirst(";carSeatNumber;", car.getSeats().toString());
             previewString = previewString.replaceFirst(";carPrice;", car.getBaseprice().toString());
             previewString = previewString.replaceFirst(";carPhotoData;", photoData);
+            previewString = previewString.replaceFirst(";type;", car.getCarCategory().toString());
+            previewString = previewString.replaceFirst(";enginetype;", car.getEngineType().toString());
+            previewString = previewString.replaceFirst(";transmissiontype;", car.getTransimissionType().toString());
+            previewString = previewString.replaceFirst(";productionyear;", car.getProductionyear().toString());
+            previewString = previewString.replaceFirst(";power;", car.getPower().toString());
             sb.append(previewString);
         }
         return sb.toString();
     }
 
     @Transactional
-    public boolean createCar(String model, String brand, String baseprice, String color, String power, String productionyear, String trunkvolume, String foldingrearseats, String seats, String consumption, String description, MultipartFile photo, String carCategory) {
+    public boolean createCar(String model, String brand, String baseprice, String color, String power, String productionyear, String trunkvolume, String foldingrearseats, String seats, String consumption, String transimissionType, String engineType, String description, MultipartFile photo, String carCategory) {
         try {
             boolean foldingseats;
             if ("yes".equals(foldingrearseats)) {
@@ -76,9 +83,9 @@ public class CarService {
                 for (Byte b : photo.getBytes()) {
                     photoCopy[i++] = b;
                 }
-                return carDao.CreateCar(model, brand, Double.valueOf(baseprice), color, Double.valueOf(power), Integer.valueOf(productionyear), Double.valueOf(trunkvolume), foldingseats, Integer.valueOf(seats), Double.valueOf(consumption), description, photoCopy, CarCategory.valueOf(carCategory));
+                return carDao.CreateCar(model, brand, Double.valueOf(baseprice), color, Double.valueOf(power), Integer.valueOf(productionyear), Double.valueOf(trunkvolume), foldingseats, Integer.valueOf(seats), Double.valueOf(consumption), TransmissionType.valueOf(transimissionType), EngineType.valueOf(engineType), description, photoCopy, CarCategory.valueOf(carCategory));
             } else {
-                return carDao.CreateCar(model, brand, Double.valueOf(baseprice), color, Double.valueOf(power), Integer.valueOf(productionyear), Double.valueOf(trunkvolume), foldingseats, Integer.valueOf(seats), Double.valueOf(consumption), description, CarCategory.valueOf(carCategory));
+                return carDao.CreateCar(model, brand, Double.valueOf(baseprice), color, Double.valueOf(power), Integer.valueOf(productionyear), Double.valueOf(trunkvolume), foldingseats, Integer.valueOf(seats), Double.valueOf(consumption), TransmissionType.valueOf(transimissionType), EngineType.valueOf(engineType), description, CarCategory.valueOf(carCategory));
             }
         } catch (IOException | IllegalArgumentException e) {
             System.out.println("Velky spatny: ");

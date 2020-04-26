@@ -53,38 +53,15 @@ public class Car implements Serializable {
     @Column(nullable = false)
     private Double consumption;
 
-
-    //edited by fantomas
-
-    //sry za upravu
-    /*
     @Basic(optional = false)
     @Column(nullable = false)
-    private String transmisson;
-
-    public void setConsumption(Double consumption) {
-        this.consumption = consumption;
-    }
-
-    public String getTransmisson() {
-        return transmisson;
-    }
-
-    public void setTransmisson(String transmisson) {
-        this.transmisson = transmisson;
-    }
-
-    public String getFuel() {
-        return fuel;
-    }
-
-    public void setFuel(String fuel) {
-        this.fuel = fuel;
-    }
+    @Enumerated(EnumType.STRING)
+    private TransmissionType transimissionType;
 
     @Basic(optional = false)
     @Column(nullable = false)
-    private String fuel;*/
+    @Enumerated(EnumType.STRING)
+    private EngineType engineType;
 
     @Basic(optional = false)
     @Column(nullable = false)
@@ -107,7 +84,7 @@ public class Car implements Serializable {
     public Car() {
     }
 
-    public Car(String model, String brand, Double baseprice, String color, Double power, Integer productionyear, Double trunkvolume, boolean foldingrearseats, Integer seats, Double consumption, String description, Byte[] photo, CarCategory carCategory) {
+    public Car(String model, String brand, Double baseprice, String color, Double power, Integer productionyear, Double trunkvolume, boolean foldingrearseats, Integer seats, Double consumption, TransmissionType transimissionType, EngineType engineType, String description, CarCategory carCategory) {
         this.model = model;
         this.brand = brand;
         this.baseprice = baseprice;
@@ -118,35 +95,36 @@ public class Car implements Serializable {
         this.foldingrearseats = foldingrearseats;
         this.seats = seats;
         this.consumption = consumption;
+        this.transimissionType = transimissionType;
+        this.engineType = engineType;
+        this.description = description;
+        this.carCategory = carCategory;
+    }
+
+    public Car(String model, String brand, Double baseprice, String color, Double power, Integer productionyear, Double trunkvolume, boolean foldingrearseats, Integer seats, Double consumption, TransmissionType transimissionType, EngineType engineType, String description, Byte[] photo, CarCategory carCategory) {
+        this.model = model;
+        this.brand = brand;
+        this.baseprice = baseprice;
+        this.color = color;
+        this.power = power;
+        this.productionyear = productionyear;
+        this.trunkvolume = trunkvolume;
+        this.foldingrearseats = foldingrearseats;
+        this.seats = seats;
+        this.consumption = consumption;
+        this.transimissionType = transimissionType;
+        this.engineType = engineType;
         this.description = description;
         this.photo = photo;
         this.carCategory = carCategory;
     }
 
-    public Car(String model, String brand, Double baseprice, String color, Double power, Integer productionyear, Double trunkvolume, boolean foldingrearseats, Integer seats, Double consumption, String description, CarCategory carCategory) {
-        this.model = model;
-        this.brand = brand;
-        this.baseprice = baseprice;
-        this.color = color;
-        this.power = power;
-        this.productionyear = productionyear;
-        this.trunkvolume = trunkvolume;
-        this.foldingrearseats = foldingrearseats;
-        this.seats = seats;
-        this.consumption = consumption;
-        this.description = description;
-        this.carCategory = carCategory;
-    }
-
-    public List<Carorder> getOrders() {
-        if (orders == null) {
-            orders = new ArrayList<>();
-        }
-        return orders;
-    }
-
     public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getModel() {
@@ -197,7 +175,7 @@ public class Car implements Serializable {
         this.productionyear = productionyear;
     }
 
-    public double getTrunkvolume() {
+    public Double getTrunkvolume() {
         return trunkvolume;
     }
 
@@ -221,12 +199,28 @@ public class Car implements Serializable {
         this.seats = seats;
     }
 
-    public double getConsumption() {
+    public Double getConsumption() {
         return consumption;
     }
 
-    public void setConsumption(double consumption) {
+    public void setConsumption(Double consumption) {
         this.consumption = consumption;
+    }
+
+    public TransmissionType getTransimissionType() {
+        return transimissionType;
+    }
+
+    public void setTransimissionType(TransmissionType transimissionType) {
+        this.transimissionType = transimissionType;
+    }
+
+    public EngineType getEngineType() {
+        return engineType;
+    }
+
+    public void setEngineType(EngineType engineType) {
+        this.engineType = engineType;
     }
 
     public String getDescription() {
@@ -253,8 +247,16 @@ public class Car implements Serializable {
         this.carCategory = carCategory;
     }
 
+    public List<Carorder> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Carorder> orders) {
+        this.orders = orders;
+    }
+
     @Override
     public String toString() {
-        return "Car{" + "id=" + id + ", model=" + model + ", brand=" + brand + ", baseprice=" + baseprice + ", color=" + color + ", power=" + power + ", productionyear=" + productionyear + ", trunkvolume=" + trunkvolume + ", foldingrearseats=" + foldingrearseats + ", seats=" + seats + ", consumption=" + consumption + ", description=" + description + ", carCategory=" + carCategory + '}';
+        return "Car{" + "id=" + id + ", model=" + model + ", brand=" + brand + ", baseprice=" + baseprice + ", color=" + color + ", power=" + power + ", productionyear=" + productionyear + ", trunkvolume=" + trunkvolume + ", foldingrearseats=" + foldingrearseats + ", seats=" + seats + ", consumption=" + consumption + ", transimissionType=" + transimissionType + ", engineType=" + engineType + ", description=" + description + ", photo=" + photo + ", carCategory=" + carCategory + ", orders=" + orders + '}';
     }
 }

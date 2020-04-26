@@ -5,6 +5,8 @@ import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 import tygri.pujcovna.model.Car;
 import tygri.pujcovna.model.CarCategory;
+import tygri.pujcovna.model.EngineType;
+import tygri.pujcovna.model.TransmissionType;
 
 @Repository
 public class CarDao extends BaseDao {
@@ -13,9 +15,9 @@ public class CarDao extends BaseDao {
         super(Car.class);
     }
 
-    public boolean CreateCar(String model, String brand, double baseprice, String color, double power, int productionyear, double trunkvolume, boolean foldingrearseats, int seats, double consumption, String description, Byte[] photo, CarCategory carCategory) {
+    public boolean CreateCar(String model, String brand, double baseprice, String color, double power, int productionyear, double trunkvolume, boolean foldingrearseats, int seats, double consumption, TransmissionType transimissionType, EngineType engineType, String description, Byte[] photo, CarCategory carCategory) {
         try {
-            Car car = new Car(model, brand, baseprice, color, power, productionyear, trunkvolume, foldingrearseats, seats, consumption, description, photo, carCategory);
+            Car car = new Car(model, brand, baseprice, color, power, productionyear, trunkvolume, foldingrearseats, seats, consumption, transimissionType, engineType, description, photo, carCategory);
             persist(car);
         } catch (Exception e) {
             return false;
@@ -23,9 +25,9 @@ public class CarDao extends BaseDao {
         return true;
     }
 
-    public boolean CreateCar(String model, String brand, double baseprice, String color, double power, int productionyear, double trunkvolume, boolean foldingrearseats, int seats, double consumption, String description, CarCategory carCategory) {
+    public boolean CreateCar(String model, String brand, double baseprice, String color, double power, int productionyear, double trunkvolume, boolean foldingrearseats, int seats, double consumption, TransmissionType transimissionType, EngineType engineType, String description, CarCategory carCategory) {
         try {
-            Car car = new Car(model, brand, baseprice, color, power, productionyear, trunkvolume, foldingrearseats, seats, consumption, description, carCategory);
+            Car car = new Car(model, brand, baseprice, color, power, productionyear, trunkvolume, foldingrearseats, seats, consumption, transimissionType, engineType, description, carCategory);
             persist(car);
         } catch (Exception e) {
             return false;

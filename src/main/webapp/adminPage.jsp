@@ -31,6 +31,8 @@
                         <label>Foldingrearseats(yes/no): </label><input type="text" name="foldingrearseats" required><br>
                         <label>Seats(int): </label><input type="text" name="seats" required><br>
                         <label>Consumption(double): </label><input type="text" name="consumption" required><br>
+                        <label>Transmissiontype(AUTOMATIC/MANUAL): </label><input type="text" name="transmissiontype" required><br>
+                        <label>Enginetype(GAS/DIESEL/ELECTRIC): </label><input type="text" name="enginetype" required><br>
                         <label>Description(string): </label><input type="text" name="description" required><br>
                         <label>Car photo: </label><input type="file" name="photo"><br>
                         <label>Car category(SEDAN/COMBI/SUV/HATCHBACK/CABRIOLET/PICKUP/VAN): </label><input type="string" name="carcategory" required><br>

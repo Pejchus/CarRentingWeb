@@ -33,9 +33,9 @@ public class Main {
         userService.createUser("admin", "admin", "admin@admin.com", "true", "777777777", "25101", "admin", "vonAdmin", "Praha", "Parizska", "4", "ADMIN");
         userService.createUser("zamestnanec", "zamestnanec", "zamestnanec@zamestnanec.com", "true", "666666666", "069", "zamestnanec", "vonZamestnanec", "Ricany", "Sokolska", "5", "EMPLOYEE");
         userService.createUser("zakaznik", "zakaznik", "zakaznik@zakaznik.com", "true", "555555555", "05689", "zakaznik", "vonZakaznik", "Ricany", "U nadrazi", "6", "CUSTOMER");
-        carService.createCar("Felicia", "Skoda", "1000", "blue", "120", "1999", "420", "yes", "5", "4.5", "nic moc", null, "SEDAN");
-        carService.createCar("A4", "Audi", "2000", "green", "2000", "2012", "425", "yes", "5", "6.5", "docela dobry", null, "SEDAN");
-        carService.createCar("nakejSaab", "Saab", "2000", "green", "2000", "2012", "425", "yes", "5", "6.5", "docela ujde", null, "CABRIOLET");
+        carService.createCar("Felicia", "Skoda", "1000", "blue", "120", "1999", "420", "yes", "5", "4.5", "AUTOMATIC", "ELECTRIC", "nic moc", null, "SEDAN");
+        carService.createCar("A4", "Audi", "2000", "green", "2000", "2012", "425", "yes", "5", "6.5", "AUTOMATIC", "GAS", "docela dobry", null, "SEDAN");
+        carService.createCar("nakejSaab", "Saab", "2000", "green", "2000", "2012", "425", "yes", "5", "6.5", "MANUAL", "DIESEL", "docela ujde", null, "CABRIOLET");
         Car car = carService.getACar();
         User user = userService.loadUserByUsername("zakaznik");
         carorderDao.createCarorder(user, new Timestamp(System.currentTimeMillis() + 86400000), new Timestamp(System.currentTimeMillis() + 86400000 * 8), car, car.getBaseprice(), true);
