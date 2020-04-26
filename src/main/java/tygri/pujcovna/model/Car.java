@@ -53,6 +53,38 @@ public class Car implements Serializable {
     @Column(nullable = false)
     private Double consumption;
 
+
+    //edited by fantomas
+
+    //sry za upravu
+    @Basic(optional = false)
+    @Column(nullable = false)
+    private String transmisson;
+
+    public void setConsumption(Double consumption) {
+        this.consumption = consumption;
+    }
+
+    public String getTransmisson() {
+        return transmisson;
+    }
+
+    public void setTransmisson(String transmisson) {
+        this.transmisson = transmisson;
+    }
+
+    public String getFuel() {
+        return fuel;
+    }
+
+    public void setFuel(String fuel) {
+        this.fuel = fuel;
+    }
+
+    @Basic(optional = false)
+    @Column(nullable = false)
+    private String fuel;
+
     @Basic(optional = false)
     @Column(nullable = false)
     private String description;

@@ -4,59 +4,70 @@
     font-size: 2rem;
     color: orangered;
 }
+
 .logo_icon {
     width: 100px;
     height: 100px;
 }
+
 .navbar {
     margin-top: -16px;
     padding: .8rem;
 }
-.nav-link{
+
+.nav-link {
     font-size: 1em !important;
 }
-.nav-item{
+
+.nav-item {
     font-size: 20px;
 }
+
 .dropdown-menu a:hover {
     background-color: lightgrey;
 }
+
 /*  MAIN SECTION */
-.main{
+.main {
     min-height: 100%;
     height: 100%;
     position: relative;
     overflow: auto;
     padding-bottom: .5em;
 }
-.index-car-image{
+
+.index-car-image {
     width: 100%;
     max-width: 100%;
     object-fit: cover;
 }
-.main_description{
+
+.main_description {
     margin-top: 20px;
 }
 
 /* CAR PROFILE */
-.car_profile{
+.car_profile {
     flex: auto;
 }
-.car_information_table{
+
+.car_information_table {
 
 }
 
 /* FOOTER */
-.fixedBottom{
+.fixedBottom {
     position: fixed;
     bottom: 0;
 }
-.footer_content{
+
+.footer_content {
     padding: 20px 20px 20px 20px;
     font-size: 1em;
     color: rgb(252, 125, 79);
 }
-.footer_title{
+
+.footer_title {
     font-weight: bold;
     font-size: 1.5rem;
     color: orangered;
@@ -64,35 +75,54 @@
 
 /* NABIDKA AUT STRANKA */
 /* Filter */
-.horni-filter{
+.horni-filter {
     width: 100%;
     display: inline-flex;
 }
-form{
+.form-control{
+    max-width: 15em;
+}
+
+.filter-top{
+    display: flex;
+}
+
+
+.form-calendar-container{
+    display: flex;
+}
+.form-calendar{
+    display: flex;
+    flex-direction: column;
+    margin: 0 8em 2em 4.5em;
+}
+
+.mb-4{
+    margin-right: 4em;
+    width: 27em
+;
+}
+form {
     flex-direction: column;
     align-items: center;
     margin-bottom: 15px;
 }
-.filter-inside{
-    width: 30em;
-    padding: 0 10px 0 10px;
-    align-content: center;
-}
-.spodni-filter{
-    margin-top: 3em;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+.active-cyan-4 input[type=text]:focus:not([readonly]) {
+    border: 1px solid #4dd0e1;
+    box-shadow: 0 0 0 1px #4dd0e1;
 }
 
-.break{
+
+
+.break {
     width: 100%;
     height: 2.5em;
 }
-.radio{
+
+.radio {
     display: flex;
     flex-direction: row;
-    margin:30px 0 16px 0;
+    margin: 30px 0 16px 0;
     max-width: 100%;
 }
 
@@ -116,16 +146,18 @@ form{
     /*outline: 2px solid orangered;*/
     box-shadow: 0 0 3px orangered;
 }
-.filter-auto-container{
-    height:5em;
+
+.filter-auto-container {
+    height: 5em;
     width: 8em;
-    margin:  0 1em 0 0em ;
+    margin: 0 1em 0 0em;
     align-content: center;
     border-radius: 15px;
     text-align: center;
 
 }
-.filter-auto-container >  img{
+
+.filter-auto-container > img {
     margin: 2px auto auto;
     max-width: 100%;
     max-height: 100%;
@@ -135,29 +167,34 @@ form{
 
 
 /* NABIDKA */
-.nabidka-nadpis{
+.nabidka-nadpis {
     text-align: center;
 }
-.nabidka-row{
+
+.nabidka-row {
     display: flex;
     flex-wrap: wrap;
     margin: 0 -15px 0 -15px;
 }
-.nabidka-auto-container{
+
+.nabidka-auto-container {
     background-color: rgba(206, 206, 206, 0.84);
     border-radius: 8px;
     padding: 3px 10px 3px 25px;
 }
+
 .odkaz-auto {
     color: #ff901f;
 }
-.nabidka-auto-container:hover{
+
+.nabidka-auto-container:hover {
     background-color: rgba(150, 150, 150, 0.84);
     color: #e67300;
     cursor: pointer;
 }
-.nabidka-button{
-    font-size:2em;
+
+.nabidka-button {
+    font-size: 2em;
     text-align: center;
     background-color: #f38100;
     color: black;
@@ -167,25 +204,74 @@ form{
 
 
 /* SLIDER */
-.filter-form  {
+.filter-form {
     display: flex;
-    width:100%;
+    width: 100%;
 }
 
-.ui-slider .ui-btn-inner {
-    padding: 4px 0 0 0 !important;
-    font-size: 0px;
+input[type=range] {
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 400px;
+    margin: 0;
+    padding: 0 2px;
+    /* Add some L/R padding to ensure box shadow of handle is shown */
+    overflow: hidden;
+    border: 0;
+    border-radius: 1px;
+    outline: none;
+    background: -webkit-gradient(linear, left top, left bottom, from(grey), to(grey)) no-repeat center;
+    background: linear-gradient(grey, grey) no-repeat center;
+    /* Use a linear gradient to generate only the 2px height background */
+    background-size: 100% 2px;
+    pointer-events: none;
 }
-.ui-slider-track .ui-btn.ui-slider-handle{
-    width: 35px;
+input[type=range]:active,
+input[type=range]:focus {
+    outline: none;
 }
-
-.ui-slider-popup {
-    position: absolute !important;
-    width: 64px;
-    height: 64px;
+input[type=range]::-webkit-slider-thumb {
+    height: 28px;
+    width: 28px;
+    border-radius: 28px;
+    background-color: #fff;
+    position: relative;
+    margin: 5px 0;
+    /* Add some margin to ensure box shadow is shown */
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    pointer-events: all;
+    box-shadow: 0 1px 4px 0.5px rgba(0, 0, 0, 0.25);
 }
-
+input[type=range]::-webkit-slider-thumb::before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    top: 13px;
+    left: 100%;
+    width: 2000px;
+    height: 2px;
+}
+.multi-range {
+    position: relative;
+    height: 50px;
+    margin-right: 24em;
+}
+.multi-range input[type=range] {
+    position: absolute;
+}
+.multi-range input[type=range]:nth-child(1)::-webkit-slider-thumb::before {
+    background-color: purple;
+}
+.multi-range input[type=range]:nth-child(2) {
+    background: none;
+}
+.multi-range input[type=range]:nth-child(2)::-webkit-slider-thumb::before {
+    background-color: grey;
+}
 /* MEDIA QUERIES */
 @media only screen and (max-width: 1250px) {
 
