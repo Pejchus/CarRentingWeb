@@ -259,7 +259,7 @@ public class CarProfileController {
     @ResponseBody
     public String fetchOrders(@RequestParam String carID) {
         Car car = carService.getCarById(carID);
-        List<Carorder> carOrders = car.getOrderss();
+        List<Carorder> carOrders = carorderService.getAllOrders(car);
         JSONArray orderDates = new JSONArray();
         for (int i = 0; i < carOrders.size(); i++) {
             JSONObject object = new JSONObject();
@@ -269,7 +269,6 @@ public class CarProfileController {
             object.append("dates", dates);
             orderDates.put(dates);
         }
-        System.out.println(orderDates);
         return orderDates.toString();
     }
 }

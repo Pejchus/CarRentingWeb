@@ -57,7 +57,7 @@ public class CarorderDao extends BaseDao {
 
     public List<Carorder> getUserOrderHistory(User u) {
         try {
-            return em.createQuery("SELECT e FROM Carorder e where e.account=:user ORDER BY e.begindate ASC").setParameter("user", u).getResultList();
+            return em.createQuery("SELECT e FROM Carorder e where e.account=:user ORDER BY e.begindate").setParameter("user", u).getResultList();
         } catch (Exception e) {
             return null;
         }
@@ -65,7 +65,7 @@ public class CarorderDao extends BaseDao {
 
     public List<Carorder> getCarOrderHistory(Car c) {
         try {
-            return em.createQuery("SELECT e FROM Carorder e where e.car=:car ORDER BY e.begindate ASC").setParameter("car", c).getResultList();
+            return em.createQuery("SELECT e FROM Carorder e where e.car=:car ORDER BY e.begindate").setParameter("car", c).getResultList();
         } catch (Exception e) {
             return null;
         }
