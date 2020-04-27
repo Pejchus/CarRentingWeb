@@ -38,6 +38,6 @@ public class Main {
         carService.createCar("nakejSaab", "Saab", "2000", "green", "2000", "2012", "425", "5", "6.5", "MANUAL", "DIESEL", "docela ujde", null, "CABRIOLET");
         Car car = carService.getACar();
         User user = userService.loadUserByUsername("zakaznik");
-        carorderDao.createCarorder(user, new Timestamp(System.currentTimeMillis() + 86400000), new Timestamp(System.currentTimeMillis() + 86400000 * 8), car, car.getBaseprice(), true);
+        carorderDao.createCarorder(user, new Timestamp(System.currentTimeMillis() + 86400000 * 3), new Timestamp(System.currentTimeMillis() + 86400000 * 8), car, car.getBaseprice(), true);
     }
 }

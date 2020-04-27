@@ -6,9 +6,15 @@
         <title>Car</title>
 
         <link rel="stylesheet" href="css/styles.css">
+
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
               integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <script src="https://kit.fontawesome.com/cf89d56701.js" crossorigin="anonymous"></script>
+        <script src="js/libraries/jquery-3.5.0.min.js"></script>
+        <link rel="stylesheet" href="js/libraries/jquery-ui-1.12.1/jquery-ui.min.css">
+        <script src="js/libraries/jquery-ui-1.12.1/external/jquery/jquery.js"></script>
+        <script src="js/libraries/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+
         <!-- Potreba ve vsech .jsp kde pouzivame security:authorize tagy -->
         <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
     </head>
@@ -55,17 +61,32 @@
                         </table>
 
 
+<%--                        <form action="makeOrder">--%>
+<%--                            <label for="start">Zacatek pujcky:</label>--%>
+<%--                            <div class="filter-inside">--%>
+<%--                                <input type="date" id="start" name="tripstart" value="" min="${minDate}" max="2021-12-31">--%>
+<%--                            </div>--%>
+<%--                            <label for="end">Konec pujcky:</label>--%>
+<%--                            <div class="filter-inside">--%>
+<%--                                <input type="date" id="end" name="tripend" value="" min="${minDate}" max="2021-12-31">--%>
+<%--                            </div>--%>
+<%--                            <input type="hidden" name="carId" value="${carId}">--%>
+<%--                            <input type="submit" value="objednat na zvolene datum">--%>
+<%--                        </form>--%>
                         <form action="makeOrder">
-                            <label for="start">Zacatek pujcky:</label>
+                            <label for="tripstart">Zacatek pujcky:</label>
                             <div class="filter-inside">
-                                <input type="date" id="start" name="tripstart" value="" min="${minDate}" max="2021-12-31">
+                                <%--                        poslat datumy kdy auto neni volny --%>
+                                <label id="startLabel" hidden>${dates}</label>
+                                <input type="text" id="tripstart" name="tripstart" placeholder="Vyberte datum" readonly required>
+
                             </div>
-                            <label for="end">Konec pujcky:</label>
+                            <label for="tripend">Konec pujcky:</label>
                             <div class="filter-inside">
-                                <input type="date" id="end" name="tripend" value="" min="${minDate}" max="2021-12-31">
+                                <input type="text" id="tripend" name="tripend" placeholder="Vyberte datum" readonly required>
                             </div>
                             <input type="hidden" name="carId" value="${carId}">
-                            <input type="submit" value="objednat na zvolene datum">
+                            <input type="submit" value="Rezervovat">
                         </form>
                     </div>
                     <div class="car-profile">
@@ -135,6 +156,11 @@
                 integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
 
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js" type="text/javascript"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
+        <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" />
+
+        <script src="js/calendar.js"></script>
 
     </body>
 </html>

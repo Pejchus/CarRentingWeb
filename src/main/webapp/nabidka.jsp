@@ -127,17 +127,20 @@
 
 
                             <div class="slider">
-                                <input type="text" id="lower-value"></input>
-
-                                <div class="multi-range">
-
-                                    <input name="range1a" type="range" min="0" max="2000" value="5" id="lower">
-                                    <input name="range1b" type="range" min="0" max="2000" value="45" id="upper">
-
+                                <div class="slider_lower_value_span">
+                                    <span>Od</span>
+                                    <span id="lower-value" disabled></span>
                                 </div>
 
-                                <input type="text" id="upper-value"></input>
+                                <div class="multi-range">
+                                    <input name="range1a" type="range" min="0" max="2000" value="0" id="lower">
+                                    <input name="range1b" type="range" min="0" max="2000" value="2000" id="upper">
+                                </div>
 
+                                <div class="slider_lower_value_span">
+                                    <span>Do</span>
+                                    <span id="upper-value" disabled></span>
+                                </div>
                             </div>
 
 
@@ -188,52 +191,14 @@
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
     crossorigin="anonymous"></script>
 
-    <!-- scrit na slider-->
-    <script>var lowerSlider = document.querySelector('#lower'),
-                upperSlider = document.querySelector('#upper'),
-                lowerVal = parseInt(lowerSlider.value);
-        upperVal = parseInt(upperSlider.value);
+    <script src="js/slider.js"></script>
 
-        upperSlider.oninput = function () {
-            lowerVal = parseInt(lowerSlider.value);
-            upperVal = parseInt(upperSlider.value);
-
-            if (upperVal < lowerVal + 4) {
-                lowerSlider.value = upperVal - 4;
-
-                if (lowerVal == lowerSlider.min) {
-                    upperSlider.value = 4;
-                }
-            }
-        };
-
-
-        lowerSlider.oninput = function () {
-            lowerVal = parseInt(lowerSlider.value);
-            upperVal = parseInt(upperSlider.value);
-
-            if (lowerVal > upperVal - 4) {
-                upperSlider.value = lowerVal + 4;
-
-                if (upperVal == upperSlider.max) {
-                    lowerSlider.value = parseInt(upperSlider.max) - 4;
-                }
-
-            }
-        }
-
-        function myFunction() {
-            document.getElementById('upper-value').value = upperSlider;
-            document.getElementById('lower-value').value = lowerSlider;
-        }
-        ;
-    </script>
-
-
-    <script>
-        $(document).ready(function () {
-            $('.mdb-select').materialSelect();
-        });</script>
+<%--CO TO MA BEJT JAKO--%>
+<%--    <script>--%>
+<%--        $(document).ready(function () {--%>
+<%--            $('.mdb-select').materialSelect();--%>
+<%--        });--%>
+<%--    </script>--%>
 
 </body>
 </html>

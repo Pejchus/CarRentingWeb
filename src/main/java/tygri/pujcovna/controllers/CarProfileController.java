@@ -1,18 +1,33 @@
 package tygri.pujcovna.controllers;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import tygri.pujcovna.model.AuthorityType;
 import tygri.pujcovna.model.Car;
+import tygri.pujcovna.model.Carorder;
 import tygri.pujcovna.model.User;
 import tygri.pujcovna.services.CarService;
 import tygri.pujcovna.services.CarorderService;
@@ -106,6 +121,12 @@ public class CarProfileController {
         ModelAndView mv = new ModelAndView("/carProfile.jsp");
         User user = userService.loadUserByUsername(session.getAttribute("userName").toString());
         Car car = carService.getCarById(carId);
+
+        String[] tripStart = tripstart.split("/");
+        tripstart = tripStart[2] + "-" + tripStart[0] + "-" + tripStart[1];
+        String[] tripEnd = tripend.split("/");
+        tripend = tripEnd[2] + "-" + tripEnd[0] + "-" + tripEnd[1];
+
         if (carorderService.createOrder(user, car, tripstart, tripend)) {
             mv.addObject("createOrderMsg", "<p>Order successfully made on specified date</p>");
         } else {
@@ -231,5 +252,22 @@ public class CarProfileController {
         mv.addObject("carData", carService.getAllCarsPreviews());
         mv.addObject("userData", userService.getAllUsersPreviews());
         return mv;
+    }
+
+    @RequestMapping(value = "/carOrders", method = RequestMethod.GET)
+    @ResponseBody
+    public String fetchOrders(@RequestParam String carID) {
+        Car car = carService.getCarById(carID);
+        List<Carorder> carOrders = car.getOrderss();
+        JSONArray orderDates = new JSONArray();
+        for (int i = 0; i < carOrders.size(); i++) {
+            JSONObject object = new JSONObject();
+            JSONArray dates = new JSONArray();
+            dates.put(carOrders.get(i).getBegindate());
+            dates.put(carOrders.get(i).getEnddate());
+            object.append("dates", dates);
+            orderDates.put(dates);
+        }
+        return orderDates.toString();
     }
 }
