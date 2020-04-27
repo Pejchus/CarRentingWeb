@@ -146,7 +146,7 @@ public class CarProfileController {
         Date date = new Date();
         mv.addObject("minDate", formatter.format(date));
         if (session.getAttribute("UserStatus") != AuthorityType.ROLE_CUSTOMER) {
-            //ORDERS--  TOHLE BYCH POTREBOVAL ABY BYLO SERAZENY PODLE DATUMU OD NEJBLIZSIHO K NEJPOZDEJSIMU
+            //ORDERS--  TOHLE BYCH POTREBOVAL ABY BYLO SERAZENY PODLE DATUMU OD NEJBLIZSIHO K NEJPOZDEJSIMU - 
             mv.addObject("orders", carorderService.getAllOrders(car));
             mv.addObject("disabled", "");
             if (car.isEnabled()) {
