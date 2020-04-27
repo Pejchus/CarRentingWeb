@@ -269,6 +269,7 @@ public class CarProfileController {
             object.append("dates", dates);
             orderDates.put(dates);
         }
+        System.out.println(orderDates);
         return orderDates.toString();
     }
 }

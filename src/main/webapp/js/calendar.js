@@ -41,9 +41,11 @@ function updateCalendar(data) {
                     var msecsInADay = 86400000;
                     var endDate = new Date(selectedDate.getTime() + msecsInADay);
                     var maxDate;
+                    console.log(reservationDates);
                     for (var i = 0; i < reservationDates[0].length; i++) {
                         if (selectedDate < Date.parse(reservationDates[0][i])) {
                             maxDate = new Date(Date.parse(reservationDates[0][i]) - msecsInADay);
+                            break;
                         }
                     }
                     $("#tripend").datepicker("option", "minDate", endDate);

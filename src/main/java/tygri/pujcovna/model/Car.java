@@ -1,8 +1,13 @@
 package tygri.pujcovna.model;
 
+import javafx.collections.transformation.SortedList;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import javax.management.Query;
 import javax.persistence.*;
 
 @Entity
@@ -250,6 +255,8 @@ public class Car implements Serializable {
     }
 
     public List<Carorder> getOrderss() {
+        Comparator<Carorder> c = (s1, s2) -> s1.getBegindate().compareTo(s2.getBegindate());
+        orderss.sort(c);
         return orderss;
     }
 
