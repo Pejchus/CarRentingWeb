@@ -39,5 +39,7 @@ public class Main {
         Car car = carService.getACar();
         User user = userService.loadUserByUsername("zakaznik");
         carorderDao.createCarorder(user, new Timestamp(System.currentTimeMillis() + 86400000 * 3), new Timestamp(System.currentTimeMillis() + 86400000 * 8), car, car.getBaseprice(), true);
+        carorderDao.createCarorder(user, new Timestamp(System.currentTimeMillis() + 86400000 * 15), new Timestamp(System.currentTimeMillis() + 86400000 * 21), car, car.getBaseprice(), true);
+
     }
 }
