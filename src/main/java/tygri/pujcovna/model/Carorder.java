@@ -127,7 +127,7 @@ public class Carorder implements Serializable {
         } else {
             ret += car.getId() + "," + car.getBrand() + "," + car.getModel();
         }
-        ret += "], od " + begindate + " do " + enddate + ", price: " + price + ", zaplaceno: " + paid + ", vytvoreno: " + createDate + "\n" + "<a href=/deleteOrder?id=" + getId() + ">Zrusit objednavku</a>";
+        ret += "], od " + begindate + " do " + enddate + ", price: " + price + ", zaplaceno: " + paid + ", vytvoreno: " + createDate;
         return ret;
     }
 }

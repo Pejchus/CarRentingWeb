@@ -52,4 +52,11 @@ public class CarorderController {
         mv.addObject("minDate", formatter.format(date));
         return mv;
     }
+
+    @RequestMapping(value = "/deleteCarOrder", method = RequestMethod.GET)
+    public ModelAndView showOffers(HttpSession session, @RequestParam("id") String id) {
+        ModelAndView mv = new ModelAndView("");
+        return mv;
+    }
+
 }
