@@ -17,6 +17,7 @@
 
         <!-- Potreba ve vsech .jsp kde pouzivame security:authorize tagy -->
         <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+        <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     </head>
     <body>
         <%@include file="components/header.jsp" %>
@@ -101,9 +102,33 @@
                         </form>
                         ${carProfilePhotoChangeMsg}
 
-                        <td>Objednavky kde figuruje toto auto</td>
-                        <br>
-                        <td>${orders}</td>
+                        <h4>Objednavky</h4>
+                        <table class="table table-condensed table-hover" id="ordersHistoryTable">
+                            <thead>
+                            <tr>
+                                <th>Vytvoreno</th>
+                                <th>Vozidlo</th>
+                                <th>Od</th>
+                                <th>Do</th>
+                                <th>Cena</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach items="${orders}" var="order">
+                                <tr>
+                                    <td><c:out value="${order.createDate}"/></td>
+                                    <td><c:out value="${order.car.brand} ${order.car.model}"/></td>
+                                    <td><c:out value="${order.begindate}"/></td>
+                                    <td><c:out value="${order.enddate}"/></td>
+                                    <td><c:out value="${order.price}"/></td>
+                                    <td>
+                                        <a class="cancelOrder" href="/deleteCarOrder?id=${order.id}">Odstranit</a>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
 
                         <fieldset ${disableDisableCar}>
                             <a href="disableCar?id=${carId}">Zablokovat auto</a>
@@ -162,6 +187,6 @@
         <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" />
 
         <script src="js/calendar.js"></script>
-
+        <script src="js/ordersHistory.js"></script>
     </body>
 </html>

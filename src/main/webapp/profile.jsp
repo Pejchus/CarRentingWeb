@@ -49,19 +49,25 @@
                     <table class="table table-condensed table-hover" id="ordersHistoryTable">
                         <thead>
                             <tr>
+                                <th>Vytvoreno</th>
                                 <th>Vozidlo</th>
                                 <th>Od</th>
                                 <th>Do</th>
                                 <th>Cena</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             <c:forEach items="${orders}" var="order">
                                 <tr>
+                                    <td><c:out value="${order.createDate}"/></td>
                                     <td><c:out value="${order.car.brand} ${order.car.model}"/></td>
                                     <td><c:out value="${order.begindate}"/></td>
                                     <td><c:out value="${order.enddate}"/></td>
                                     <td><c:out value="${order.price}"/></td>
+                                    <td>
+                                        <a class="cancelOrder" href="/deleteCarOrder?id=${order.id}">Odstranit</a>
+                                    </td>
                                 </tr>
                             </c:forEach>
                         </tbody>
