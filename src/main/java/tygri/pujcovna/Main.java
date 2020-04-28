@@ -33,8 +33,17 @@ public class Main {
         userService.createUser("admin", "admin", "admin@admin.com", "true", "777777777", "25101", "admin", "vonAdmin", "Praha", "Parizska", "4", "ADMIN");
         userService.createUser("zamestnanec", "zamestnanec", "zamestnanec@zamestnanec.com", "true", "666666666", "069", "zamestnanec", "vonZamestnanec", "Ricany", "Sokolska", "5", "EMPLOYEE");
         userService.createUser("zakaznik", "zakaznik", "zakaznik@zakaznik.com", "true", "555555555", "05689", "zakaznik", "vonZakaznik", "Ricany", "U nadrazi", "6", "CUSTOMER");
-        carService.createCar("Felicia", "Skoda", "1000", "blue", "120", "1999", "420", "5", "4.5", "AUTOMATIC", "ELECTRIC", "nic moc", null, "SEDAN");
+        carService.createCar("Fabia", "Skoda", "1100", "silver", "55", "2020", "420", "5", "5.5", "AUTOMATIC", "ELECTRIC", "pekny", null, "SEDAN");
+        carService.createCar("Felicia", "Skoda", "1000", "blue", "55", "1999", "420", "5", "4.5", "MANUAL", "GAS", "nic moc", null, "SEDAN");
+        carService.createCar("Octavia", "Skoda", "1250", "silver", "80", "2015", "420", "5", "5.5", "AUTOMATIC", "DIESEL", "hezky", null, "SEDAN");
+        carService.createCar("Superb", "Skoda", "2000", "silver", "120", "2020", "420", "5", "5.5", "AUTOMATIC", "ELECTRIC", "pekny", null, "SEDAN");
+        carService.createCar("Superb", "Skoda", "2000", "red", "100", "2020", "420", "5", "5.5", "AUTOMATIC", "DIESEL", "pekny", null, "SEDAN");
+        carService.createCar("x6", "BMW", "2000", "black", "220", "2020", "420", "5", "5.5", "AUTOMATIC", "ELECTRIC", "pekny", null, "SEDAN");
+        carService.createCar("x5", "BMW", "2000", "blue", "200", "2020", "420", "5", "5.5", "AUTOMATIC", "ELECTRIC", "pekny", null, "SEDAN");
+        carService.createCar("m2", "BMW", "2000", "red", "230", "2020", "420", "5", "5.5", "AUTOMATIC", "ELECTRIC", "pekny", null, "SEDAN");
         carService.createCar("A4", "Audi", "2000", "green", "2000", "2012", "425", "5", "6.5", "AUTOMATIC", "GAS", "docela dobry", null, "SEDAN");
+        carService.createCar("Superb", "Skoda", "2000", "orange", "120", "2014", "420", "5", "5.5", "AUTOMATIC", "ELECTRIC", "pekny", null, "SEDAN");
+        carService.createCar("Superb", "Skoda", "2000", "yellow", "120", "2017", "420", "5", "5.5", "AUTOMATIC", "ELECTRIC", "pekny", null, "SEDAN");
         carService.createCar("nakejSaab", "Saab", "2000", "green", "2000", "2012", "425", "5", "6.5", "MANUAL", "DIESEL", "docela ujde", null, "CABRIOLET");
         Car car = carService.getACar();
         User user = userService.loadUserByUsername("zakaznik");
