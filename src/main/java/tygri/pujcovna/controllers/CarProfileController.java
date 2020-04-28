@@ -1,19 +1,9 @@
 package tygri.pujcovna.controllers;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,32 +41,7 @@ public class CarProfileController {
     public ModelAndView carProfile(HttpSession session, @RequestParam String id) {
         ModelAndView mv = new ModelAndView("/carProfile.jsp");
         Car car = carService.getCarById(id);
-        mv.addObject("brand", car.getBrand());
-        mv.addObject("name", car.getModel());
-        mv.addObject("foto", carService.getPhoto(car));
-        mv.addObject("productionyear", car.getProductionyear());
-        mv.addObject("seats", car.getSeats());
-        mv.addObject("consumption", car.getConsumption());
-        mv.addObject("power", car.getPower());
-        mv.addObject("baseprice", car.getBaseprice());
-        mv.addObject("description", car.getDescription());
-        mv.addObject("carId", id);
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date();
-        mv.addObject("minDate", formatter.format(date));
-        if (session.getAttribute("UserStatus") != null && session.getAttribute("UserStatus") != AuthorityType.ROLE_CUSTOMER) {
-            mv.addObject("orders", carorderService.getAllOrders(car));
-            mv.addObject("disabled", "");
-            if (car.isEnabled()) {
-                mv.addObject("disableEnableCar", "hidden");
-                mv.addObject("disableDisableCar", "");
-            } else {
-                mv.addObject("disableEnableCar", "");
-                mv.addObject("disableDisableCar", "hidden");
-            }
-        } else {
-            mv.addObject("disabled", "hidden");
-        }
+        setCommonCarProfileVariables(mv, session, car);
         return mv;
     }
 
@@ -90,28 +55,7 @@ public class CarProfileController {
         } else {
             mv.addObject("carProfilePhotoChangeMsg", "<p>Car photo NOT changed!</p>");
         }
-        mv.addObject("brand", car.getBrand());
-        mv.addObject("name", car.getModel());
-        mv.addObject("foto", carService.getPhoto(car));
-        mv.addObject("productionyear", car.getProductionyear());
-        mv.addObject("seats", car.getSeats());
-        mv.addObject("consumption", car.getConsumption());
-        mv.addObject("power", car.getPower());
-        mv.addObject("baseprice", car.getBaseprice());
-        mv.addObject("description", car.getDescription());
-        mv.addObject("orders", carorderService.getAllOrders(car));
-        mv.addObject("carId", id);
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date();
-        mv.addObject("minDate", formatter.format(date));
-        mv.addObject("disabled", "");
-        if (car.isEnabled()) {
-            mv.addObject("disableEnableCar", "hidden");
-            mv.addObject("disableDisableCar", "");
-        } else {
-            mv.addObject("disableEnableCar", "");
-            mv.addObject("disableDisableCar", "hidden");
-        }
+        setCommonCarProfileVariables(mv, session, car);
         return mv;
     }
 
@@ -121,44 +65,16 @@ public class CarProfileController {
         ModelAndView mv = new ModelAndView("/carProfile.jsp");
         User user = userService.loadUserByUsername(session.getAttribute("userName").toString());
         Car car = carService.getCarById(carId);
-
         String[] tripStart = tripstart.split("/");
         tripstart = tripStart[2] + "-" + tripStart[0] + "-" + tripStart[1];
         String[] tripEnd = tripend.split("/");
         tripend = tripEnd[2] + "-" + tripEnd[0] + "-" + tripEnd[1];
-
         if (carorderService.createOrder(user, car, tripstart, tripend)) {
             mv.addObject("createOrderMsg", "<p>Order successfully made on specified date</p>");
         } else {
             mv.addObject("createOrderMsg", "<p>Unable to order for that date</p>");
         }
-        mv.addObject("brand", car.getBrand());
-        mv.addObject("name", car.getModel());
-        mv.addObject("foto", carService.getPhoto(car));
-        mv.addObject("productionyear", car.getProductionyear());
-        mv.addObject("seats", car.getSeats());
-        mv.addObject("consumption", car.getConsumption());
-        mv.addObject("power", car.getPower());
-        mv.addObject("baseprice", car.getBaseprice());
-        mv.addObject("description", car.getDescription());
-        mv.addObject("carId", car.getId());
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date();
-        mv.addObject("minDate", formatter.format(date));
-        if (session.getAttribute("UserStatus") != AuthorityType.ROLE_CUSTOMER) {
-            //ORDERS--  TOHLE BYCH POTREBOVAL ABY BYLO SERAZENY PODLE DATUMU OD NEJBLIZSIHO K NEJPOZDEJSIMU - 
-            mv.addObject("orders", carorderService.getAllOrders(car));
-            mv.addObject("disabled", "");
-            if (car.isEnabled()) {
-                mv.addObject("disableEnableCar", "hidden");
-                mv.addObject("disableDisableCar", "");
-            } else {
-                mv.addObject("disableEnableCar", "");
-                mv.addObject("disableDisableCar", "hidden");
-            }
-        } else {
-            mv.addObject("disabled", "hidden");
-        }
+        setCommonCarProfileVariables(mv, session, car);
         return mv;
     }
 
@@ -168,36 +84,11 @@ public class CarProfileController {
         ModelAndView mv = new ModelAndView("/carProfile.jsp");
         Car car = carService.getCarById(id);
         if (carService.enable(car)) {
-            mv.addObject("carEnabledMsg", "Auto bylo odblokovano");
+            mv.addObject("carChangeMsg", "Auto bylo odblokovano");
         } else {
-            mv.addObject("carEnabledMsg", "Auto bylo odblokovano");
+            mv.addObject("carChangeMsg", "Auto bylo odblokovano");
         }
-        mv.addObject("brand", car.getBrand());
-        mv.addObject("name", car.getModel());
-        mv.addObject("foto", carService.getPhoto(car));
-        mv.addObject("productionyear", car.getProductionyear());
-        mv.addObject("seats", car.getSeats());
-        mv.addObject("consumption", car.getConsumption());
-        mv.addObject("power", car.getPower());
-        mv.addObject("baseprice", car.getBaseprice());
-        mv.addObject("description", car.getDescription());
-        mv.addObject("carId", car.getId());
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date();
-        mv.addObject("minDate", formatter.format(date));
-        if (session.getAttribute("UserStatus") != null && session.getAttribute("UserStatus") != AuthorityType.ROLE_CUSTOMER) {
-            mv.addObject("orders", carorderService.getAllOrders(car));
-            mv.addObject("disabled", "");
-            if (car.isEnabled()) {
-                mv.addObject("disableEnableCar", "hidden");
-                mv.addObject("disableDisableCar", "");
-            } else {
-                mv.addObject("disableEnableCar", "");
-                mv.addObject("disableDisableCar", "hidden");
-            }
-        } else {
-            mv.addObject("disabled", "hidden");
-        }
+        setCommonCarProfileVariables(mv, session, car);
         return mv;
     }
 
@@ -207,36 +98,39 @@ public class CarProfileController {
         ModelAndView mv = new ModelAndView("/carProfile.jsp");
         Car car = carService.getCarById(id);
         if (carService.disable(car)) {
-            mv.addObject("carEnabledMsg", "Auto bylo zablokovano");
+            mv.addObject("carChangeMsg", "Auto bylo zablokovano");
         } else {
-            mv.addObject("carEnabledMsg", "Auto nebylo zablokovano");
+            mv.addObject("carChangeMsg", "Auto nebylo zablokovano");
         }
-        mv.addObject("brand", car.getBrand());
-        mv.addObject("name", car.getModel());
-        mv.addObject("foto", carService.getPhoto(car));
-        mv.addObject("productionyear", car.getProductionyear());
-        mv.addObject("seats", car.getSeats());
-        mv.addObject("consumption", car.getConsumption());
-        mv.addObject("power", car.getPower());
-        mv.addObject("baseprice", car.getBaseprice());
-        mv.addObject("description", car.getDescription());
-        mv.addObject("carId", car.getId());
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date();
-        mv.addObject("minDate", formatter.format(date));
-        if (session.getAttribute("UserStatus") != null && session.getAttribute("UserStatus") != AuthorityType.ROLE_CUSTOMER) {
-            mv.addObject("orders", carorderService.getAllOrders(car));
-            mv.addObject("disabled", "");
-            if (car.isEnabled()) {
-                mv.addObject("disableEnableCar", "hidden");
-                mv.addObject("disableDisableCar", "");
-            } else {
-                mv.addObject("disableEnableCar", "");
-                mv.addObject("disableDisableCar", "hidden");
-            }
+        setCommonCarProfileVariables(mv, session, car);
+        return mv;
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE','ROLE_ADMIN')")
+    @RequestMapping(value = "/addCarToFrontPage", method = RequestMethod.GET)
+    public ModelAndView addCarToFrontPage(HttpSession session, @RequestParam String id) {
+        ModelAndView mv = new ModelAndView("/carProfile.jsp");
+        Car car = carService.getCarById(id);
+        if (carService.setIsOnFrontPage(car, true)) {
+            mv.addObject("carChangeMsg", "Auto bylo pridano na titulni stranku");
         } else {
-            mv.addObject("disabled", "hidden");
+            mv.addObject("carChangeMsg", "Auto nebylo pridano na titulni stranku");
         }
+        setCommonCarProfileVariables(mv, session, car);
+        return mv;
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE','ROLE_ADMIN')")
+    @RequestMapping(value = "/removeCarFromFrontPage", method = RequestMethod.GET)
+    public ModelAndView removeCarFromFrontPage(HttpSession session, @RequestParam String id) {
+        ModelAndView mv = new ModelAndView("/carProfile.jsp");
+        Car car = carService.getCarById(id);
+        if (carService.setIsOnFrontPage(car, false)) {
+            mv.addObject("carChangeMsg", "Auto bylo odebrano z titulni stranky");
+        } else {
+            mv.addObject("carChangeMsg", "Auto nebylo odebrano z titulni stranky");
+        }
+        setCommonCarProfileVariables(mv, session, car);
         return mv;
     }
 
@@ -246,9 +140,9 @@ public class CarProfileController {
         ModelAndView mv = new ModelAndView("adminPage.jsp");
         Car car = carService.getCarById(id);
         if (carService.deleteCar(car)) {
-            mv.addObject("userAddedMessage", "Auto bylo smazano");
+            mv.addObject("changeMessage", "Auto bylo smazano");
         } else {
-            mv.addObject("userAddedMessage", "Auto nebylo smazano");
+            mv.addObject("changeMessage", "Auto nebylo smazano");
         }
         mv.addObject("carData", carService.getAllCarsPreviews());
         mv.addObject("userData", userService.getAllUsersPreviews());
@@ -270,5 +164,41 @@ public class CarProfileController {
             orderDates.put(dates);
         }
         return orderDates.toString();
+    }
+
+    private void setCommonCarProfileVariables(ModelAndView mv, HttpSession session, Car car) {
+        mv.addObject("brand", car.getBrand());
+        mv.addObject("name", car.getModel());
+        mv.addObject("foto", carService.getPhoto(car));
+        mv.addObject("productionyear", car.getProductionyear());
+        mv.addObject("seats", car.getSeats());
+        mv.addObject("consumption", car.getConsumption());
+        mv.addObject("power", car.getPower());
+        mv.addObject("baseprice", car.getBaseprice());
+        mv.addObject("description", car.getDescription());
+        mv.addObject("carId", car.getId());
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        mv.addObject("minDate", formatter.format(date));
+        if (session.getAttribute("UserStatus") != null && session.getAttribute("UserStatus") != AuthorityType.ROLE_CUSTOMER) {
+            mv.addObject("orders", carorderService.getAllOrders(car));
+            mv.addObject("disabled", "");
+            if (car.isEnabled()) {
+                mv.addObject("disableEnableCar", "hidden");
+                mv.addObject("disableDisableCar", "");
+            } else {
+                mv.addObject("disableEnableCar", "");
+                mv.addObject("disableDisableCar", "hidden");
+            }
+            if (car.isOnFrontPage()) {
+                mv.addObject("disableRemoveFromFrontPageCar", "");
+                mv.addObject("disableAddToFrontPageCar", "hidden");
+            } else {
+                mv.addObject("disableRemoveFromFrontPageCar", "hidden");
+                mv.addObject("disableAddToFrontPageCar", "");
+            }
+        } else {
+            mv.addObject("disabled", "hidden");
+        }
     }
 }

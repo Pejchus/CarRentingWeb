@@ -31,7 +31,6 @@ public class CarService {
         this.carorderDao = carorderDao;
     }
 
-    //osklive, predelat jestli bude cas
     @Transactional
     public String getAllCarsPreviews() {
         return getCarsPreviews(carDao.getAll());
@@ -163,5 +162,17 @@ public class CarService {
 
     public boolean disable(Car car) {
         return carDao.setEnabled(false, car.getId());
+    }
+
+    public boolean getIsOnFrontPage(Car car) {
+        return carDao.getIsOnFrontPage(car);
+    }
+
+    public boolean setIsOnFrontPage(Car car, boolean b) {
+        return carDao.setIsOnFrontPage(car, b);
+    }
+
+    public String getCarsOnFrontPagePreviews() {
+        return getCarsPreviews(carDao.getCarsOnFrontPage());
     }
 }

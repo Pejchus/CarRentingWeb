@@ -37,7 +37,7 @@
                         <label>Car category(SEDAN/COMBI/SUV/HATCHBACK/CABRIOLET/PICKUP/VAN): </label><input type="string" name="carcategory" required><br>
                         <input type="submit"><br>
                     </form>
-
+                    ${carAddedMessage}
                     <h3>Add User</h3>
                     <form action="doAddUser">
                         <label>Username(string): </label><input type="text" name="username" required><br>
@@ -54,8 +54,7 @@
                         <label>Authority(CUSTOMER/EMPLOYEE/ADMIN): </label><input type="text" name="authority" required><br>
                         <input type="submit"><br>
                     </form>
-                    ${userAddedMessage}
-
+                    ${changeMessage}
                 </security:authorize>
                 <table class="accounts">
                     <tr>
@@ -65,8 +64,6 @@
                             ${userData}</td>
                     </tr>
                 </table>
-
-
             </div>
         </main>
 

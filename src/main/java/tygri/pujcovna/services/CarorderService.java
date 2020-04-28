@@ -32,17 +32,17 @@ public class CarorderService {
         for (Carorder order : orders) {
             Car car = order.getCar();
             if (colorHistory.containsKey(car.getColor())) {
-                colorHistory.put(car.getColor(), colorHistory.get(car.getColor()).intValue() + 1);
+                colorHistory.put(car.getColor(), colorHistory.get(car.getColor()) + 1);
             } else {
                 colorHistory.put(car.getColor(), 1);
             }
             if (typeHistory.containsKey(car.getCarCategory())) {
-                typeHistory.put(String.valueOf(car.getCarCategory()), typeHistory.get(String.valueOf(car.getCarCategory())).intValue() + 1);
+                typeHistory.put(String.valueOf(car.getCarCategory()), typeHistory.get(String.valueOf(car.getCarCategory())) + 1);
             } else {
                 typeHistory.put(String.valueOf(car.getCarCategory()), 1);
             }
             if (companyHistory.containsKey(car.getBrand())) {
-                companyHistory.put(car.getBrand(), companyHistory.get(car.getBrand()).intValue() + 1);
+                companyHistory.put(car.getBrand(), companyHistory.get(car.getBrand()) + 1);
             } else {
                 companyHistory.put(car.getBrand(), 1);
             }
@@ -50,19 +50,19 @@ public class CarorderService {
         Set<Car> preferedcars = new HashSet<>();
         String[][] topick = permutations(colorHistory, typeHistory, companyHistory);
         for (int i = 0; i < 9; i++) {
-            if (topick[i][1]==null){
-                topick[i][1]="all";
+            if (topick[i][1] == null) {
+                topick[i][1] = "all";
             }
-            List<Car> toadd = getFilteredCars("",topick[i][2],"","","","",topick[i][1],topick[i][0]);
+            List<Car> toadd = getFilteredCars("", topick[i][2], "", "", "", "", topick[i][1], topick[i][0]);
             preferedcars.addAll(toadd);
         }
-        preferedcars.addAll(getFilteredCars("","","","","","","all",""));
+        preferedcars.addAll(getFilteredCars("", "", "", "", "", "", "all", ""));
         return carService.getCarsPreviews(new ArrayList<>(preferedcars));
     }
 
     public String getOffers(String modelsearch, String carcompany, String tripstart, String tripend, String range1a, String range1b, String type) {
 
-        return carService.getCarsPreviews(getFilteredCars(modelsearch,carcompany,tripstart,tripend,range1a,range1b,type,""));
+        return carService.getCarsPreviews(getFilteredCars(modelsearch, carcompany, tripstart, tripend, range1a, range1b, type, ""));
     }
 
     private List<Car> getFilteredCars(String modelsearch, String carcompany, String tripstart, String tripend, String range1a, String range1b, String type, String color) {
@@ -94,7 +94,7 @@ public class CarorderService {
         }
         List<Car> filteredCars;
         if (!"".equals(type)) {
-            filteredCars = carDao.getFilteredCars(modelsearch, carcompany, lowPrice, highPrice, CarCategory.valueOf(type),"");
+            filteredCars = carDao.getFilteredCars(modelsearch, carcompany, lowPrice, highPrice, CarCategory.valueOf(type), "");
         } else {
             filteredCars = carDao.getFilteredCars(modelsearch, carcompany, lowPrice, highPrice);
         }
@@ -143,7 +143,6 @@ public class CarorderService {
         }
     }
 
-
     public List<Carorder> getAllOrders(User user) {
         return carOrderDao.getUserOrderHistory(user);
     }
@@ -152,50 +151,54 @@ public class CarorderService {
         return carOrderDao.getCarOrderHistory(car);
     }
 
-    private String[][] permutations(HashMap colorHistory, HashMap typeHistory, HashMap brandHistory){
-        String [][] per = new String[9][3];
+    private String[][] permutations(HashMap colorHistory, HashMap typeHistory, HashMap brandHistory) {
+        String[][] per = new String[9][3];
         String[] topColor = topThree(colorHistory);
-        String [] topType = topThree(typeHistory);
+        String[] topType = topThree(typeHistory);
         String[] topBrand = topThree(brandHistory);
-        for(int i =0 ; i<3;i++){
-            for(int j=0;j<4;j++) {
-                per[j+i*4][0] = topColor[i];
-                per[j+i*4][1] = topType[i];
-                per[j+i*4][2] = topBrand[i];
-                if(j==1){per[j+i*4][0]=topColor[i+1];};
-                if(j==2){per[j+i*4][1]=topType[i+1];};
-                if(j==3){per[j+i*4][2]=topBrand[i+1];};
-                if(i==2) {break;};
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 4; j++) {
+                per[j + i * 4][0] = topColor[i];
+                per[j + i * 4][1] = topType[i];
+                per[j + i * 4][2] = topBrand[i];
+                if (j == 1) {
+                    per[j + i * 4][0] = topColor[i + 1];
+                }
+                if (j == 2) {
+                    per[j + i * 4][1] = topType[i + 1];
+                }
+                if (j == 3) {
+                    per[j + i * 4][2] = topBrand[i + 1];
+                }
+                if (i == 2) {
+                    break;
+                }
             }
         }
 
         return per;
     }
 
-    private String [] topThree(HashMap<String,Integer> map){
-        int first , second ,third;
+    private String[] topThree(HashMap<String, Integer> map) {
+        int first, second, third;
         first = second = third = 1;
         String[] res = new String[3];
-        for (String name : map.keySet()){
-            if (map.get(name).intValue() > first)
-            {
+        for (String name : map.keySet()) {
+            if (map.get(name) > first) {
                 third = second;
                 second = first;
-                first = map.get(name).intValue();
-                res[2]=res[1];
-                res[1]=res[0];
-                res[0]=name;
-            }
-            else if (map.get(name).intValue() > second)
-            {
+                first = map.get(name);
+                res[2] = res[1];
+                res[1] = res[0];
+                res[0] = name;
+            } else if (map.get(name) > second) {
                 third = second;
-                second = map.get(name).intValue();
-                res[2]=res[1];
-                res[1]=name;
-            }
-            else if (map.get(name).intValue() > third){
-                third = map.get(name).intValue();
-                res[2]=name;
+                second = map.get(name);
+                res[2] = res[1];
+                res[1] = name;
+            } else if (map.get(name) > third) {
+                third = map.get(name);
+                res[2] = name;
             }
 
         }

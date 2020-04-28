@@ -7,23 +7,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import tygri.pujcovna.services.CarService;
-import tygri.pujcovna.services.UserService;
 
 @Controller
 public class MainController implements ErrorController {
 
     private final CarService carService;
-    private final UserService userService;
 
     @Autowired
-    public MainController(CarService carService, UserService userService) {
+    public MainController(CarService carService) {
         this.carService = carService;
-        this.userService = userService;
     }
 
     @RequestMapping("/")
     public ModelAndView index(HttpSession session) {
         ModelAndView mv = new ModelAndView("/index.jsp");
+        mv.addObject("frontPageCars", carService.getCarsOnFrontPagePreviews());
         return mv;
     }
 

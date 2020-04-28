@@ -1,6 +1,5 @@
 package tygri.pujcovna.model;
 
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -79,6 +78,10 @@ public class Car implements Serializable {
     @Enumerated(EnumType.STRING)
     private CarCategory carCategory;
 
+    @Basic(optional = false)
+    @Column(nullable = false)
+    private boolean onFrontPage;
+
     @OneToMany(
             cascade = CascadeType.ALL,
             orphanRemoval = true,
@@ -105,6 +108,7 @@ public class Car implements Serializable {
         this.engineType = engineType;
         this.description = description;
         this.carCategory = carCategory;
+        this.onFrontPage = false;
     }
 
     public Car(String model, String brand, Double baseprice, String color, Double power, Integer productionyear, Double trunkvolume, boolean enabled, Integer seats, Double consumption, TransmissionType transimissionType, EngineType engineType, String description, Byte[] photo, CarCategory carCategory) {
@@ -123,6 +127,7 @@ public class Car implements Serializable {
         this.description = description;
         this.photo = photo;
         this.carCategory = carCategory;
+        this.onFrontPage = false;
     }
 
     public Integer getId() {
@@ -259,6 +264,14 @@ public class Car implements Serializable {
 
     public void setOrderss(List<Carorder> orderss) {
         this.orderss = orderss;
+    }
+
+    public boolean isOnFrontPage() {
+        return onFrontPage;
+    }
+
+    public void setOnFrontPage(boolean onFrontPage) {
+        this.onFrontPage = onFrontPage;
     }
 
     @Override

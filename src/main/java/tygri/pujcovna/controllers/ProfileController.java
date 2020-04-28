@@ -95,9 +95,9 @@ public class ProfileController {
         ModelAndView mv = new ModelAndView("adminPage.jsp");
         User user = userService.loadUserById(id);
         if (userService.deleteUser(session, user)) {
-            mv.addObject("userAddedMessage", "Uzivatel byl smazan");
+            mv.addObject("changeMessage", "Uzivatel byl smazan");
         } else {
-            mv.addObject("userAddedMessage", "Uzivatel nebyl smazan");
+            mv.addObject("changeMessage", "Uzivatel nebyl smazan");
         }
         mv.addObject("carData", carService.getAllCarsPreviews());
         mv.addObject("userData", userService.getAllUsersPreviews());
@@ -110,9 +110,9 @@ public class ProfileController {
         ModelAndView mv = new ModelAndView("/profile.jsp");
         User user = userService.loadUserById(id);
         if (userService.disable(session, user)) {
-            mv.addObject("userEnabledMsg", "Uzivatel byl zablokovan");
+            mv.addObject("changeMessage", "Uzivatel byl zablokovan");
         } else {
-            mv.addObject("userEnabledMsg", "Uzivatel nebyl zablokovan");
+            mv.addObject("changeMessage", "Uzivatel nebyl zablokovan");
         }
         if (user != null) {
             mv.addObject("firstname", user.getFirstname());
@@ -156,9 +156,9 @@ public class ProfileController {
         ModelAndView mv = new ModelAndView("/profile.jsp");
         User user = userService.loadUserById(id);
         if (userService.enable(session, user)) {
-            mv.addObject("userEnabledMsg", "Uzivatel byl odblokovan");
+            mv.addObject("changeMessage", "Uzivatel byl odblokovan");
         } else {
-            mv.addObject("userEnabledMsg", "Uzivatel byl odblokovan");
+            mv.addObject("changeMessage", "Uzivatel byl odblokovan");
         }
         if (user != null) {
             mv.addObject("firstname", user.getFirstname());
@@ -248,9 +248,9 @@ public class ProfileController {
     public ModelAndView doAddUser(HttpSession session, @RequestParam String username, @RequestParam String password, @RequestParam String email, @RequestParam String enabled, @RequestParam String phone, @RequestParam String countryCode, @RequestParam String firstname, @RequestParam String lastname, @RequestParam String city, @RequestParam String street, @RequestParam String streetNo, @RequestParam String authority) {
         ModelAndView mv = new ModelAndView("/adminPage.jsp");
         if (userService.createUser(username, password, email, enabled, phone, countryCode, firstname, lastname, city, street, streetNo, authority)) {
-            mv.addObject("userAddedMessage", "<p>User added!</p>");
+            mv.addObject("changeMessage", "<p>User added!</p>");
         } else {
-            mv.addObject("userAddedMessage", "<p>User not added!</p>");
+            mv.addObject("changeMessage", "<p>User not added!</p>");
         }
         mv.addObject("userData", userService.getAllUsersPreviews());
         mv.addObject("carData", carService.getAllCarsPreviews());

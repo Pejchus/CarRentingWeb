@@ -51,7 +51,7 @@ public class CarDao extends BaseDao {
         brand = "%" + brand + "%";
         try {
             TypedQuery<Car> q = em.createQuery("SELECT e FROM Car e WHERE e.model LIKE :model and e.brand LIKE :brand and e.color like :color and e.carCategory LIKE :carCategory and e.baseprice between :lowest AND :highest", Car.class);
-            return q.setParameter("lowest", lowest).setParameter("highest", highest).setParameter("model", model).setParameter("color",color).setParameter("brand", brand).setParameter("carCategory", carCategory).getResultList();
+            return q.setParameter("lowest", lowest).setParameter("highest", highest).setParameter("model", model).setParameter("color", color).setParameter("brand", brand).setParameter("carCategory", carCategory).getResultList();
         } catch (RuntimeException e) {
             return null;
         }
@@ -63,6 +63,15 @@ public class CarDao extends BaseDao {
         try {
             TypedQuery<Car> q = em.createQuery("SELECT e FROM Car e WHERE e.model LIKE :model and e.brand LIKE :brand and e.baseprice between :lowest AND :highest", Car.class);
             return q.setParameter("lowest", lowest).setParameter("highest", highest).setParameter("model", model).setParameter("brand", brand).getResultList();
+        } catch (RuntimeException e) {
+            return null;
+        }
+    }
+
+    public List<Car> getCarsOnFrontPage() {
+        try {
+            TypedQuery<Car> q = em.createQuery("SELECT e FROM Car e WHERE e.onFrontPage=TRUE", Car.class);
+            return q.getResultList();
         } catch (RuntimeException e) {
             return null;
         }
@@ -107,4 +116,17 @@ public class CarDao extends BaseDao {
         }
     }
 
+    public boolean getIsOnFrontPage(Car car) {
+        return car.isOnFrontPage();
+    }
+
+    public boolean setIsOnFrontPage(Car car, boolean b) {
+        try {
+            car.setOnFrontPage(b);
+            updateEntity(car);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

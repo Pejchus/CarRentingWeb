@@ -29,10 +29,10 @@ public class CarorderController {
 
     @RequestMapping(value = "/offers", method = RequestMethod.GET)
     public ModelAndView offers(HttpSession session) {
-        User user ;
-        try {
-            System.out.println(session.getAttribute("userName").toString());
-            user = userService.loadUserByUsername(session.getAttribute("userName").toString());
+        if (session.getAttribute("userName") == null) {
+            return showOffers(session, "", "", "", "", "", "", "");
+        } else {
+            User user = userService.loadUserByUsername(session.getAttribute("userName").toString());
             ModelAndView mv = new ModelAndView("/nabidka.jsp");
             String offers = orderService.getPrefferd(user);
             mv.addObject("offers", offers);
@@ -40,9 +40,6 @@ public class CarorderController {
             Date date = new Date();
             mv.addObject("minDate", formatter.format(date));
             return mv;
-        }catch (Exception e) {
-            e.printStackTrace();
-            return showOffers(session, "", "", "", "", "", "", "");
         }
     }
 

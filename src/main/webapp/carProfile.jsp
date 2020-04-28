@@ -111,8 +111,16 @@
                         <fieldset ${disableEnableCar}>
                             <a href="enableCar?id=${carId}">Odblokovat auto</a>
                         </fieldset>
+
+                        <fieldset ${disableAddToFrontPageCar}>
+                            <a href="addCarToFrontPage?id=${carId}">Pridat auto na titulni stranku</a>
+                        </fieldset>
+                        <fieldset ${disableRemoveFromFrontPageCar}>
+                            <a href="removeCarFromFrontPage?id=${carId}">Odebrat auto z titulni stranky</a>
+                        </fieldset>
+
                         <a href="deleteCar?id=${carId}">Smazat auto (nezrusi jeho objednavky)</a>
-                        ${carEnabledMsg}
+                        ${carChangeMsg}
                     </fieldset>
                 </div>
             </div>
