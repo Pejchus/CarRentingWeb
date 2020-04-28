@@ -33,7 +33,7 @@ public class CarorderController {
         } else {
             User user = userService.loadUserByUsername(session.getAttribute("userName").toString());
             ModelAndView mv = new ModelAndView("/nabidka.jsp");
-            String offers = orderService.getPrefferd(user);
+            String offers = orderService.getEnabledPrefferd(user);
             mv.addObject("offers", offers);
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date date = new Date();
@@ -45,7 +45,7 @@ public class CarorderController {
     @RequestMapping(value = "/filterOffers", method = RequestMethod.GET)
     public ModelAndView showOffers(HttpSession session, @RequestParam String modelsearch, @RequestParam String carcompany, @RequestParam String tripstart, @RequestParam String tripend, @RequestParam String range1a, @RequestParam String range1b, @RequestParam("type") String type) {
         ModelAndView mv = new ModelAndView("/nabidka.jsp");
-        String offers = orderService.getOffers(modelsearch, carcompany, tripstart, tripend, range1a, range1b, type);
+        String offers = orderService.getEnabledCarsOffers(modelsearch, carcompany, tripstart, tripend, range1a, range1b, type);
         mv.addObject("offers", offers);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();

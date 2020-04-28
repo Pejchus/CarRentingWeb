@@ -32,6 +32,123 @@ public class ProfileController {
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
     public ModelAndView profile(HttpSession session) {
         ModelAndView mv = new ModelAndView("/profile.jsp");
+        setCommonProfileVariables(session, mv);
+        mv.addObject("disabled", "");
+        mv.addObject("disabledAdminButtons", "hidden");
+        mv.addObject("disableEnableUser", "hidden");
+        mv.addObject("disableDisableUser", "hidden");
+        return mv;
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')")
+    @RequestMapping(value = "/setProfilePhoto", method = RequestMethod.POST)
+    public ModelAndView setProfilePhoto(HttpSession session, @RequestParam MultipartFile photo) {
+        ModelAndView mv = new ModelAndView("/profile.jsp");
+        if (userService.setPhoto(photo, session.getAttribute("userName").toString())) {
+            mv.addObject("profilePhotoChangeMsg", "<p>Profilove foto uspesne zmeneno</p>");
+        } else {
+            mv.addObject("profilePhotoChangeMsg", "<p>Profilove foto nebylo zmeneno</p>");
+        }
+        setCommonProfileVariables(session, mv);
+        mv.addObject("disabled", "");
+        mv.addObject("disabledAdminButtons", "hidden");
+        mv.addObject("disableEnableUser", "hidden");
+        mv.addObject("disableDisableUser", "hidden");
+        return mv;
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RequestMapping(value = "/adminProfileView", method = RequestMethod.GET)
+    public ModelAndView adminProfileView(HttpSession session, @RequestParam String id) {
+        if (session.getAttribute("userId").toString().equals(id)) {
+            return profile(session);
+        } else {
+            ModelAndView mv = new ModelAndView("/profile.jsp");
+            User user = userService.loadUserById(id);
+            if (user != null) {
+                setCommonProfileVariables(session, mv);
+                if (user.isEnabled()) {
+                    mv.addObject("disableEnableUser", "hidden");
+                    mv.addObject("disableDisableUser", "");
+                } else {
+                    mv.addObject("disableEnableUser", "");
+                    mv.addObject("disableDisableUser", "hidden");
+                }
+            } else {
+                return new ModelAndView("/error.html");
+            }
+            mv.addObject("userId", id);
+            mv.addObject("disabled", "hidden");
+            mv.addObject("disabledAdminButtons", "");
+            return mv;
+        }
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RequestMapping(value = "/disableUser", method = RequestMethod.GET)
+    public ModelAndView disableUser(HttpSession session, @RequestParam String id) {
+        if (session.getAttribute("userId").toString().equals(id)) {
+            return profile(session);
+        } else {
+            ModelAndView mv = new ModelAndView("/profile.jsp");
+            User user = userService.loadUserById(id);
+            if (userService.disable(session, user)) {
+                mv.addObject("changeMessage", "Uzivatel byl zablokovan");
+            } else {
+                mv.addObject("changeMessage", "Uzivatel nebyl zablokovan");
+            }
+            if (user != null) {
+                setCommonProfileVariables(session, mv);
+                if (user.isEnabled()) {
+                    mv.addObject("disableEnableUser", "hidden");
+                    mv.addObject("disableDisableUser", "");
+                } else {
+                    mv.addObject("disableEnableUser", "");
+                    mv.addObject("disableDisableUser", "hidden");
+                }
+            } else {
+                return new ModelAndView("/error.html");
+            }
+            mv.addObject("disabledAdminButtons", "");
+            mv.addObject("userId", id);
+            mv.addObject("disabled", "hidden");
+            return mv;
+        }
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RequestMapping(value = "/enableUser", method = RequestMethod.GET)
+    public ModelAndView enableUser(HttpSession session, @RequestParam String id) {
+        if (session.getAttribute("userId").toString().equals(id)) {
+            return profile(session);
+        } else {
+            ModelAndView mv = new ModelAndView("/profile.jsp");
+            User user = userService.loadUserById(id);
+            if (userService.enable(session, user)) {
+                mv.addObject("changeMessage", "Uzivatel byl odblokovan");
+            } else {
+                mv.addObject("changeMessage", "Uzivatel byl odblokovan");
+            }
+            if (user != null) {
+                setCommonProfileVariables(session, mv);
+                if (user.isEnabled()) {
+                    mv.addObject("disableEnableUser", "hidden");
+                    mv.addObject("disableDisableUser", "");
+                } else {
+                    mv.addObject("disableEnableUser", "");
+                    mv.addObject("disableDisableUser", "hidden");
+                }
+            } else {
+                return new ModelAndView("/error.html");
+            }
+            mv.addObject("disabledAdminButtons", "");
+            mv.addObject("userId", id);
+            mv.addObject("disabled", "hidden");
+            return mv;
+        }
+    }
+
+    private void setCommonProfileVariables(HttpSession session, ModelAndView mv) {
         mv.addObject("firstname", session.getAttribute("firstname"));
         mv.addObject("lastname", session.getAttribute("lastname"));
         mv.addObject("phone", session.getAttribute("phone"));
@@ -42,50 +159,14 @@ public class ProfileController {
         mv.addObject("streetno", session.getAttribute("streetno"));
         mv.addObject("profilePhoto", userService.getPhoto(session.getAttribute("userName").toString()));
         mv.addObject("orders", carorderService.getAllOrders(userService.loadUserByUsername(session.getAttribute("userName").toString())));
-        mv.addObject("disabled", "");
-        mv.addObject("disableEnableUser", "hidden");
-        mv.addObject("disableDisableUser", "hidden");
-        return mv;
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(value = "/adminProfileView", method = RequestMethod.GET)
-    public ModelAndView adminProfileView(HttpSession session, @RequestParam String id) {
-        ModelAndView mv = new ModelAndView("/profile.jsp");
-        User user = userService.loadUserById(id);
-        if (user != null) {
-            mv.addObject("firstname", user.getFirstname());
-            mv.addObject("lastname", user.getLastname());
-            mv.addObject("phone", user.getPhone());
-            mv.addObject("email", user.getEmail());
-            mv.addObject("countrycode", user.getCountryCode());
-            mv.addObject("city", user.getCity());
-            mv.addObject("street", user.getStreet());
-            mv.addObject("streetno", user.getStreetno());
-            mv.addObject("profilePhoto", userService.getPhoto(user.getUsername()));
-            mv.addObject("orders", carorderService.getAllOrders(user));
-            if (user.isEnabled()) {
-                mv.addObject("disableEnableUser", "hidden");
-                mv.addObject("disableDisableUser", "");
-            } else {
-                mv.addObject("disableEnableUser", "");
-                mv.addObject("disableDisableUser", "hidden");
-            }
-        } else {
-            mv.addObject("firstname", "User does not exist");
-            mv.addObject("lastname", "User does not exist");
-            mv.addObject("phone", "User does not exist");
-            mv.addObject("email", "User does not exist");
-            mv.addObject("countrycode", "User does not exist");
-            mv.addObject("city", "User does not exist");
-            mv.addObject("street", "User does not exist");
-            mv.addObject("streetno", "User does not exist");
-            mv.addObject("profilePhoto", "User does not exist");
-            mv.addObject("disableEnableUser", "");
-            mv.addObject("disableDisableUser", "");
-        }
-        mv.addObject("userId", id);
-        mv.addObject("disabled", "hidden");
+    @RequestMapping(value = "/adminPage")
+    @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE','ROLE_ADMIN')")
+    public ModelAndView getAdminPage(HttpSession session) {
+        ModelAndView mv = new ModelAndView("/adminPage.jsp");
+        mv.addObject("carData", carService.getAllCarsPreviews());
+        mv.addObject("userData", userService.getAllUsersPreviews());
         return mv;
     }
 
@@ -99,130 +180,6 @@ public class ProfileController {
         } else {
             mv.addObject("changeMessage", "Uzivatel nebyl smazan");
         }
-        mv.addObject("carData", carService.getAllCarsPreviews());
-        mv.addObject("userData", userService.getAllUsersPreviews());
-        return mv;
-    }
-
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(value = "/disableUser", method = RequestMethod.GET)
-    public ModelAndView disableUser(HttpSession session, @RequestParam String id) {
-        ModelAndView mv = new ModelAndView("/profile.jsp");
-        User user = userService.loadUserById(id);
-        if (userService.disable(session, user)) {
-            mv.addObject("changeMessage", "Uzivatel byl zablokovan");
-        } else {
-            mv.addObject("changeMessage", "Uzivatel nebyl zablokovan");
-        }
-        if (user != null) {
-            mv.addObject("firstname", user.getFirstname());
-            mv.addObject("lastname", user.getLastname());
-            mv.addObject("phone", user.getPhone());
-            mv.addObject("email", user.getEmail());
-            mv.addObject("countrycode", user.getCountryCode());
-            mv.addObject("city", user.getCity());
-            mv.addObject("street", user.getStreet());
-            mv.addObject("streetno", user.getStreetno());
-            mv.addObject("profilePhoto", userService.getPhoto(user.getUsername()));
-            mv.addObject("orders", carorderService.getAllOrders(user));
-            if (user.isEnabled()) {
-                mv.addObject("disableEnableUser", "hidden");
-                mv.addObject("disableDisableUser", "");
-            } else {
-                mv.addObject("disableEnableUser", "");
-                mv.addObject("disableDisableUser", "hidden");
-            }
-        } else {
-            mv.addObject("firstname", "User does not exist");
-            mv.addObject("lastname", "User does not exist");
-            mv.addObject("phone", "User does not exist");
-            mv.addObject("email", "User does not exist");
-            mv.addObject("countrycode", "User does not exist");
-            mv.addObject("city", "User does not exist");
-            mv.addObject("street", "User does not exist");
-            mv.addObject("streetno", "User does not exist");
-            mv.addObject("profilePhoto", "User does not exist");
-            mv.addObject("disableEnableUser", "");
-            mv.addObject("disableDisableUser", "");
-        }
-        mv.addObject("userId", id);
-        mv.addObject("disabled", "hidden");
-        return mv;
-    }
-
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(value = "/enableUser", method = RequestMethod.GET)
-    public ModelAndView enableUser(HttpSession session, @RequestParam String id) {
-        ModelAndView mv = new ModelAndView("/profile.jsp");
-        User user = userService.loadUserById(id);
-        if (userService.enable(session, user)) {
-            mv.addObject("changeMessage", "Uzivatel byl odblokovan");
-        } else {
-            mv.addObject("changeMessage", "Uzivatel byl odblokovan");
-        }
-        if (user != null) {
-            mv.addObject("firstname", user.getFirstname());
-            mv.addObject("lastname", user.getLastname());
-            mv.addObject("phone", user.getPhone());
-            mv.addObject("email", user.getEmail());
-            mv.addObject("countrycode", user.getCountryCode());
-            mv.addObject("city", user.getCity());
-            mv.addObject("street", user.getStreet());
-            mv.addObject("streetno", user.getStreetno());
-            mv.addObject("profilePhoto", userService.getPhoto(user.getUsername()));
-            mv.addObject("orders", carorderService.getAllOrders(user));
-            if (user.isEnabled()) {
-                mv.addObject("disableEnableUser", "hidden");
-                mv.addObject("disableDisableUser", "");
-            } else {
-                mv.addObject("disableEnableUser", "");
-                mv.addObject("disableDisableUser", "hidden");
-            }
-        } else {
-            mv.addObject("firstname", "User does not exist");
-            mv.addObject("lastname", "User does not exist");
-            mv.addObject("phone", "User does not exist");
-            mv.addObject("email", "User does not exist");
-            mv.addObject("countrycode", "User does not exist");
-            mv.addObject("city", "User does not exist");
-            mv.addObject("street", "User does not exist");
-            mv.addObject("streetno", "User does not exist");
-            mv.addObject("profilePhoto", "User does not exist");
-            mv.addObject("disableEnableUser", "");
-            mv.addObject("disableDisableUser", "");
-        }
-        mv.addObject("userId", id);
-        mv.addObject("disabled", "hidden");
-        return mv;
-    }
-
-    @PreAuthorize("hasAnyRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')")
-    @RequestMapping(value = "/setProfilePhoto", method = RequestMethod.POST)
-    public ModelAndView profile(HttpSession session, @RequestParam MultipartFile photo) {
-        ModelAndView mv = new ModelAndView("/profile.jsp");
-        if (userService.setPhoto(photo, session.getAttribute("userName").toString())) {
-            mv.addObject("profilePhotoChangeMsg", "<p>Profilove foto uspesne zmeneno</p>");
-        } else {
-            mv.addObject("profilePhotoChangeMsg", "<p>Profilove foto nebylo zmeneno</p>");
-        }
-        mv.addObject("firstname", session.getAttribute("firstname"));
-        mv.addObject("lastname", session.getAttribute("lastname"));
-        mv.addObject("phone", session.getAttribute("phone"));
-        mv.addObject("email", session.getAttribute("email"));
-        mv.addObject("countrycode", session.getAttribute("countrycode"));
-        mv.addObject("city", session.getAttribute("city"));
-        mv.addObject("street", session.getAttribute("street"));
-        mv.addObject("streetno", session.getAttribute("streetno"));
-        mv.addObject("profilePhoto", userService.getPhoto(session.getAttribute("userName").toString()));
-        mv.addObject("orders", carorderService.getAllOrders(userService.loadUserByUsername(session.getAttribute("userName").toString())));
-        mv.addObject("disabled", "");
-        return mv;
-    }
-
-    @RequestMapping(value = "/adminPage")
-    @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE','ROLE_ADMIN')")
-    public ModelAndView getAdminPage(HttpSession session) {
-        ModelAndView mv = new ModelAndView("/adminPage.jsp");
         mv.addObject("carData", carService.getAllCarsPreviews());
         mv.addObject("userData", userService.getAllUsersPreviews());
         return mv;
@@ -257,4 +214,5 @@ public class ProfileController {
         mv.addObject("LoggedUser", session.getAttribute("userName"));
         return mv;
     }
+
 }

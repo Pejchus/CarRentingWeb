@@ -17,27 +17,26 @@
         <!-- MAIN SECTION -->
         <main class="main">
             <div class="container main_description">
-
-                <security:authorize access="hasAnyRole('ROLE_EMPLOYEE','ROLE_ADMIN')">
-                    <h3>Add Car</h3>
-                    <form method="POST" enctype="multipart/form-data" action="doAddCar">
-                        <label>Model(string): </label><input type="text" name="model" required><br>
-                        <label>Brand(string): </label><input type="text" name="brand" required><br>
-                        <label>Baseprice(double): </label><input type="text" name="baseprice" required><br>
-                        <label>Color(string): </label><input type="text" name="color" required><br>
-                        <label>Power(double): </label><input type="text" name="power" required><br>
-                        <label>Productionyear(int): </label><input type="text" name="productionyear" required><br>
-                        <label>Trunkvolume(double): </label><input type="text" name="trunkvolume" required><br>
-                        <label>Seats(int): </label><input type="text" name="seats" required><br>
-                        <label>Consumption(double): </label><input type="text" name="consumption" required><br>
-                        <label>Transmissiontype(AUTOMATIC/MANUAL): </label><input type="text" name="transmissiontype" required><br>
-                        <label>Enginetype(GAS/DIESEL/ELECTRIC): </label><input type="text" name="enginetype" required><br>
-                        <label>Description(string): </label><input type="text" name="description" required><br>
-                        <label>Car photo: </label><input type="file" name="photo"><br>
-                        <label>Car category(SEDAN/COMBI/SUV/HATCHBACK/CABRIOLET/PICKUP/VAN): </label><input type="string" name="carcategory" required><br>
-                        <input type="submit"><br>
-                    </form>
-                    ${carAddedMessage}
+                <h3>Add Car</h3>
+                <form method="POST" enctype="multipart/form-data" action="doAddCar">
+                    <label>Model(string): </label><input type="text" name="model" required><br>
+                    <label>Brand(string): </label><input type="text" name="brand" required><br>
+                    <label>Baseprice(double): </label><input type="text" name="baseprice" required><br>
+                    <label>Color(string): </label><input type="text" name="color" required><br>
+                    <label>Power(double): </label><input type="text" name="power" required><br>
+                    <label>Productionyear(int): </label><input type="text" name="productionyear" required><br>
+                    <label>Trunkvolume(double): </label><input type="text" name="trunkvolume" required><br>
+                    <label>Seats(int): </label><input type="text" name="seats" required><br>
+                    <label>Consumption(double): </label><input type="text" name="consumption" required><br>
+                    <label>Transmissiontype(AUTOMATIC/MANUAL): </label><input type="text" name="transmissiontype" required><br>
+                    <label>Enginetype(GAS/DIESEL/ELECTRIC): </label><input type="text" name="enginetype" required><br>
+                    <label>Description(string): </label><input type="text" name="description" required><br>
+                    <label>Car photo: </label><input type="file" name="photo"><br>
+                    <label>Car category(SEDAN/COMBI/SUV/HATCHBACK/CABRIOLET/PICKUP/VAN): </label><input type="string" name="carcategory" required><br>
+                    <input type="submit"><br>
+                </form>
+                ${carAddedMessage}
+                <security:authorize access="hasRole('ROLE_ADMIN')">
                     <h3>Add User</h3>
                     <form action="doAddUser">
                         <label>Username(string): </label><input type="text" name="username" required><br>
@@ -60,8 +59,10 @@
                     <tr>
                         <td><h1>Auta V databazi</h1>
                             ${carData}</td>
-                        <td><h1>Users V databazi</h1>
-                            ${userData}</td>
+                            <security:authorize access="hasRole('ROLE_ADMIN')">
+                            <td><h1>Users V databazi</h1>
+                                ${userData}</td>
+                            </security:authorize>
                     </tr>
                 </table>
             </div>

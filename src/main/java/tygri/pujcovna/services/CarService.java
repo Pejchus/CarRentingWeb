@@ -32,8 +32,12 @@ public class CarService {
     }
 
     @Transactional
-    public String getAllCarsPreviews() {
+    public String getAllEnabledCarsPreviews() {
         return getCarsPreviews(carDao.getAll());
+    }
+
+    public String getAllCarsPreviews() {
+        return getCarsPreviews(carDao.getAllCars());
     }
 
     @Transactional
@@ -103,7 +107,7 @@ public class CarService {
         } catch (NumberFormatException e) {
             high = Double.MAX_VALUE;
         }
-        return carDao.getFilteredCars(color, brand, low, high);
+        return carDao.getFilteredEnabledCars(color, brand, low, high);
     }
 
     public Car getCarById(String id) {

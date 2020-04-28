@@ -46,23 +46,32 @@ public class CarDao extends BaseDao {
         return true;
     }
 
-    public List<Car> getFilteredCars(String model, String brand, double lowest, double highest, CarCategory carCategory, String color) {
+    public List<Car> getFilteredEnabledCars(String model, String brand, double lowest, double highest, CarCategory carCategory, String color) {
         model = "%" + model + "%";
         brand = "%" + brand + "%";
         try {
-            TypedQuery<Car> q = em.createQuery("SELECT e FROM Car e WHERE e.model LIKE :model and e.brand LIKE :brand and e.color like :color and e.carCategory LIKE :carCategory and e.baseprice between :lowest AND :highest", Car.class);
+            TypedQuery<Car> q = em.createQuery("SELECT e FROM Car e WHERE e.model LIKE :model and e.brand LIKE :brand and e.color like :color and e.carCategory LIKE :carCategory and e.baseprice between :lowest AND :highest AND e.enabled=TRUE", Car.class);
             return q.setParameter("lowest", lowest).setParameter("highest", highest).setParameter("model", model).setParameter("color", color).setParameter("brand", brand).setParameter("carCategory", carCategory).getResultList();
         } catch (RuntimeException e) {
             return null;
         }
     }
 
-    public List<Car> getFilteredCars(String model, String brand, double lowest, double highest) {
+    public List<Car> getFilteredEnabledCars(String model, String brand, double lowest, double highest) {
         model = "%" + model + "%";
         brand = "%" + brand + "%";
         try {
-            TypedQuery<Car> q = em.createQuery("SELECT e FROM Car e WHERE e.model LIKE :model and e.brand LIKE :brand and e.baseprice between :lowest AND :highest", Car.class);
+            TypedQuery<Car> q = em.createQuery("SELECT e FROM Car e WHERE e.model LIKE :model and e.brand LIKE :brand and e.baseprice between :lowest AND :highest AND e.enabled=TRUE", Car.class);
             return q.setParameter("lowest", lowest).setParameter("highest", highest).setParameter("model", model).setParameter("brand", brand).getResultList();
+        } catch (RuntimeException e) {
+            return null;
+        }
+    }
+
+    public List<Car> getAllCars() {
+        try {
+            TypedQuery<Car> q = em.createQuery("SELECT e FROM Car e", Car.class);
+            return q.getResultList();
         } catch (RuntimeException e) {
             return null;
         }

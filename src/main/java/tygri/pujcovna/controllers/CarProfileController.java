@@ -148,7 +148,7 @@ public class CarProfileController {
         } else {
             mv.addObject("changeMessage", "Auto nebylo smazano");
         }
-        mv.addObject("carData", carService.getAllCarsPreviews());
+        mv.addObject("carData", carService.getAllEnabledCarsPreviews());
         mv.addObject("userData", userService.getAllUsersPreviews());
         return mv;
     }
