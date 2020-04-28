@@ -14,12 +14,12 @@ $.ajax( {
     }
 });
 
+var tripStartDate = -1;
+
 function updateCalendar(data) {
     jQuery(document).ready(
         (function ($) {
             function dayAvailable(date) {
-                //var todayDate = date.getDate();
-                //return [todayDate % 2 == 0, 'my-class', 'Label when hover'];
                 var dateString = jQuery.datepicker.formatDate('yy-mm-dd', date);
                 var dateRange = [];
                 for (var i = 0; i < data.length; i++) {
@@ -38,8 +38,9 @@ function updateCalendar(data) {
                 minDate: 0,
                 onSelect: function (date) {
                     var selectedDate = new Date(date);
+                    tripStartDate = selectedDate;
                     var msecsInADay = 86400000;
-                    var endDate = new Date(selectedDate.getTime() + msecsInADay);
+                    var endDate = new Date(selectedDate.getTime());
                     var maxDate;
                     console.log(reservationDates);
                     for (var i = 0; i < reservationDates[0].length; i++) {
@@ -54,7 +55,18 @@ function updateCalendar(data) {
             });
 
             $('#tripend').datepicker({
-                beforeShowDay: dayAvailable
+                beforeShowDay: dayAvailable,
+                onSelect: function (date) {
+                    if (tripStartDate !== -1) {
+                        var tripEndDate = new Date(date);
+                        var msecsInADay = 86400000;
+                        var priceDay = $("#priceDay").html();
+                        var priceTotal = priceDay * ((Number(tripEndDate.getTime() - tripStartDate.getTime()) / msecsInADay) + 1);
+                        $("#totalPrice").html(priceTotal);
+                    } else {
+                        $("#tripendMsg").html("Vyberte prosim prvne datum od jinak je mozne ze vas vyber bude prepsan");
+                    }
+                }
             });
         })(jQuery)
     );

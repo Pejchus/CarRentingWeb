@@ -55,7 +55,7 @@
                             <div class="car_price">
                                 <tr>
                                     <td>Cena za den</td>
-                                    <td>${baseprice}</td>
+                                    <td id="priceDay">${baseprice}</td>
                                 </tr>
                             </div>
                         </table>
@@ -71,8 +71,10 @@
                             <label for="tripend">Konec pujcky:</label>
                             <div class="filter-inside">
                                 <input type="text" id="tripend" name="tripend" placeholder="Vyberte datum" readonly required>
+                                <span id="tripendMsg"></span>
                             </div>
                             <input type="hidden" name="carId" value="${carId}">
+                            <span id="totalPrice"></span>
                             <input type="submit" value="Rezervovat">
                         </form>
                     </div>
