@@ -9,9 +9,12 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
               integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <script src="https://kit.fontawesome.com/cf89d56701.js" crossorigin="anonymous"></script>
+        
         <%--  STYLY NA FORMULAR--%>
-        <link rel="stylesheet"
-              href="https://demos.jquerymobile.com/1.4.2/css/themes/default/jquery.mobile-1.4.2.min.css">
+<%--        KURVI TO STYLY NEPOUZIVAT --%>
+<%--        <link rel="stylesheet"--%>
+<%--              href="https://demos.jquerymobile.com/1.4.2/css/themes/default/jquery.mobile-1.4.2.min.css">--%>
+
         <!-- Potreba ve vsech .jsp kde pouzivame security:authorize tagy -->
         <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
     </head>
