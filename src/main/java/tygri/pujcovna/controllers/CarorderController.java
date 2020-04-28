@@ -42,8 +42,7 @@ public class CarorderController {
             return mv;
         }catch (Exception e) {
             e.printStackTrace();
-            return null;
-            //return showOffers(session, "", "", "", "", "", "", "");
+            return showOffers(session, "", "", "", "", "", "", "");
         }
     }
 
