@@ -47,7 +47,8 @@ public class CarorderDao extends BaseDao {
             c.set(Calendar.SECOND, 0);
             c.set(Calendar.MILLISECOND, 0);
             end.setTime(c.getTimeInMillis());
-            Carorder order = new Carorder(customer, car, begin, end, new Timestamp(System.currentTimeMillis()), price, paid);
+            double days = ((end.getTime() - begin.getTime()) / 86400000) + 1;
+            Carorder order = new Carorder(customer, car, begin, end, new Timestamp(System.currentTimeMillis()), days * price, paid);
             persist(order);
         } catch (Exception e) {
             return false;

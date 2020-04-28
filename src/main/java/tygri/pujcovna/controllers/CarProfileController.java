@@ -65,12 +65,16 @@ public class CarProfileController {
         ModelAndView mv = new ModelAndView("/carProfile.jsp");
         User user = userService.loadUserByUsername(session.getAttribute("userName").toString());
         Car car = carService.getCarById(carId);
-        String[] tripStart = tripstart.split("/");
-        tripstart = tripStart[2] + "-" + tripStart[0] + "-" + tripStart[1];
-        String[] tripEnd = tripend.split("/");
-        tripend = tripEnd[2] + "-" + tripEnd[0] + "-" + tripEnd[1];
-        if (carorderService.createOrder(user, car, tripstart, tripend)) {
-            mv.addObject("createOrderMsg", "<p>Order successfully made on specified date</p>");
+        if (!"".equals(tripstart) && !"".equals(tripend)) {
+            String[] tripStart = tripstart.split("/");
+            tripstart = tripStart[2] + "-" + tripStart[0] + "-" + tripStart[1];
+            String[] tripEnd = tripend.split("/");
+            tripend = tripEnd[2] + "-" + tripEnd[0] + "-" + tripEnd[1];
+            if (carorderService.createOrder(user, car, tripstart, tripend)) {
+                mv.addObject("createOrderMsg", "<p>Order successfully made on specified date</p>");
+            } else {
+                mv.addObject("createOrderMsg", "<p>Unable to order for that date</p>");
+            }
         } else {
             mv.addObject("createOrderMsg", "<p>Unable to order for that date</p>");
         }

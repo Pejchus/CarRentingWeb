@@ -43,7 +43,6 @@ public class Carorder implements Serializable {
     public Carorder() {
     }
 
-    // PRIDAT ATRIBUT "totalPrice"
     public Carorder(User account, Car car, Timestamp begindate, Timestamp enddate, Timestamp createDate, double price, boolean paid) {
         this.account = account;
         this.car = car;
@@ -128,7 +127,7 @@ public class Carorder implements Serializable {
         } else {
             ret += car.getId() + "," + car.getBrand() + "," + car.getModel();
         }
-        ret += "], od " + begindate + " do " + enddate + ", price: " + price + ", zaplaceno: " + paid + ", vytvoreno: " + createDate;
+        ret += "], od " + begindate + " do " + enddate + ", price: " + price + ", zaplaceno: " + paid + ", vytvoreno: " + createDate + "\n" + "<a href=/deleteOrder?id=" + getId() + ">Zrusit objednavku</a>";
         return ret;
     }
 }
