@@ -81,7 +81,7 @@
                     </form>
                     ${profilePhotoChangeMsg}
                 </fieldset>
-                <security:authorize access="hasRole('ROLE_ADMIN')">
+                <fieldset ${disabledAdminButtons}>
                     <fieldset ${disableDisableUser}>
                         <a href="disableUser?id=${userId}">Zablokovat uzivatele</a>
                     </fieldset>
@@ -90,7 +90,7 @@
                     </fieldset>
                     <a href="deleteUser?id=${userId}">Smazat uzivatele (nezrusi jeho objednavky)</a>
                     ${userEnabledMsg}
-                </security:authorize>
+                </fieldset>
             </div>
 
         </main>
