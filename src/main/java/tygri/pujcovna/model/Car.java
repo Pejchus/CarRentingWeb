@@ -1,6 +1,5 @@
 package tygri.pujcovna.model;
 
-import javafx.collections.transformation.SortedList;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -46,12 +46,12 @@ public class CarDao extends BaseDao {
         return true;
     }
 
-    public List<Car> getFilteredCars(String model, String brand, double lowest, double highest, CarCategory carCategory) {
+    public List<Car> getFilteredCars(String model, String brand, double lowest, double highest, CarCategory carCategory, String color) {
         model = "%" + model + "%";
         brand = "%" + brand + "%";
         try {
-            TypedQuery<Car> q = em.createQuery("SELECT e FROM Car e WHERE e.model LIKE :model and e.brand LIKE :brand and e.carCategory LIKE :carCategory and e.baseprice between :lowest AND :highest", Car.class);
-            return q.setParameter("lowest", lowest).setParameter("highest", highest).setParameter("model", model).setParameter("brand", brand).setParameter("carCategory", carCategory).getResultList();
+            TypedQuery<Car> q = em.createQuery("SELECT e FROM Car e WHERE e.model LIKE :model and e.brand LIKE :brand and e.color like :color and e.carCategory LIKE :carCategory and e.baseprice between :lowest AND :highest", Car.class);
+            return q.setParameter("lowest", lowest).setParameter("highest", highest).setParameter("model", model).setParameter("color",color).setParameter("brand", brand).setParameter("carCategory", carCategory).getResultList();
         } catch (RuntimeException e) {
             return null;
         }
