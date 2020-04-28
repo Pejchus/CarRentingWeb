@@ -43,6 +43,7 @@ public class Carorder implements Serializable {
     public Carorder() {
     }
 
+    // PRIDAT ATRIBUT "totalPrice"
     public Carorder(User account, Car car, Timestamp begindate, Timestamp enddate, Timestamp createDate, double price, boolean paid) {
         this.account = account;
         this.car = car;
