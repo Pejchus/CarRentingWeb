@@ -77,6 +77,7 @@
                             <span id="totalPrice"></span>
                             <input type="submit" value="Rezervovat">
                         </form>
+                        ${createOrderMsg}
                     </div>
                     <div class="car-profile">
                         ${foto}
@@ -84,8 +85,14 @@
 
 
 
-                    ${createOrderMsg}
 
+
+
+                </div>
+                <div class="car-description">
+                    ${description}
+                </div>
+                <div class="car-profile-admin">
                     <fieldset ${disabled}>
                         <form method="POST" enctype="multipart/form-data" action="setCarProfilePhoto">
                             <label>Zmenit fotku auta: </label><input type="file" name="photo" required><br>
@@ -107,9 +114,6 @@
                         <a href="deleteCar?id=${carId}">Smazat auto (nezrusi jeho objednavky)</a>
                         ${carEnabledMsg}
                     </fieldset>
-                </div>
-                <div class="car-description">
-                    ${description}
                 </div>
             </div>
 

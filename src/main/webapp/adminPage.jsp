@@ -17,9 +17,9 @@
         <!-- MAIN SECTION -->
         <main class="main">
             <div class="container main_description">
-                <h1>Auta V databazi</h1>
-                ${carData}
+
                 <security:authorize access="hasAnyRole('ROLE_EMPLOYEE','ROLE_ADMIN')">
+                    <h3>Add Car</h3>
                     <form method="POST" enctype="multipart/form-data" action="doAddCar">
                         <label>Model(string): </label><input type="text" name="model" required><br>
                         <label>Brand(string): </label><input type="text" name="brand" required><br>
@@ -37,17 +37,7 @@
                         <label>Car category(SEDAN/COMBI/SUV/HATCHBACK/CABRIOLET/PICKUP/VAN): </label><input type="string" name="carcategory" required><br>
                         <input type="submit"><br>
                     </form>
-                </security:authorize>
-            </div>
-        </main>
 
-        <!-- MAIN SECTION -->
-        <main class="main">
-
-            <div class="container main_description">
-                <security:authorize access="hasRole('ROLE_ADMIN')">
-                    <h1>Users V databazi</h1>
-                    ${userData}
                     <h3>Add User</h3>
                     <form action="doAddUser">
                         <label>Username(string): </label><input type="text" name="username" required><br>
@@ -64,11 +54,23 @@
                         <label>Authority(CUSTOMER/EMPLOYEE/ADMIN): </label><input type="text" name="authority" required><br>
                         <input type="submit"><br>
                     </form>
-                    ${userAddedMessage}                    
-                </security:authorize>
-            </div>
+                    ${userAddedMessage}
 
+                </security:authorize>
+                <table class="accounts">
+                    <tr>
+                        <td><h1>Auta V databazi</h1>
+                            ${carData}</td>
+                        <td><h1>Users V databazi</h1>
+                            ${userData}</td>
+                    </tr>
+                </table>
+
+
+            </div>
         </main>
+
+
 
         <!-- END OF MAIN SECTION -->
 

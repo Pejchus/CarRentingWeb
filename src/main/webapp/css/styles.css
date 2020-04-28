@@ -45,6 +45,23 @@
 .main_description {
     margin-top: 20px;
 }
+/* user preview */
+.user-container {
+    margin: 1em 3em 1em 3em;
+    border-style: solid;
+    border-radius: 10px;
+    padding: 10px;
+    min-height: 15em;
+    color: black;
+}
+/* PROFILE */
+.profile{
+    margin: 0 3em 0 3em;
+    border-style: solid;
+    border-radius: 10px;
+    padding: 10px;
+    min-height: 15em;
+}
 
 /* CAR PROFILE */
 .car_profile {
@@ -53,6 +70,10 @@
 
 .car_information_table {
 
+}
+/* ADMIN PAGE */
+.accounts td{
+vertical-align: top;
 }
 
 /* FOOTER */
@@ -277,13 +298,14 @@ input[type=range]::-webkit-slider-thumb::before {
     display: flex;
     margin-bottom: 3em;
 }
-.car-profile, .car-description{
+.car-profile, .car-description {
     width: 40%;
-    margin: 0 5em 0 2em;
+    margin: 0 3em 0 3em;
     border-style: solid;
     border-radius: 10px;
     padding: 10px;
     min-height: 15em;
+
 }
 .car-description{
     width: 90%;

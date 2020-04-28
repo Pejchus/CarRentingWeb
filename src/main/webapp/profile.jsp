@@ -18,7 +18,8 @@
         <main class="main">
 
             <div class="container main_description">
-                <table class="user_profile_table">
+                <div class="profile">
+                <table >
                     <tr>
                         <td>Jmeno a Prijmeni</td>
                         <td>${firstname} ${lastname}</td>
@@ -45,6 +46,7 @@
                         <td>${orders}</td>
                     </tr>
                 </table>
+                </div>
                 <fieldset ${disabled}>
                     <form method="POST" enctype="multipart/form-data" action="setProfilePhoto">
                         <label>Zmenit profilovou fotku: </label><input type="file" name="photo" required><br>
@@ -71,7 +73,7 @@
 
         <!-- FOOTER -->
         <footer>
-            <div class="footer bottom container-fluid bg-dark fixedBottom">
+            <div class="container-fluid bg-dark">
                 <div class="footer_content">
                     <h3 class="footer_title">Kontakty</h3>
                     <table class="footer_table">
