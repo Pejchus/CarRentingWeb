@@ -47,7 +47,7 @@ public class CarorderService {
                 companyHistory.put(car.getBrand(), 1);
             }
         }
-        Set<Car> preferedcars = new HashSet<>();
+        Set<Car> preferedcars = new LinkedHashSet<>();
         String[][] topick = permutations(colorHistory, typeHistory, companyHistory);
         for (int i = 0; i < 9; i++) {
             if (topick[i][1] == null) {
