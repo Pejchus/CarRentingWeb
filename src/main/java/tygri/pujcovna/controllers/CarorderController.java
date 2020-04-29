@@ -38,6 +38,8 @@ public class CarorderController {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date date = new Date();
             mv.addObject("minDate", formatter.format(date));
+            mv.addObject("minSliderVal", orderService.getLowestEnabledCarPrice());
+            mv.addObject("maxSliderVal", orderService.getHighestEnabledCarPrice());
             return mv;
         }
     }
@@ -50,11 +52,13 @@ public class CarorderController {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         mv.addObject("minDate", formatter.format(date));
+        mv.addObject("minSliderVal", orderService.getLowestEnabledCarPrice());
+        mv.addObject("maxSliderVal", orderService.getHighestEnabledCarPrice());
         return mv;
     }
 
     @RequestMapping(value = "/deleteCarOrder", method = RequestMethod.GET)
-    public ModelAndView showOffers(HttpSession session, @RequestParam("id") String id) {
+    public ModelAndView deleteCarOrder(HttpSession session, @RequestParam("id") String id) {
         ModelAndView mv = new ModelAndView("");
         return mv;
     }

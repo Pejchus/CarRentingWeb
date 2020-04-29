@@ -138,4 +138,22 @@ public class CarDao extends BaseDao {
             return false;
         }
     }
+
+    public Double getLowestEnabledCarPrice() {
+        try {
+            TypedQuery<Double> q = em.createQuery("SELECT MIN(e.baseprice) FROM Car e WHERE e.enabled=TRUE", Double.class);
+            return q.getSingleResult();
+        } catch (RuntimeException e) {
+            return null;
+        }
+    }
+
+    public Double getHighestEnabledCarPrice() {
+        try {
+            TypedQuery<Double> q = em.createQuery("SELECT MAX(e.baseprice) FROM Car e WHERE e.enabled=TRUE", Double.class);
+            return q.getSingleResult();
+        } catch (RuntimeException e) {
+            return null;
+        }
+    }
 }

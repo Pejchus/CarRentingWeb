@@ -202,4 +202,12 @@ public class CarorderService {
         }
         return res;
     }
+
+    public Double getLowestEnabledCarPrice() {
+        return carDao.getLowestEnabledCarPrice();
+    }
+
+    public Double getHighestEnabledCarPrice() {
+        return carDao.getHighestEnabledCarPrice();
+    }
 }

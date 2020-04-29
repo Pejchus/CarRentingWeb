@@ -136,8 +136,8 @@
                                 </div>
 
                                 <div class="multi-range">
-                                    <input name="range1a" type="range" min="0" max="2000" value="0" id="lower">
-                                    <input name="range1b" type="range" min="0" max="2000" value="2000" id="upper">
+                                    <input name="range1a" type="range" min="${minSliderVal}" max="${maxSliderVal}" value="0" id="lower">
+                                    <input name="range1b" type="range" min="${minSliderVal}" max="${maxSliderVal}" value="2000" id="upper">
                                 </div>
 
                                 <div class="slider_lower_value_span">
@@ -152,6 +152,7 @@
                     </div>
                 </div>
                 <h2 class="nabidka-nadpis">Nabidka vozidel:</h2>
+                
                 <div class="nabidka-container">
                     <div class="nabidka-row">
                         ${offers}
