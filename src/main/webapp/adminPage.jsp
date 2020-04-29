@@ -60,7 +60,7 @@
                         <td><h1>Auta V databazi</h1>
                             ${carData}</td>
                     <fieldset ${pagingcarNext}>
-                        <form action="adminPage">    
+                        <form action="adminPagepaged">    
                             <input type="hidden" name="carpagestart" value="${nextcarpagestart}">
                             <input type="hidden" name="userpagestart" value="${currentuserpagestart}">
                             <input type="submit" value=">">
@@ -68,7 +68,7 @@
                         <span>Next 10 cars</span>
                     </fieldset>
                     <fieldset ${pagingcarPrevious}>
-                        <form action="adminPage">    
+                        <form action="adminPagepaged">    
                             <input type="hidden" name="carpagestart" value="${previouscarpagestart}">
                             <input type="hidden" name="userpagestart" value="${currentuserpagestart}">
                             <input type="submit" value="<">
@@ -79,7 +79,7 @@
                         <td><h1>Users V databazi</h1>
                             ${userData}</td>
                         <fieldset ${paginguserNext}>
-                            <form action="adminPage">    
+                            <form action="adminPagepaged">    
                                 <input type="hidden" name="userpagestart" value="${nextuserpagestart}">
                                 <input type="hidden" name="carpagestart" value="${currentcarpagestart}">
                                 <input type="submit" value=">">
@@ -87,7 +87,7 @@
                             <span>Next 10 users</span>
                         </fieldset>
                         <fieldset ${paginguserPrevious}>
-                            <form action="adminPage">    
+                            <form action="adminPagepaged">    
                                 <input type="hidden" name="userpagestart" value="${previoususerpagestart}">
                                 <input type="hidden" name="carpagestart" value="${currentcarpagestart}">
                                 <input type="submit" value="<">

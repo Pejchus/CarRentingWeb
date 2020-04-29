@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import tygri.pujcovna.model.AuthorityType;
 import tygri.pujcovna.model.Car;
 import tygri.pujcovna.model.User;
 import tygri.pujcovna.services.CarService;
@@ -174,7 +175,22 @@ public class ProfileController {
     public ModelAndView getAdminPagePaged(HttpSession session, @RequestParam String carpagestart, @RequestParam String userpagestart) {
         ModelAndView mv = new ModelAndView("/adminPage.jsp");
         mv.addObject("carData", carService.getAllCarsPreviews(carpagestart));
-        mv.addObject("userData", userService.getAllUsersPreviews(userpagestart));
+        if (session.getAttribute("UserStatus") == AuthorityType.ROLE_ADMIN) {
+            mv.addObject("userData", userService.getAllUsersPreviews(userpagestart));
+            if (!"".equals(userService.getAllUsersPreviews(String.valueOf(Integer.valueOf(carpagestart) + 10)))) {
+                mv.addObject("paginguserNext", "");
+            } else {
+                mv.addObject("paginguserNext", "hidden");
+            }
+            if (!"0".equals(userpagestart)) {
+                mv.addObject("paginguserPrevious", "");
+            } else {
+                mv.addObject("paginguserPrevious", "hidden");
+            }
+            mv.addObject("previoususerpagestart", String.valueOf(Integer.valueOf(userpagestart) - 10));
+            mv.addObject("nextuserpagestart", String.valueOf(Integer.valueOf(userpagestart) + 10));
+            mv.addObject("currentuserpagestart", String.valueOf(Integer.valueOf(userpagestart)));
+        }
         if (!"".equals(carService.getAllCarsPreviews(String.valueOf(Integer.valueOf(carpagestart) + 10)))) {
             mv.addObject("pagingcarNext", "");
         } else {
@@ -185,22 +201,9 @@ public class ProfileController {
         } else {
             mv.addObject("pagingcarPrevious", "hidden");
         }
-        if (!"".equals(userService.getAllUsersPreviews(String.valueOf(Integer.valueOf(carpagestart) + 10)))) {
-            mv.addObject("paginguserNext", "");
-        } else {
-            mv.addObject("paginguserNext", "hidden");
-        }
-        if (!"0".equals(userpagestart)) {
-            mv.addObject("paginguserPrevious", "");
-        } else {
-            mv.addObject("paginguserPrevious", "hidden");
-        }
         mv.addObject("nextcarpagestart", String.valueOf(Integer.valueOf(carpagestart) + 10));
-        mv.addObject("nextuserpagestart", String.valueOf(Integer.valueOf(userpagestart) + 10));
         mv.addObject("currentcarpagestart", String.valueOf(Integer.valueOf(carpagestart)));
-        mv.addObject("currentuserpagestart", String.valueOf(Integer.valueOf(userpagestart)));
         mv.addObject("previouscarpagestart", String.valueOf(Integer.valueOf(carpagestart) - 10));
-        mv.addObject("previoususerpagestart", String.valueOf(Integer.valueOf(userpagestart) - 10));
         return mv;
     }
 
