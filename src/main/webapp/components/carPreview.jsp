@@ -1,4 +1,4 @@
-<div class="col-lg-4 ">
+<div class="col-lg-4">
 
     <a href=";carProfileLink;" class="odkaz-auto">
         <label>
@@ -12,7 +12,7 @@
 
                 <div class="cmatter">
 
-                    <div class="nabidka-row">
+                    <div class="row">
                         <div class="col-sm-5 detailLeftTd">Pocet sedadel: <b>;carSeatNumber;</b>
                         </div>
                         <div class="col-sm-7">Trida: <b>;type;</b>

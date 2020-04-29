@@ -70,7 +70,7 @@
 
                             </div>
                             <label for="tripend">Konec pujcky:</label>
-                            <div class="filter-inside">
+                            <div class="filter-inside end-calendar">
                                 <input type="text" id="tripend" name="tripend" placeholder="Vyberte datum" readonly required>
                                 <span id="tripendMsg"></span>
                             </div>
