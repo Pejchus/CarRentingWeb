@@ -9,11 +9,11 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
               integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <script src="https://kit.fontawesome.com/cf89d56701.js" crossorigin="anonymous"></script>
-        
+
         <%--  STYLY NA FORMULAR--%>
-<%--        KURVI TO STYLY NEPOUZIVAT --%>
-<%--        <link rel="stylesheet"--%>
-<%--              href="https://demos.jquerymobile.com/1.4.2/css/themes/default/jquery.mobile-1.4.2.min.css">--%>
+        <%--        KURVI TO STYLY NEPOUZIVAT --%>
+        <%--        <link rel="stylesheet"--%>
+        <%--              href="https://demos.jquerymobile.com/1.4.2/css/themes/default/jquery.mobile-1.4.2.min.css">--%>
 
         <!-- Potreba ve vsech .jsp kde pouzivame security:authorize tagy -->
         <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
@@ -36,53 +36,53 @@
                             <div class="radio">
                                 <div class="filter-auto-container">
                                     <label>
-                                        <input type="radio" id="all" name="type" value="all" checked>
+                                        <input type="radio" id="all" name="type" value="all" ${allchecked}>
                                         <img class="car-icon" src="css/images/star.png">
                                     </label>
                                 </div>
                                 <div class="filter-auto-container">
                                     <label>
-                                        <input type="radio" id="CABRIOLET" name="type" value="CABRIOLET">
+                                        <input type="radio" id="CABRIOLET" name="type" value="CABRIOLET" ${CABRIOLETchecked}>
                                         <img class="car-icon" src="css/images/cabrio_kupe.png">
                                     </label>
                                 </div>
 
                                 <div class="filter-auto-container">
                                     <label>
-                                        <input type="radio" id="COMBI" name="type" value="COMBI">
+                                        <input type="radio" id="COMBI" name="type" value="COMBI" ${COMBIchecked}>
                                         <img class="car-icon" src="css/images/Combi.png">
                                     </label>
                                 </div>
 
                                 <div class="filter-auto-container">
                                     <label>
-                                        <input type="radio" id="VAN" name="type" value="VAN">
+                                        <input type="radio" id="VAN" name="type" value="VAN" ${VANchecked}>
                                         <img class="car-icon" src="css/images/dodavka.png">
                                     </label>
                                 </div>
 
                                 <div class="filter-auto-container">
                                     <label>
-                                        <input type="radio" id="HATCHBACK" name="type" value="HATCHBACK">
+                                        <input type="radio" id="HATCHBACK" name="type" value="HATCHBACK" ${HATCHBACKchecked}>
                                         <img class="car-icon" src="css/images/Hatchback.png">
                                     </label>
                                 </div>
 
                                 <div class="filter-auto-container ">
                                     <label>
-                                        <input type="radio" id="PICKUP" name="type" value="PICKUP">
+                                        <input type="radio" id="PICKUP" name="type" value="PICKUP" ${PICKUPchecked}>
                                         <img class="car-icon" src="css/images/pickup.png">
                                     </label>
                                 </div>
                                 <div class="filter-auto-container ">
                                     <label>
-                                        <input type="radio" id="SEDAN" name="type" value="SEDAN">
+                                        <input type="radio" id="SEDAN" name="type" value="SEDAN" ${SEDANchecked}>
                                         <img class="car-icon" src="css/images/sedan.png">
                                     </label>
                                 </div>
                                 <div class="filter-auto-container ">
                                     <label>
-                                        <input type="radio" id="SUV" name="type" value="SUV">
+                                        <input type="radio" id="SUV" name="type" value="SUV" ${SUVchecked}>
                                         <img class="car-icon" src="css/images/SUV.png">
                                     </label>
                                 </div>
@@ -92,22 +92,22 @@
 
                                 <!-- Search form -->
                                 <div class="active-cyan-4 mb-4">
-                                    <input name="modelsearch" class="form-control" type="text" placeholder="Search" aria-label="Search">
+                                    <input name="modelsearch" class="form-control" type="text" placeholder="Search" aria-label="Search" value="${modelsearchValue}">
                                 </div>
 
 
                                 <select name="carcompany" class="form-control">
-                                    <option value="vsechny">Vsechny</option>
-                                    <option value="Volvo">Volvo</option>
-                                    <option value="Saab">Saab</option>
-                                    <option value="Opel">Opel</option>
-                                    <option value="Audi">Audi</option>
-                                    <option value="BMW">BMW</option>
-                                    <option value="Skoda">Skoda</option>
-                                    <option value="Jaguar">Jaguar</option>
-                                    <option value="Citroen">Citroen</option>
-                                    <option value="Vw">Volkswagen</option>
-                                    <option value="Hyundai">Hyundai</option>
+                                    <option value="vsechny" ${vsechnychecked}>Vsechny</option>
+                                    <option value="Volvo" ${Volvochecked}>Volvo</option>
+                                    <option value="Saab" ${Saabchecked}>Saab</option>
+                                    <option value="Opel" ${Opelchecked}>Opel</option>
+                                    <option value="Audi" ${Audichecked}>Audi</option>
+                                    <option value="BMW" ${BMWchecked}>BMW</option>
+                                    <option value="Skoda" ${Skodachecked}>Skoda</option>
+                                    <option value="Jaguar" ${Jaguarchecked}>Jaguar</option>
+                                    <option value="Citroen" ${Citroenchecked}>Citroen</option>
+                                    <option value="Vw" ${Vwchecked}>Volkswagen</option>
+                                    <option value="Hyundai" ${Hyundaichecked}>Hyundai</option>
                                 </select>
                             </div>
 
@@ -116,12 +116,12 @@
 
                                     <label for="start"><h3>Zacatek pujcky:</h3></label>
 
-                                    <input type="date" id="start" name="tripstart" value="" min="${minDate}" max="2021-12-31">
+                                    <input type="date" id="start" name="tripstart" min="${minDate}" max="2021-12-31" value="${tripstartValue}">
                                 </div>
                                 <div class="form-calendar">
 
                                     <label for="end"><h3>Konec pujcky:</h3></label>
-                                    <input type="date" id="end" name="tripend" value="" min="${minDate}" max="2021-12-31">
+                                    <input type="date" id="end" name="tripend" min="${minDate}" max="2021-12-31" value="${tripendValue}">
                                 </div>
                             </div>
 
@@ -136,8 +136,8 @@
                                 </div>
 
                                 <div class="multi-range">
-                                    <input name="range1a" type="range" min="${minSliderVal}" max="${maxSliderVal}" value="0" id="lower">
-                                    <input name="range1b" type="range" min="${minSliderVal}" max="${maxSliderVal}" value="2000" id="upper">
+                                    <input name="range1a" type="range" min="${minSliderVal}" max="${maxSliderVal}" value="${range1aValue}" id="lower">
+                                    <input name="range1b" type="range" min="${minSliderVal}" max="${maxSliderVal}" value="${range1bValue}" id="upper">
                                 </div>
 
                                 <div class="slider_lower_value_span">
@@ -152,7 +152,7 @@
                     </div>
                 </div>
                 <h2 class="nabidka-nadpis">Nabidka vozidel:</h2>
-                
+
                 <div class="nabidka-container">
                     <div class="nabidka-row">
                         ${offers}
@@ -197,12 +197,12 @@
 
     <script src="js/slider.js"></script>
 
-<%--CO TO MA BEJT JAKO--%>
-<%--    <script>--%>
-<%--        $(document).ready(function () {--%>
-<%--            $('.mdb-select').materialSelect();--%>
-<%--        });--%>
-<%--    </script>--%>
+    <%--CO TO MA BEJT JAKO--%>
+    <%--    <script>--%>
+    <%--        $(document).ready(function () {--%>
+    <%--            $('.mdb-select').materialSelect();--%>
+    <%--        });--%>
+    <%--    </script>--%>
 
 </body>
 </html>

@@ -205,4 +205,10 @@ public class CarProfileController {
             mv.addObject("disabled", "hidden");
         }
     }
+
+    @RequestMapping(value = "/deleteCarOrder", method = RequestMethod.GET)
+    public ModelAndView deleteCarOrder(HttpSession session, @RequestParam("id") String id) {
+        ModelAndView mv = new ModelAndView("");
+        return mv;
+    }
 }
