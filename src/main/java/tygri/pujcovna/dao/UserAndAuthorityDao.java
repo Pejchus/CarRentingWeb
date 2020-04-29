@@ -154,4 +154,13 @@ public class UserAndAuthorityDao extends BaseDao /*implements UserRepository*/ {
         }
     }
 
+    public List<User> getAllUsersPaged(Integer pageStart) {
+        try {
+            TypedQuery<User> q = em.createQuery("SELECT e FROM User e", User.class).setFirstResult(pageStart).setMaxResults(10);
+            return q.getResultList();
+        } catch (RuntimeException e) {
+            return null;
+        }
+    }
+
 }

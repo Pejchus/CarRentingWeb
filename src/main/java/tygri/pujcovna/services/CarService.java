@@ -36,8 +36,8 @@ public class CarService {
         return getCarsPreviews(carDao.getAll());
     }
 
-    public String getAllCarsPreviews() {
-        return getCarsPreviews(carDao.getAllCars());
+    public String getAllCarsPreviews(String pagestart) {
+        return getCarsPreviews(carDao.getAllCars(Integer.valueOf(pagestart)));
     }
 
     @Transactional
@@ -94,7 +94,7 @@ public class CarService {
     }
 
     @Transactional
-    public List<Car> getFilteredCars(String color, String brand, String lowest, String highest) {
+    public List<Car> getFilteredCars(String color, String brand, String lowest, String highest, int pagestart) {
         double low;
         double high;
         try {
@@ -107,7 +107,7 @@ public class CarService {
         } catch (NumberFormatException e) {
             high = Double.MAX_VALUE;
         }
-        return carDao.getFilteredEnabledCars(color, brand, low, high);
+        return carDao.getFilteredEnabledCars(color, brand, low, high, pagestart);
     }
 
     public Car getCarById(String id) {

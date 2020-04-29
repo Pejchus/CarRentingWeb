@@ -50,16 +50,15 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public String getAllUsersPreviews() {
-        return getUsersPreviews(userAndAuthorityDao.getAll());
+    public String getAllUsersPreviews(String pagestart) {
+        return getUsersPreviews(userAndAuthorityDao.getAllUsersPaged(Integer.valueOf(pagestart)));
     }
 
     @Transactional
     public String getUsersPreviews(List<User> users) {
         StringBuilder sb = new StringBuilder(10000);
-        for (Object obj : users) {
+        for (User user : users) {
             String previewString = constants.getUserPreview();
-            User user = (User) obj;
             Byte[] carPhoto = user.getPhoto();
             String photoData = "";
             if (carPhoto != null) {

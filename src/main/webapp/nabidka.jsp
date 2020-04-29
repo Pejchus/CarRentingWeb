@@ -146,7 +146,8 @@
                                 </div>
                             </div>
 
-
+                            <input type="hidden" name="pagestart" value="0">
+                            <input type="hidden" name="prefferedCars" value="false">
                             <input type="submit" value="Hledej!">
                         </form>
                     </div>
@@ -158,6 +159,34 @@
                         ${offers}
                     </div>
                 </div>
+                <fieldset ${pagingNext}>
+                    <form action="filterOffers">    
+                        <input type="hidden" name="type" value="${typeValue}">
+                        <input type="hidden" name="modelsearch" value="${modelsearchValue}">
+                        <input type="hidden" name="carcompany" value="${carcompanyValue}">
+                        <input type="hidden" name="tripstart" value="${tripstartValue}">
+                        <input type="hidden" name="tripend" value="${tripendValue}">
+                        <input type="hidden" name="range1a" value="${range1aValue}">
+                        <input type="hidden" name="range1b" value="${range1bValue}">
+                        <input type="hidden" name="pagestart" value="${nextpagestart}">
+                        <input type="hidden" name="prefferedCars" value="false">
+                        <input type="submit" value=">">
+                    </form>
+                </fieldset>
+                <fieldset ${pagingPrevious}>
+                    <form action="filterOffers">    
+                        <input type="hidden" name="type" value="${typeValue}">
+                        <input type="hidden" name="modelsearch" value="${modelsearchValue}">
+                        <input type="hidden" name="carcompany" value="${carcompanyValue}">
+                        <input type="hidden" name="tripstart" value="${tripstartValue}">
+                        <input type="hidden" name="tripend" value="${tripendValue}">
+                        <input type="hidden" name="range1a" value="${range1aValue}">
+                        <input type="hidden" name="range1b" value="${range1bValue}">
+                        <input type="hidden" name="pagestart" value="${previouspagestart}">
+                        <input type="hidden" name="prefferedCars" value="false">
+                        <input type="submit" value="<">
+                    </form>
+                </fieldset>
             </div>
 
 

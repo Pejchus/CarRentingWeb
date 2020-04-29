@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import tygri.pujcovna.model.AuthorityType;
+import tygri.pujcovna.model.Car;
 import tygri.pujcovna.model.User;
 import tygri.pujcovna.services.CarService;
 import tygri.pujcovna.services.CarorderService;
@@ -164,55 +166,94 @@ public class ProfileController {
     @RequestMapping(value = "/adminPage")
     @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE','ROLE_ADMIN')")
     public ModelAndView getAdminPage(HttpSession session) {
+        return getAdminPagePaged(session, "0", "0");
+    }
+
+    //BUGGED
+    @RequestMapping(value = "/adminPagepaged")
+    @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE','ROLE_ADMIN')")
+    public ModelAndView getAdminPagePaged(HttpSession session, @RequestParam String carpagestart, @RequestParam String userpagestart) {
         ModelAndView mv = new ModelAndView("/adminPage.jsp");
-        mv.addObject("carData", carService.getAllCarsPreviews());
-        mv.addObject("userData", userService.getAllUsersPreviews());
+        mv.addObject("carData", carService.getAllCarsPreviews(carpagestart));
+        if (session.getAttribute("UserStatus") == AuthorityType.ROLE_ADMIN) {
+            mv.addObject("userData", userService.getAllUsersPreviews(userpagestart));
+            if (!"".equals(userService.getAllUsersPreviews(String.valueOf(Integer.valueOf(carpagestart) + 10)))) {
+                mv.addObject("paginguserNext", "");
+            } else {
+                mv.addObject("paginguserNext", "hidden");
+            }
+            if (!"0".equals(userpagestart)) {
+                mv.addObject("paginguserPrevious", "");
+            } else {
+                mv.addObject("paginguserPrevious", "hidden");
+            }
+            mv.addObject("previoususerpagestart", String.valueOf(Integer.valueOf(userpagestart) - 10));
+            mv.addObject("nextuserpagestart", String.valueOf(Integer.valueOf(userpagestart) + 10));
+            mv.addObject("currentuserpagestart", String.valueOf(Integer.valueOf(userpagestart)));
+        }
+        if (!"".equals(carService.getAllCarsPreviews(String.valueOf(Integer.valueOf(carpagestart) + 10)))) {
+            mv.addObject("pagingcarNext", "");
+        } else {
+            mv.addObject("pagingcarNext", "hidden");
+        }
+        if (!"0".equals(carpagestart)) {
+            mv.addObject("pagingcarPrevious", "");
+        } else {
+            mv.addObject("pagingcarPrevious", "hidden");
+        }
+        mv.addObject("nextcarpagestart", String.valueOf(Integer.valueOf(carpagestart) + 10));
+        mv.addObject("currentcarpagestart", String.valueOf(Integer.valueOf(carpagestart)));
+        mv.addObject("previouscarpagestart", String.valueOf(Integer.valueOf(carpagestart) - 10));
         return mv;
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/deleteUser", method = RequestMethod.GET)
     public ModelAndView deleteUser(HttpSession session, @RequestParam String id) {
-        ModelAndView mv = new ModelAndView("adminPage.jsp");
+        ModelAndView mv = getAdminPagePaged(session, "0", "0");
         User user = userService.loadUserById(id);
         if (userService.deleteUser(session, user)) {
             mv.addObject("changeMessage", "Uzivatel byl smazan");
         } else {
             mv.addObject("changeMessage", "Uzivatel nebyl smazan");
         }
-        mv.addObject("carData", carService.getAllCarsPreviews());
-        mv.addObject("userData", userService.getAllUsersPreviews());
         return mv;
     }
 
-    @RequestMapping(value = "/doAddCar", method = RequestMethod.POST)
     @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE','ROLE_ADMIN')")
-    public ModelAndView doAddCar(HttpSession session, @RequestParam("model") String model, @RequestParam("brand") String brand, @RequestParam("baseprice") String baseprice, @RequestParam("color") String color, @RequestParam("power") String power, @RequestParam("productionyear") String productionyear, @RequestParam("trunkvolume") String trunkvolume, @RequestParam("seats") String seats, @RequestParam("consumption") String consumption, @RequestParam("transmissiontype") String transmissiontype, @RequestParam("enginetype") String enginetype, @RequestParam("description") String description, @RequestParam("photo") MultipartFile photo, @RequestParam("carcategory") String carcategory) {
-        ModelAndView mv = new ModelAndView("/adminPage.jsp");
-        if (carService.createCar(model, brand, baseprice, color, power, productionyear, trunkvolume, seats, consumption, transmissiontype, enginetype, description, photo, carcategory)) {
-            mv.addObject("carAddedMessage", "<p>Car added!</p>");
+    @RequestMapping(value = "/deleteCar", method = RequestMethod.GET)
+    public ModelAndView deleteCar(HttpSession session, @RequestParam String id) {
+        ModelAndView mv = getAdminPagePaged(session, "0", "0");
+        Car car = carService.getCarById(id);
+        if (carService.deleteCar(car)) {
+            mv.addObject("changeMessage", "Auto bylo smazano");
         } else {
-            mv.addObject("carAddedMessage", "<p>Car not added!</p>");
+            mv.addObject("changeMessage", "Auto nebylo smazano");
         }
-        mv.addObject("carData", carService.getAllCarsPreviews());
-        mv.addObject("userData", userService.getAllUsersPreviews());
-        mv.addObject("LoggedUser", session.getAttribute("userName"));
         return mv;
     }
 
     @RequestMapping("/doAddUser")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ModelAndView doAddUser(HttpSession session, @RequestParam String username, @RequestParam String password, @RequestParam String email, @RequestParam String enabled, @RequestParam String phone, @RequestParam String countryCode, @RequestParam String firstname, @RequestParam String lastname, @RequestParam String city, @RequestParam String street, @RequestParam String streetNo, @RequestParam String authority) {
-        ModelAndView mv = new ModelAndView("/adminPage.jsp");
+        ModelAndView mv = getAdminPagePaged(session, "0", "0");
         if (userService.createUser(username, password, email, enabled, phone, countryCode, firstname, lastname, city, street, streetNo, authority)) {
             mv.addObject("changeMessage", "<p>User added!</p>");
         } else {
             mv.addObject("changeMessage", "<p>User not added!</p>");
         }
-        mv.addObject("userData", userService.getAllUsersPreviews());
-        mv.addObject("carData", carService.getAllCarsPreviews());
-        mv.addObject("LoggedUser", session.getAttribute("userName"));
         return mv;
     }
 
+    @RequestMapping(value = "/doAddCar", method = RequestMethod.POST)
+    @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE','ROLE_ADMIN')")
+    public ModelAndView doAddCar(HttpSession session, @RequestParam("model") String model, @RequestParam("brand") String brand, @RequestParam("baseprice") String baseprice, @RequestParam("color") String color, @RequestParam("power") String power, @RequestParam("productionyear") String productionyear, @RequestParam("trunkvolume") String trunkvolume, @RequestParam("seats") String seats, @RequestParam("consumption") String consumption, @RequestParam("transmissiontype") String transmissiontype, @RequestParam("enginetype") String enginetype, @RequestParam("description") String description, @RequestParam("photo") MultipartFile photo, @RequestParam("carcategory") String carcategory) {
+        ModelAndView mv = getAdminPagePaged(session, "0", "0");
+        if (carService.createCar(model, brand, baseprice, color, power, productionyear, trunkvolume, seats, consumption, transmissiontype, enginetype, description, photo, carcategory)) {
+            mv.addObject("carAddedMessage", "<p>Car added!</p>");
+        } else {
+            mv.addObject("carAddedMessage", "<p>Car not added!</p>");
+        }
+        return mv;
+    }
 }

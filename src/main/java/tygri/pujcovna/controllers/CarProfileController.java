@@ -138,21 +138,6 @@ public class CarProfileController {
         return mv;
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE','ROLE_ADMIN')")
-    @RequestMapping(value = "/deleteCar", method = RequestMethod.GET)
-    public ModelAndView deleteCar(HttpSession session, @RequestParam String id) {
-        ModelAndView mv = new ModelAndView("adminPage.jsp");
-        Car car = carService.getCarById(id);
-        if (carService.deleteCar(car)) {
-            mv.addObject("changeMessage", "Auto bylo smazano");
-        } else {
-            mv.addObject("changeMessage", "Auto nebylo smazano");
-        }
-        mv.addObject("carData", carService.getAllEnabledCarsPreviews());
-        mv.addObject("userData", userService.getAllUsersPreviews());
-        return mv;
-    }
-
     @RequestMapping(value = "/carOrders", method = RequestMethod.GET)
     @ResponseBody
     public String fetchOrders(@RequestParam String carID) {
@@ -209,6 +194,7 @@ public class CarProfileController {
     @RequestMapping(value = "/deleteCarOrder", method = RequestMethod.GET)
     public ModelAndView deleteCarOrder(HttpSession session, @RequestParam("id") String id) {
         ModelAndView mv = new ModelAndView("");
+        //todo
         return mv;
     }
 }
