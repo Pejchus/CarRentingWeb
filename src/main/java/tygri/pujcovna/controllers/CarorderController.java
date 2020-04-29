@@ -29,32 +29,34 @@ public class CarorderController {
     @RequestMapping(value = "/offers", method = RequestMethod.GET)
     public ModelAndView offers(HttpSession session) {
         if (session.getAttribute("userName") == null) {
-            return showOffers(session, "", "", "", "", orderService.getLowestEnabledCarPrice().toString(), orderService.getHighestEnabledCarPrice().toString(), "");
+            return showOffers(session, "false", "", "", "", "", orderService.getLowestEnabledCarPrice().toString(), orderService.getHighestEnabledCarPrice().toString(), "", "0");
         } else {
-            User user = userService.loadUserByUsername(session.getAttribute("userName").toString());
-            ModelAndView mv = new ModelAndView("/nabidka.jsp");
-            String offers = orderService.getEnabledPrefferd(user);
-            mv.addObject("offers", offers);
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = new Date();
-            mv.addObject("minDate", formatter.format(date));
-            mv.addObject("minSliderVal", orderService.getLowestEnabledCarPrice());
-            mv.addObject("maxSliderVal", orderService.getHighestEnabledCarPrice());
-            mv.addObject("modelsearchValue", "");
-            resolveCheckedcarcompany(mv, "");
-            mv.addObject("tripstartValue", "");
-            mv.addObject("tripendValue", "");
-            mv.addObject("range1aValue", orderService.getLowestEnabledCarPrice());
-            mv.addObject("range1bValue", orderService.getHighestEnabledCarPrice());
-            resolveCheckedType(mv, "");
-            return mv;
+            return showOffers(session, "true", "", "", "", "", orderService.getLowestEnabledCarPrice().toString(), orderService.getHighestEnabledCarPrice().toString(), "", "0");
         }
     }
 
     @RequestMapping(value = "/filterOffers", method = RequestMethod.GET)
-    public ModelAndView showOffers(HttpSession session, @RequestParam String modelsearch, @RequestParam String carcompany, @RequestParam String tripstart, @RequestParam String tripend, @RequestParam String range1a, @RequestParam String range1b, @RequestParam("type") String type) {
+    public ModelAndView showOffers(HttpSession session, @RequestParam String prefferedCars, @RequestParam String modelsearch, @RequestParam String carcompany, @RequestParam String tripstart, @RequestParam String tripend, @RequestParam String range1a, @RequestParam String range1b, @RequestParam("type") String type, @RequestParam("pagestart") String pagestart) {
         ModelAndView mv = new ModelAndView("/nabidka.jsp");
-        String offers = orderService.getEnabledCarsOffers(modelsearch, carcompany, tripstart, tripend, range1a, range1b, type);
+        String offers;
+        if ("false".equals(prefferedCars)) {
+            offers = orderService.getEnabledCarsOffers(modelsearch, carcompany, tripstart, tripend, range1a, range1b, type, pagestart);
+            if ("0".equals(pagestart)) {
+                mv.addObject("pagingPrevious", "hidden");
+            } else {
+                mv.addObject("pagingPrevious", "");
+            }
+            if ("".equals(orderService.getEnabledCarsOffers(modelsearch, carcompany, tripstart, tripend, range1a, range1b, type, String.valueOf(Integer.valueOf(pagestart) + 10)))) {
+                mv.addObject("pagingNext", "hidden");
+            } else {
+                mv.addObject("pagingNext", "");
+            }
+        } else {//only get first ten preffered cars always - predelam mozna pozdeji
+            User user = userService.loadUserByUsername(session.getAttribute("userName").toString());
+            offers = orderService.getEnabledPrefferd(user, pagestart);
+            mv.addObject("pagingNext", "hidden");
+            mv.addObject("pagingPrevious", "hidden");
+        }
         mv.addObject("offers", offers);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
@@ -67,11 +69,16 @@ public class CarorderController {
         mv.addObject("tripendValue", tripend);
         mv.addObject("range1aValue", range1a);
         mv.addObject("range1bValue", range1b);
+        mv.addObject("range1bValue", range1b);
+        mv.addObject("pagestart", pagestart);
+        mv.addObject("previouspagestart", String.valueOf(Integer.valueOf(pagestart) - 10));
+        mv.addObject("nextpagestart", String.valueOf(Integer.valueOf(pagestart) + 10));
         resolveCheckedType(mv, type);
         return mv;
     }
 
     private void resolveCheckedType(ModelAndView mv, String type) {
+        mv.addObject("typeValue", type);
         switch (type) {
             case "all":
             case "":
@@ -102,6 +109,7 @@ public class CarorderController {
     }
 
     private void resolveCheckedcarcompany(ModelAndView mv, String carcompany) {
+        mv.addObject("carcompanyValue", carcompany);
         switch (carcompany) {
             case "vsechny":
             case "":
