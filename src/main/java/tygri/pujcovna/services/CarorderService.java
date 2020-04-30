@@ -42,20 +42,29 @@ public class CarorderService {
             } else {
                 typeHistory.put(String.valueOf(car.getCarCategory()), 1);
             }
-            if (companyHistory.containsKey(car.getBrand())) {
-                companyHistory.put(car.getBrand(), companyHistory.get(car.getBrand()) + 1);
+            if (companyHistory.containsKey(car.getModel())) {
+                companyHistory.put(car.getModel(), companyHistory.get(car.getModel()) + 1);
             } else {
-                companyHistory.put(car.getBrand(), 1);
+                companyHistory.put(car.getModel(), 1);
             }
         }
+        companyHistory.forEach((k, v) -> {
+            System.out.format("key: %s, value: %d%n", k, v);
+        });
+        System.out.println(companyHistory.containsKey("A4"));
         Set<Car> preferedcars = new LinkedHashSet<>();
         String[][] topick = permutations(colorHistory, typeHistory, companyHistory);
+
         for (int i = 0; i < 9; i++) {
             if (topick[i][1] == null) {
                 topick[i][1] = "all";
             }
-            List<Car> toadd = getEnabledFilteredCars("", topick[i][2], "", "", "", "", topick[i][1], topick[i][0], pagestartt);
+            System.out.println(topick[i][2]);
+            List<Car> toadd = getEnabledFilteredCars(topick[i][2], "", "", "", "", "", topick[i][1], topick[i][0], pagestartt);
             preferedcars.addAll(toadd);
+            for (Car c : preferedcars){
+                System.out.println(c.getModel());
+            }
         }
         preferedcars.addAll(getEnabledFilteredCars("", "", "", "", "", "", "all", "", pagestartt));
         return carService.getCarsPreviews(new ArrayList<>(preferedcars));
@@ -181,26 +190,30 @@ public class CarorderService {
 
     private String[] topThree(HashMap<String, Integer> map) {
         int first, second, third;
-        first = second = third = 1;
+        first = second = third = -1;
         String[] res = new String[3];
+       int i=0;
         for (String name : map.keySet()) {
-            if (map.get(name) > first) {
+            System.out.println(i++);
+            System.out.println(map.get(name).intValue());
+            if (map.get(name).intValue() > first) {
                 third = second;
                 second = first;
-                first = map.get(name);
+                first = map.get(name).intValue();
                 res[2] = res[1];
                 res[1] = res[0];
                 res[0] = name;
-            } else if (map.get(name) > second) {
+            } else if (map.get(name).intValue() > second) {
                 third = second;
-                second = map.get(name);
+                second = map.get(name).intValue();
                 res[2] = res[1];
                 res[1] = name;
-            } else if (map.get(name) > third) {
-                third = map.get(name);
+            } else if (map.get(name).intValue() > third) {
+                third = map.get(name).intValue();
                 res[2] = name;
             }
         }
+        System.out.println(res[0]+res[1]+res[2]);
         return res;
     }
 
