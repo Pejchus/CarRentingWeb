@@ -277,16 +277,26 @@ public class ProfileController {
             mv.addObject("carChangeMsg", "Rezervace nebyla smazana");
         }
         setCommonProfileVariables(mv, ownerId);
-        if (userService.loadUserById(ownerId).isEnabled()) {
-            mv.addObject("disableEnableUser", "hidden");
-            mv.addObject("disableDisableUser", "");
+        if (isAdmin) {
+            if (userService.loadUserById(ownerId).isEnabled()) {
+                mv.addObject("disableEnableUser", "hidden");
+                mv.addObject("disableDisableUser", "");
+            } else {
+                mv.addObject("disableEnableUser", "");
+                mv.addObject("disableDisableUser", "hidden");
+            }
+            mv.addObject("disabledAdminButtons", "");
         } else {
-            mv.addObject("disableEnableUser", "");
+            mv.addObject("disabledAdminButtons", "hidden");
             mv.addObject("disableDisableUser", "hidden");
+            mv.addObject("disableEnableUser", "hidden");
         }
-        mv.addObject("disabledAdminButtons", "");
         mv.addObject("userId", ownerId);
-        mv.addObject("disabled", "hidden");
+        if (ownerId.equals(session.getAttribute("userId").toString())) {
+            mv.addObject("disabled", "");
+        } else {
+            mv.addObject("disabled", "hidden");
+        }
         return mv;
     }
 }
