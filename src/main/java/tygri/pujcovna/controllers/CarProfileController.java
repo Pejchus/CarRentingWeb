@@ -64,7 +64,7 @@ public class CarProfileController {
 
     @PreAuthorize("hasAnyRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')")
     @RequestMapping(value = "/makeOrder", method = RequestMethod.GET)
-    public ModelAndView makeOrder(HttpSession session, @RequestParam String carId, @RequestParam String tripstart, @RequestParam String tripend, @RequestParam String username) {
+    public ModelAndView makeOrder(HttpSession session, @RequestParam String carId, @RequestParam String tripstart, @RequestParam String tripend, @RequestParam(required = false) String username) {
         ModelAndView mv = new ModelAndView("/carProfile.jsp");
         User user = userService.loadUserByUsername(session.getAttribute("userName").toString());
         Car car = carService.getCarById(carId);
@@ -74,7 +74,7 @@ public class CarProfileController {
             String[] tripEnd = tripend.split("/");
             tripend = tripEnd[2] + "-" + tripEnd[0] + "-" + tripEnd[1];
             boolean userok = true;
-            if (!"".equals(username)){
+            if (null != username){
                 try{
                     user = userService.loadUserByUsername(username);
                 }catch (UsernameNotFoundException e){
