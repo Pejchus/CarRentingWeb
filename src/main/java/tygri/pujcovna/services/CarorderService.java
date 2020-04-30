@@ -59,7 +59,7 @@ public class CarorderService {
             System.out.println(topick[i][2]);
             List<Car> toadd = getEnabledFilteredCars(topick[i][2], "", "", "", "", "", topick[i][1], topick[i][0], pagestartt);
             preferedcars.addAll(toadd);
-            
+
         }
         preferedcars.addAll(getEnabledFilteredCars("", "", "", "", "", "", "all", "", pagestartt));
         return carService.getCarsPreviews(new ArrayList<>(preferedcars));
