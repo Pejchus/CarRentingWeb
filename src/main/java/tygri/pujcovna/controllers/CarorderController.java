@@ -31,7 +31,7 @@ public class CarorderController {
         if (session.getAttribute("userName") == null) {
             return showOffers(session, "false", "", "", "", "", orderService.getLowestEnabledCarPrice().toString(), orderService.getHighestEnabledCarPrice().toString(), "", "0");
         } else {
-            return showOffers(session, "true", "", "", "", "", orderService.getLowestEnabledCarPrice().toString(), orderService.getHighestEnabledCarPrice().toString(), "", "0");
+            return showOffers(session, "true", "", "", "", "", orderService.getLowestEnabledCarPrice().toString(), orderService.getHighestEnabledCarPrice().toString(), "all", "0");
         }
     }
 
@@ -39,7 +39,7 @@ public class CarorderController {
     public ModelAndView showOffers(HttpSession session, @RequestParam String prefferedCars, @RequestParam String modelsearch, @RequestParam String carcompany, @RequestParam String tripstart, @RequestParam String tripend, @RequestParam String range1a, @RequestParam String range1b, @RequestParam("type") String type, @RequestParam("pagestart") String pagestart) {
         ModelAndView mv = new ModelAndView("/nabidka.jsp");
         String offers;
-        if ("false".equals(prefferedCars)) {
+        if (session.getAttribute("userName") == null) {
             offers = orderService.getEnabledCarsOffers(modelsearch, carcompany, tripstart, tripend, range1a, range1b, type, pagestart);
             if ("0".equals(pagestart)) {
                 mv.addObject("pagingPrevious", "hidden");
@@ -53,7 +53,7 @@ public class CarorderController {
             }
         } else {//only get first ten preffered cars always - predelam mozna pozdeji
             User user = userService.loadUserByUsername(session.getAttribute("userName").toString());
-            offers = orderService.getEnabledPrefferd(user, pagestart);
+            offers = orderService.getEnabledPrefferd(user,modelsearch,carcompany,tripstart,tripend,range1a,range1b,type, pagestart);
             mv.addObject("pagingNext", "hidden");
             mv.addObject("pagingPrevious", "hidden");
         }

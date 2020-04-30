@@ -24,7 +24,7 @@ public class CarorderService {
     @Autowired
     private CarDao carDao;
 
-    public String getEnabledPrefferd(User user, String pagestart) {
+    public String getEnabledPrefferd(User user, String modelsearch, String carcompany, String tripstart, String tripend, String range1a, String range1b, String type, String pagestart) {
         int pagestartt = Integer.valueOf(pagestart);
         HashMap<String, Integer> colorHistory = new HashMap<>();
         HashMap<String, Integer> typeHistory = new HashMap<>();
@@ -48,7 +48,6 @@ public class CarorderService {
                 companyHistory.put(car.getModel(), 1);
             }
         }
-        System.out.println(companyHistory.containsKey("A4"));
         Set<Car> preferedcars = new LinkedHashSet<>();
         String[][] topick = permutations(colorHistory, typeHistory, companyHistory);
 
@@ -56,12 +55,16 @@ public class CarorderService {
             if (topick[i][1] == null) {
                 topick[i][1] = "all";
             }
-            System.out.println(topick[i][2]);
-            List<Car> toadd = getEnabledFilteredCars(topick[i][2], "", "", "", "", "", topick[i][1], topick[i][0], pagestartt);
+            if(!modelsearch.equals("")&&topick[i][2]!=modelsearch){
+                continue;
+            }
+            if(topick[i][1]!=type && (!type.equals("all"))){
+                continue;
+            }
+            List<Car> toadd = getEnabledFilteredCars(topick[i][2], carcompany, tripstart, tripend, range1a, range1b, topick[i][1], topick[i][0], pagestartt);
             preferedcars.addAll(toadd);
-
         }
-        preferedcars.addAll(getEnabledFilteredCars("", "", "", "", "", "", "all", "", pagestartt));
+        preferedcars.addAll(getEnabledFilteredCars(modelsearch, carcompany, tripstart, tripend, range1a,range1b, type, "", pagestartt));
         return carService.getCarsPreviews(new ArrayList<>(preferedcars));
     }
 
@@ -189,8 +192,6 @@ public class CarorderService {
         String[] res = new String[3];
        int i=0;
         for (String name : map.keySet()) {
-            System.out.println(i++);
-            System.out.println(map.get(name).intValue());
             if (map.get(name).intValue() > first) {
                 third = second;
                 second = first;
@@ -208,7 +209,6 @@ public class CarorderService {
                 res[2] = name;
             }
         }
-        System.out.println(res[0]+res[1]+res[2]);
         return res;
     }
 
