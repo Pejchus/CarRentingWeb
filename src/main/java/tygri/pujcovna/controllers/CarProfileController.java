@@ -8,7 +8,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,6 +24,7 @@ import tygri.pujcovna.model.User;
 import tygri.pujcovna.services.CarService;
 import tygri.pujcovna.services.CarorderService;
 import tygri.pujcovna.services.UserService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 @Controller
 public class CarProfileController {
@@ -204,10 +206,24 @@ public class CarProfileController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_CUSTOMER')")
     @RequestMapping(value = "/deleteCarOrder", method = RequestMethod.GET)
-    public ModelAndView deleteCarOrder(HttpSession session, @RequestParam("id") String id) {
-        ModelAndView mv = new ModelAndView("");
-        //todo
+    public ModelAndView deleteCarOrder(HttpSession session, @RequestParam String id) {
+        ModelAndView mv = new ModelAndView("profile.jsp");
+        String userId= session.getAttribute("userId").toString();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean hasUserRole = authentication.getAuthorities().stream()
+                .anyMatch(r -> r.getAuthority().equals("ROLE_USER"));
+        carorderService.deleteOrder(userId,id,hasUserRole);
+        if (carorderService.deleteOrder(userId,id,hasUserRole)) {
+            mv.addObject("changeMessage", "Rezervace byla smazana");
+        } else {
+            mv.addObject("changeMessage", "Rezervace nebyla smazana");
+        }
+        mv.addObject("orders", carorderService.getAllOrders(userService.loadUserById(userId)));
         return mv;
     }
+
+
+
 }

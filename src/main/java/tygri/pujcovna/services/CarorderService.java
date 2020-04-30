@@ -108,7 +108,7 @@ public class CarorderService {
     }
 
     /*
-    Zatim Lze objednavat alespon 0 hodin dopredu    
+    Zatim Lze objednavat alespon 0 hodin dopredu
      */
     private boolean isFree(Car car, Timestamp startDate, Timestamp endDate) {
         if (startDate == null && endDate == null) {
@@ -211,4 +211,23 @@ public class CarorderService {
     public Double getHighestEnabledCarPrice() {
         return carDao.getHighestEnabledCarPrice();
     }
+
+    public boolean deleteOrder(String userId, String id, boolean admin) {
+        try {
+            Carorder carOrder = carOrderDao.getOrder(id);
+            if (System.currentTimeMillis()>carOrder.getBegindate().getTime() || !admin && !userId.equals(carOrder.getAccount().getId().toString())) {
+                return false;
+            }
+            return carOrderDao.removeOrder(carOrderDao.getOrder(id));
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public CarorderDao getCarOrderDao() {
+        return carOrderDao;
+    }
 }
+
+
+
