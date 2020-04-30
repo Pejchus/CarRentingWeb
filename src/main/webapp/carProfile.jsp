@@ -74,6 +74,10 @@
                                 <input type="text" id="tripend" name="tripend" placeholder="Vyberte datum" readonly required>
                                 <span id="tripendMsg"></span>
                             </div>
+                            <security:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')">
+                                <label for="username">Pro uzivatele:</label>
+                                <input type="text" class="form-control" id="username" name="username" value ="" placeholder="Zadejte username" >
+                            </security:authorize>
                             <input type="hidden" name="carId" value="${carId}">
                             <span id="totalPrice"></span>
                             <input type="submit" value="Rezervovat">

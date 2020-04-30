@@ -3,6 +3,7 @@ package tygri.pujcovna.dao;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.List;
+
 import org.springframework.stereotype.Repository;
 import tygri.pujcovna.model.Car;
 import tygri.pujcovna.model.Carorder;
@@ -153,5 +154,32 @@ public class CarorderDao extends BaseDao {
             return false;
         }
     }
+    public boolean removeOrder(Carorder order) {
+        try {
+            int i = order.getAccount().getOrders().indexOf(order);
+            int ii = order.getCar().getOrderss().indexOf(order);
+            order.getAccount().getOrders().remove(i);
+            order.getCar().getOrderss().remove(ii);
+            super.updateEntity(order.getAccount());
+            super.updateEntity(order.getCar());
+            super.remove(order);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
+    public Carorder getOrder(String id) {
+        try {
+            int idN = Integer.parseInt(id);
+            return em.find(Carorder.class, idN);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }
+
+
+
+
+

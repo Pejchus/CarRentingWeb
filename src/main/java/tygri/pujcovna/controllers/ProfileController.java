@@ -3,6 +3,8 @@ package tygri.pujcovna.controllers;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,7 +36,7 @@ public class ProfileController {
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
     public ModelAndView profile(HttpSession session) {
         ModelAndView mv = new ModelAndView("/profile.jsp");
-        setCommonProfileVariables(session, mv, session.getAttribute("userId").toString());
+        setCommonProfileVariables(mv, session.getAttribute("userId").toString());
         mv.addObject("disabled", "");
         mv.addObject("disabledAdminButtons", "hidden");
         mv.addObject("disableEnableUser", "hidden");
@@ -51,7 +53,7 @@ public class ProfileController {
         } else {
             mv.addObject("profilePhotoChangeMsg", "<p>Profilove foto nebylo zmeneno</p>");
         }
-        setCommonProfileVariables(session, mv, session.getAttribute("userId").toString());
+        setCommonProfileVariables(mv, session.getAttribute("userId").toString());
         mv.addObject("disabled", "");
         mv.addObject("disabledAdminButtons", "hidden");
         mv.addObject("disableEnableUser", "hidden");
@@ -68,7 +70,7 @@ public class ProfileController {
             ModelAndView mv = new ModelAndView("/profile.jsp");
             User user = userService.loadUserById(id);
             if (user != null) {
-                setCommonProfileVariables(session, mv, id);
+                setCommonProfileVariables(mv, id);
                 if (user.isEnabled()) {
                     mv.addObject("disableEnableUser", "hidden");
                     mv.addObject("disableDisableUser", "");
@@ -92,7 +94,7 @@ public class ProfileController {
         if (session.getAttribute("userId").toString().equals(id)) {
             return profile(session);
         } else {
-            ModelAndView mv = new ModelAndView("/profile.jsp");
+            ModelAndView mv = new ModelAndView("/profileA.jsp");
             User user = userService.loadUserById(id);
             if (userService.disable(session, user)) {
                 mv.addObject("changeMessage", "Uzivatel byl zablokovan");
@@ -100,7 +102,7 @@ public class ProfileController {
                 mv.addObject("changeMessage", "Uzivatel nebyl zablokovan");
             }
             if (user != null) {
-                setCommonProfileVariables(session, mv, id);
+                setCommonProfileVariables(mv, id);
                 if (user.isEnabled()) {
                     mv.addObject("disableEnableUser", "hidden");
                     mv.addObject("disableDisableUser", "");
@@ -124,7 +126,7 @@ public class ProfileController {
         if (session.getAttribute("userId").toString().equals(id)) {
             return profile(session);
         } else {
-            ModelAndView mv = new ModelAndView("/profile.jsp");
+            ModelAndView mv = new ModelAndView("/profileA.jsp");
             User user = userService.loadUserById(id);
             if (userService.enable(session, user)) {
                 mv.addObject("changeMessage", "Uzivatel byl odblokovan");
@@ -132,7 +134,7 @@ public class ProfileController {
                 mv.addObject("changeMessage", "Uzivatel byl odblokovan");
             }
             if (user != null) {
-                setCommonProfileVariables(session, mv, id);
+                setCommonProfileVariables(mv, id);
                 if (user.isEnabled()) {
                     mv.addObject("disableEnableUser", "hidden");
                     mv.addObject("disableDisableUser", "");
@@ -150,7 +152,7 @@ public class ProfileController {
         }
     }
 
-    private void setCommonProfileVariables(HttpSession session, ModelAndView mv, String id) {
+    private void setCommonProfileVariables(ModelAndView mv, String id) {
         User user = userService.loadUserById(id);
         mv.addObject("firstname", user.getFirstname());
         mv.addObject("lastname", user.getLastname());
@@ -170,7 +172,6 @@ public class ProfileController {
         return getAdminPagePaged(session, "0", "0");
     }
 
-    //BUGGED
     @RequestMapping(value = "/adminPagepaged")
     @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE','ROLE_ADMIN')")
     public ModelAndView getAdminPagePaged(HttpSession session, @RequestParam String carpagestart, @RequestParam String userpagestart) {
@@ -255,6 +256,23 @@ public class ProfileController {
         } else {
             mv.addObject("carAddedMessage", "<p>Car not added!</p>");
         }
+        return mv;
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE','ROLE_CUSTOMER')")
+    @RequestMapping(value = "/deleteCarOrder", method = RequestMethod.GET)
+    public ModelAndView deleteCarOrder(HttpSession session, @RequestParam("id") String orderId) {
+        ModelAndView mv = new ModelAndView("/profile.jsp");
+        String userId = session.getAttribute("userId").toString();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean isAdmin = authentication.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
+        String ownerId = carorderService.getCarOrderOwner(orderId);
+        if (carorderService.deleteOrder(userId, orderId, isAdmin)) {
+            mv.addObject("carChangeMsg", "Rezervace byla smazana");
+        } else {
+            mv.addObject("carChangeMsg", "Rezervace nebyla smazana");
+        }
+        setCommonProfileVariables(mv, ownerId);
         return mv;
     }
 }

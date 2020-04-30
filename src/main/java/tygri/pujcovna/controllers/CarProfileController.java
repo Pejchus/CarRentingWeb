@@ -8,6 +8,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +24,7 @@ import tygri.pujcovna.model.User;
 import tygri.pujcovna.services.CarService;
 import tygri.pujcovna.services.CarorderService;
 import tygri.pujcovna.services.UserService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 @Controller
 public class CarProfileController {
@@ -61,7 +64,7 @@ public class CarProfileController {
 
     @PreAuthorize("hasAnyRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')")
     @RequestMapping(value = "/makeOrder", method = RequestMethod.GET)
-    public ModelAndView makeOrder(HttpSession session, @RequestParam String carId, @RequestParam String tripstart, @RequestParam String tripend) {
+    public ModelAndView makeOrder(HttpSession session, @RequestParam String carId, @RequestParam String tripstart, @RequestParam String tripend, @RequestParam(required = false) String username) {
         ModelAndView mv = new ModelAndView("/carProfile.jsp");
         User user = userService.loadUserByUsername(session.getAttribute("userName").toString());
         Car car = carService.getCarById(carId);
@@ -70,8 +73,19 @@ public class CarProfileController {
             tripstart = tripStart[2] + "-" + tripStart[0] + "-" + tripStart[1];
             String[] tripEnd = tripend.split("/");
             tripend = tripEnd[2] + "-" + tripEnd[0] + "-" + tripEnd[1];
-            if (carorderService.createOrder(user, car, tripstart, tripend)) {
+            boolean userok = true;
+            if (null != username) {
+                try {
+                    user = userService.loadUserByUsername(username);
+                } catch (UsernameNotFoundException e) {
+                    userok = false;
+                    mv.addObject("createOrderMsg", "<p>Please fill valid username</p>");
+                }
+            }
+            if (userok && carorderService.createOrder(user, car, tripstart, tripend)) {
                 mv.addObject("createOrderMsg", "<p>Order successfully made on specified date</p>");
+            } else if (!userok) {
+                mv.addObject("createOrderMsg", "<p>Please fill valid username</p>");
             } else {
                 mv.addObject("createOrderMsg", "<p>Unable to order for that date</p>");
             }
@@ -189,12 +203,5 @@ public class CarProfileController {
         } else {
             mv.addObject("disabled", "hidden");
         }
-    }
-
-    @RequestMapping(value = "/deleteCarOrder", method = RequestMethod.GET)
-    public ModelAndView deleteCarOrder(HttpSession session, @RequestParam("id") String id) {
-        ModelAndView mv = new ModelAndView("");
-        //todo
-        return mv;
     }
 }
