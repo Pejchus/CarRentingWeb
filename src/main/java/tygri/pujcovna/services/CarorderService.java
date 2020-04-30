@@ -24,6 +24,8 @@ public class CarorderService {
     @Autowired
     private CarDao carDao;
 
+
+
     public String getEnabledPrefferd(User user, String modelsearch, String carcompany, String tripstart, String tripend, String range1a, String range1b, String type, String pagestart) {
         int pagestartt = Integer.valueOf(pagestart);
         HashMap<String, Integer> colorHistory = new HashMap<>();
@@ -48,7 +50,7 @@ public class CarorderService {
                 companyHistory.put(car.getModel(), 1);
             }
         }
-        Set<Car> preferedcars = new LinkedHashSet<>();
+        Set<Car> preferedcars = new LinkedHashSet<>(9);
         String[][] topick = permutations(colorHistory, typeHistory, companyHistory);
 
         for (int i = 0; i < 9; i++) {
@@ -61,18 +63,28 @@ public class CarorderService {
             if(topick[i][1]!=type && (!type.equals("all"))){
                 continue;
             }
-            List<Car> toadd = getEnabledFilteredCars(topick[i][2], carcompany, tripstart, tripend, range1a, range1b, topick[i][1], topick[i][0], pagestartt);
+            List<Car> toadd = getEnabledFilteredCars(topick[i][2], carcompany, tripstart, tripend, range1a, range1b, topick[i][1], topick[i][0]);
             preferedcars.addAll(toadd);
         }
-        preferedcars.addAll(getEnabledFilteredCars(modelsearch, carcompany, tripstart, tripend, range1a,range1b, type, "", pagestartt));
-        return carService.getCarsPreviews(new ArrayList<>(preferedcars));
+        preferedcars.addAll(getEnabledFilteredCars(modelsearch, carcompany, tripstart, tripend, range1a,range1b, type, ""));
+        return cutToPreview(new ArrayList(preferedcars),pagestartt);
+
+    }
+    public String cutToPreview(List carlist,int pagestartt){
+        int pageend = pagestartt+10;
+        if(pageend>carlist.size()){
+            pageend=carlist.size();
+        }if(pageend<pagestartt){
+            return carService.getCarsPreviews(new ArrayList<>());
+        }
+        return carService.getCarsPreviews(carlist.subList(pagestartt,pageend));
     }
 
     public String getEnabledCarsOffers(String modelsearch, String carcompany, String tripstart, String tripend, String range1a, String range1b, String type, String pagestart) {
-        return carService.getCarsPreviews(getEnabledFilteredCars(modelsearch, carcompany, tripstart, tripend, range1a, range1b, type, "", Integer.valueOf(pagestart)));
+        return cutToPreview(getEnabledFilteredCars(modelsearch, carcompany, tripstart, tripend, range1a, range1b, type, ""),Integer.valueOf(pagestart));
     }
 
-    private List<Car> getEnabledFilteredCars(String modelsearch, String carcompany, String tripstart, String tripend, String range1a, String range1b, String type, String color, int pagestart) {
+    private List<Car> getEnabledFilteredCars(String modelsearch, String carcompany, String tripstart, String tripend, String range1a, String range1b, String type, String color) {
         Double lowPrice;
         Double highPrice;
         if ("".equals(range1a)) {
@@ -101,9 +113,9 @@ public class CarorderService {
         }
         List<Car> filteredCars;
         if (!"".equals(type)) {
-            filteredCars = carDao.getFilteredEnabledCars(modelsearch, carcompany, lowPrice, highPrice, CarCategory.valueOf(type), "", pagestart);
+            filteredCars = carDao.getFilteredEnabledCars(modelsearch, carcompany, lowPrice, highPrice, CarCategory.valueOf(type), "");
         } else {
-            filteredCars = carDao.getFilteredEnabledCars(modelsearch, carcompany, lowPrice, highPrice, pagestart);
+            filteredCars = carDao.getFilteredEnabledCars(modelsearch, carcompany, lowPrice, highPrice);
         }
         List<Car> freeCars = new ArrayList<>();
         for (Car car : filteredCars) {
@@ -231,6 +243,7 @@ public class CarorderService {
             return false;
         }
     }
+
 
     public String getCarOrderOwner(String id) {
         return carOrderDao.getOrder(id).getAccount().getId().toString();

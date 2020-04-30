@@ -41,21 +41,20 @@ public class CarorderController {
         String offers;
         if (session.getAttribute("userName") == null) {
             offers = orderService.getEnabledCarsOffers(modelsearch, carcompany, tripstart, tripend, range1a, range1b, type, pagestart);
-            if ("0".equals(pagestart)) {
-                mv.addObject("pagingPrevious", "hidden");
-            } else {
-                mv.addObject("pagingPrevious", "");
-            }
-            if ("".equals(orderService.getEnabledCarsOffers(modelsearch, carcompany, tripstart, tripend, range1a, range1b, type, String.valueOf(Integer.valueOf(pagestart) + 10)))) {
-                mv.addObject("pagingNext", "hidden");
-            } else {
-                mv.addObject("pagingNext", "");
-            }
-        } else {//only get first ten preffered cars always - predelam mozna pozdeji
+        } else {
             User user = userService.loadUserByUsername(session.getAttribute("userName").toString());
             offers = orderService.getEnabledPrefferd(user,modelsearch,carcompany,tripstart,tripend,range1a,range1b,type, pagestart);
-            mv.addObject("pagingNext", "hidden");
             mv.addObject("pagingPrevious", "hidden");
+        }
+        if ("0".equals(pagestart)) {
+            mv.addObject("pagingPrevious", "hidden");
+        } else {
+            mv.addObject("pagingPrevious", "");
+        }
+        if ("".equals(orderService.getEnabledCarsOffers(modelsearch, carcompany, tripstart, tripend, range1a, range1b, type, String.valueOf(Integer.valueOf(pagestart) + 10)))) {
+            mv.addObject("pagingNext", "hidden");
+        } else {
+            mv.addObject("pagingNext", "");
         }
         mv.addObject("offers", offers);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -71,8 +70,8 @@ public class CarorderController {
         mv.addObject("range1bValue", range1b);
         mv.addObject("range1bValue", range1b);
         mv.addObject("pagestart", pagestart);
-        mv.addObject("previouspagestart", String.valueOf(Integer.valueOf(pagestart) - 9));
-        mv.addObject("nextpagestart", String.valueOf(Integer.valueOf(pagestart) + 9));
+        mv.addObject("previouspagestart", String.valueOf(Integer.valueOf(pagestart) - 10));
+        mv.addObject("nextpagestart", String.valueOf(Integer.valueOf(pagestart) + 10));
         resolveCheckedType(mv, type);
         return mv;
     }

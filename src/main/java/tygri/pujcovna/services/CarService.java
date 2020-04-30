@@ -23,6 +23,8 @@ public class CarService {
     private final CarDao carDao;
     private final Constants constants;
     private final CarorderDao carorderDao;
+    @Autowired
+    private CarorderService carorderService;
 
     @Autowired
     public CarService(CarDao carDao, Constants constants, CarorderDao carorderDao) {
@@ -37,7 +39,7 @@ public class CarService {
     }
 
     public String getAllCarsPreviews(String pagestart) {
-        return getCarsPreviews(carDao.getAllCars(Integer.valueOf(pagestart)));
+        return carorderService.cutToPreview(carDao.getAllCars(),Integer.valueOf(pagestart));
     }
 
     @Transactional
@@ -107,7 +109,7 @@ public class CarService {
         } catch (NumberFormatException e) {
             high = Double.MAX_VALUE;
         }
-        return carDao.getFilteredEnabledCars(color, brand, low, high, pagestart);
+        return carDao.getFilteredEnabledCars(color, brand, low, high);
     }
 
     public Car getCarById(String id) {
