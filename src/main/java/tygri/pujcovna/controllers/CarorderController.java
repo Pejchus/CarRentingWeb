@@ -54,8 +54,16 @@ public class CarorderController {
         } else {//only get first ten preffered cars always - predelam mozna pozdeji
             User user = userService.loadUserByUsername(session.getAttribute("userName").toString());
             offers = orderService.getEnabledPrefferd(user,modelsearch,carcompany,tripstart,tripend,range1a,range1b,type, pagestart);
-            mv.addObject("pagingNext", "hidden");
-            mv.addObject("pagingPrevious", "hidden");
+            if ("0".equals(pagestart)) {
+                mv.addObject("pagingPrevious", "hidden");
+            } else {
+                mv.addObject("pagingPrevious", "");
+            }
+            if ("".equals(orderService.getEnabledCarsOffers(modelsearch, carcompany, tripstart, tripend, range1a, range1b, type, String.valueOf(Integer.valueOf(pagestart) + 10)))) {
+                mv.addObject("pagingNext", "hidden");
+            } else {
+                mv.addObject("pagingNext", "");
+            }
         }
         mv.addObject("offers", offers);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
