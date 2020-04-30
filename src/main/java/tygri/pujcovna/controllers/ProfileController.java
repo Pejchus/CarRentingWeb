@@ -94,7 +94,7 @@ public class ProfileController {
         if (session.getAttribute("userId").toString().equals(id)) {
             return profile(session);
         } else {
-            ModelAndView mv = new ModelAndView("/profileA.jsp");
+            ModelAndView mv = new ModelAndView("/profile.jsp");
             User user = userService.loadUserById(id);
             if (userService.disable(session, user)) {
                 mv.addObject("changeMessage", "Uzivatel byl zablokovan");
@@ -126,7 +126,7 @@ public class ProfileController {
         if (session.getAttribute("userId").toString().equals(id)) {
             return profile(session);
         } else {
-            ModelAndView mv = new ModelAndView("/profileA.jsp");
+            ModelAndView mv = new ModelAndView("/profile.jsp");
             User user = userService.loadUserById(id);
             if (userService.enable(session, user)) {
                 mv.addObject("changeMessage", "Uzivatel byl odblokovan");
@@ -179,7 +179,7 @@ public class ProfileController {
         mv.addObject("carData", carService.getAllCarsPreviews(carpagestart));
         if (session.getAttribute("UserStatus") == AuthorityType.ROLE_ADMIN) {
             mv.addObject("userData", userService.getAllUsersPreviews(userpagestart));
-            if (!"".equals(userService.getAllUsersPreviews(String.valueOf(Integer.valueOf(carpagestart) + 10)))) {
+            if (!"".equals(userService.getAllUsersPreviews(String.valueOf(Integer.valueOf(carpagestart) + 9)))) {
                 mv.addObject("paginguserNext", "");
             } else {
                 mv.addObject("paginguserNext", "hidden");
@@ -189,11 +189,11 @@ public class ProfileController {
             } else {
                 mv.addObject("paginguserPrevious", "hidden");
             }
-            mv.addObject("previoususerpagestart", String.valueOf(Integer.valueOf(userpagestart) - 10));
-            mv.addObject("nextuserpagestart", String.valueOf(Integer.valueOf(userpagestart) + 10));
+            mv.addObject("previoususerpagestart", String.valueOf(Integer.valueOf(userpagestart) - 9));
+            mv.addObject("nextuserpagestart", String.valueOf(Integer.valueOf(userpagestart) + 9));
             mv.addObject("currentuserpagestart", String.valueOf(Integer.valueOf(userpagestart)));
         }
-        if (!"".equals(carService.getAllCarsPreviews(String.valueOf(Integer.valueOf(carpagestart) + 10)))) {
+        if (!"".equals(carService.getAllCarsPreviews(String.valueOf(Integer.valueOf(carpagestart) + 9)))) {
             mv.addObject("pagingcarNext", "");
         } else {
             mv.addObject("pagingcarNext", "hidden");
@@ -203,18 +203,19 @@ public class ProfileController {
         } else {
             mv.addObject("pagingcarPrevious", "hidden");
         }
-        mv.addObject("nextcarpagestart", String.valueOf(Integer.valueOf(carpagestart) + 10));
+        mv.addObject("nextcarpagestart", String.valueOf(Integer.valueOf(carpagestart) + 9));
         mv.addObject("currentcarpagestart", String.valueOf(Integer.valueOf(carpagestart)));
-        mv.addObject("previouscarpagestart", String.valueOf(Integer.valueOf(carpagestart) - 10));
+        mv.addObject("previouscarpagestart", String.valueOf(Integer.valueOf(carpagestart) - 9));
         return mv;
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/deleteUser", method = RequestMethod.GET)
     public ModelAndView deleteUser(HttpSession session, @RequestParam String id) {
-        ModelAndView mv = getAdminPagePaged(session, "0", "0");
         User user = userService.loadUserById(id);
-        if (userService.deleteUser(session, user)) {
+        boolean userDeleted = userService.deleteUser(session, user);
+        ModelAndView mv = getAdminPagePaged(session, "0", "0");
+        if (userDeleted) {
             mv.addObject("changeMessage", "Uzivatel byl smazan");
         } else {
             mv.addObject("changeMessage", "Uzivatel nebyl smazan");
@@ -225,9 +226,10 @@ public class ProfileController {
     @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE','ROLE_ADMIN')")
     @RequestMapping(value = "/deleteCar", method = RequestMethod.GET)
     public ModelAndView deleteCar(HttpSession session, @RequestParam String id) {
-        ModelAndView mv = getAdminPagePaged(session, "0", "0");
         Car car = carService.getCarById(id);
-        if (carService.deleteCar(car)) {
+        boolean carDeleted = carService.deleteCar(car);
+        ModelAndView mv = getAdminPagePaged(session, "0", "0");
+        if (carDeleted) {
             mv.addObject("changeMessage", "Auto bylo smazano");
         } else {
             mv.addObject("changeMessage", "Auto nebylo smazano");
@@ -238,8 +240,9 @@ public class ProfileController {
     @RequestMapping("/doAddUser")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ModelAndView doAddUser(HttpSession session, @RequestParam String username, @RequestParam String password, @RequestParam String email, @RequestParam String enabled, @RequestParam String phone, @RequestParam String countryCode, @RequestParam String firstname, @RequestParam String lastname, @RequestParam String city, @RequestParam String street, @RequestParam String streetNo, @RequestParam String authority) {
+        boolean userCreated = userService.createUser(username, password, email, enabled, phone, countryCode, firstname, lastname, city, street, streetNo, authority);
         ModelAndView mv = getAdminPagePaged(session, "0", "0");
-        if (userService.createUser(username, password, email, enabled, phone, countryCode, firstname, lastname, city, street, streetNo, authority)) {
+        if (userCreated) {
             mv.addObject("changeMessage", "<p>User added!</p>");
         } else {
             mv.addObject("changeMessage", "<p>User not added!</p>");
@@ -250,8 +253,9 @@ public class ProfileController {
     @RequestMapping(value = "/doAddCar", method = RequestMethod.POST)
     @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE','ROLE_ADMIN')")
     public ModelAndView doAddCar(HttpSession session, @RequestParam("model") String model, @RequestParam("brand") String brand, @RequestParam("baseprice") String baseprice, @RequestParam("color") String color, @RequestParam("power") String power, @RequestParam("productionyear") String productionyear, @RequestParam("trunkvolume") String trunkvolume, @RequestParam("seats") String seats, @RequestParam("consumption") String consumption, @RequestParam("transmissiontype") String transmissiontype, @RequestParam("enginetype") String enginetype, @RequestParam("description") String description, @RequestParam("photo") MultipartFile photo, @RequestParam("carcategory") String carcategory) {
+        boolean carCreated = carService.createCar(model, brand, baseprice, color, power, productionyear, trunkvolume, seats, consumption, transmissiontype, enginetype, description, photo, carcategory);
         ModelAndView mv = getAdminPagePaged(session, "0", "0");
-        if (carService.createCar(model, brand, baseprice, color, power, productionyear, trunkvolume, seats, consumption, transmissiontype, enginetype, description, photo, carcategory)) {
+        if (carCreated) {
             mv.addObject("carAddedMessage", "<p>Car added!</p>");
         } else {
             mv.addObject("carAddedMessage", "<p>Car not added!</p>");
@@ -273,6 +277,16 @@ public class ProfileController {
             mv.addObject("carChangeMsg", "Rezervace nebyla smazana");
         }
         setCommonProfileVariables(mv, ownerId);
+        if (userService.loadUserById(ownerId).isEnabled()) {
+            mv.addObject("disableEnableUser", "hidden");
+            mv.addObject("disableDisableUser", "");
+        } else {
+            mv.addObject("disableEnableUser", "");
+            mv.addObject("disableDisableUser", "hidden");
+        }
+        mv.addObject("disabledAdminButtons", "");
+        mv.addObject("userId", ownerId);
+        mv.addObject("disabled", "hidden");
         return mv;
     }
 }

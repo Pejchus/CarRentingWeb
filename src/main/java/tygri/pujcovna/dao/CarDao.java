@@ -42,7 +42,7 @@ public class CarDao extends BaseDao {
         brand = "%" + brand + "%";
         try {
             TypedQuery<Car> q = em.createQuery("SELECT e FROM Car e WHERE e.model LIKE :model and e.brand LIKE :brand and e.carCategory LIKE :carCategory and e.baseprice between :lowest AND :highest AND e.enabled=TRUE", Car.class);
-            return q.setParameter("lowest", lowest).setParameter("highest", highest).setParameter("model", model).setParameter("brand", brand).setParameter("carCategory", carCategory).setFirstResult(pageStart).setMaxResults(10).getResultList();
+            return q.setParameter("lowest", lowest).setParameter("highest", highest).setParameter("model", model).setParameter("brand", brand).setParameter("carCategory", carCategory).setFirstResult(pageStart).setMaxResults(9).getResultList();
         } catch (RuntimeException e) {
             return null;
         }
@@ -53,7 +53,7 @@ public class CarDao extends BaseDao {
         brand = "%" + brand + "%";
         try {
             TypedQuery<Car> q = em.createQuery("SELECT e FROM Car e WHERE e.model LIKE :model and e.brand LIKE :brand and e.baseprice between :lowest AND :highest AND e.enabled=TRUE", Car.class);
-            return q.setParameter("lowest", lowest).setParameter("highest", highest).setParameter("model", model).setParameter("brand", brand).setFirstResult(pageStart).setMaxResults(10).getResultList();
+            return q.setParameter("lowest", lowest).setParameter("highest", highest).setParameter("model", model).setParameter("brand", brand).setFirstResult(pageStart).setMaxResults(9).getResultList();
         } catch (RuntimeException e) {
             return null;
         }
@@ -61,7 +61,7 @@ public class CarDao extends BaseDao {
 
     public List<Car> getAllCars(int pageStart) {
         try {
-            TypedQuery<Car> q = em.createQuery("SELECT e FROM Car e", Car.class).setFirstResult(pageStart).setMaxResults(10);
+            TypedQuery<Car> q = em.createQuery("SELECT e FROM Car e", Car.class).setFirstResult(pageStart).setMaxResults(9);
             return q.getResultList();
         } catch (RuntimeException e) {
             return null;

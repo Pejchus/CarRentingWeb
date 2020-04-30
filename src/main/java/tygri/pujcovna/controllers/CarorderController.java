@@ -71,8 +71,8 @@ public class CarorderController {
         mv.addObject("range1bValue", range1b);
         mv.addObject("range1bValue", range1b);
         mv.addObject("pagestart", pagestart);
-        mv.addObject("previouspagestart", String.valueOf(Integer.valueOf(pagestart) - 10));
-        mv.addObject("nextpagestart", String.valueOf(Integer.valueOf(pagestart) + 10));
+        mv.addObject("previouspagestart", String.valueOf(Integer.valueOf(pagestart) - 9));
+        mv.addObject("nextpagestart", String.valueOf(Integer.valueOf(pagestart) + 9));
         resolveCheckedType(mv, type);
         return mv;
     }
