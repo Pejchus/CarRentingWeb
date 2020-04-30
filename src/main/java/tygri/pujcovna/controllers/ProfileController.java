@@ -65,10 +65,11 @@ public class ProfileController {
         if (session.getAttribute("userId").toString().equals(id)) {
             return profile(session);
         } else {
-            ModelAndView mv = new ModelAndView("/profile.jsp");
+            ModelAndView mv = new ModelAndView("/profileA.jsp");
             User user = userService.loadUserById(id);
             if (user != null) {
-                setCommonProfileVariables(session, mv);
+//                setCommonProfileVariables(session, mv);
+                setCommonUserVariables(session,mv,user);
                 if (user.isEnabled()) {
                     mv.addObject("disableEnableUser", "hidden");
                     mv.addObject("disableDisableUser", "");
@@ -92,7 +93,7 @@ public class ProfileController {
         if (session.getAttribute("userId").toString().equals(id)) {
             return profile(session);
         } else {
-            ModelAndView mv = new ModelAndView("/profile.jsp");
+            ModelAndView mv = new ModelAndView("/profileA.jsp");
             User user = userService.loadUserById(id);
             if (userService.disable(session, user)) {
                 mv.addObject("changeMessage", "Uzivatel byl zablokovan");
@@ -100,7 +101,8 @@ public class ProfileController {
                 mv.addObject("changeMessage", "Uzivatel nebyl zablokovan");
             }
             if (user != null) {
-                setCommonProfileVariables(session, mv);
+//                setCommonProfileVariables(session, mv);
+                setCommonUserVariables(session, mv,user);
                 if (user.isEnabled()) {
                     mv.addObject("disableEnableUser", "hidden");
                     mv.addObject("disableDisableUser", "");
@@ -124,7 +126,7 @@ public class ProfileController {
         if (session.getAttribute("userId").toString().equals(id)) {
             return profile(session);
         } else {
-            ModelAndView mv = new ModelAndView("/profile.jsp");
+            ModelAndView mv = new ModelAndView("/profileA.jsp");
             User user = userService.loadUserById(id);
             if (userService.enable(session, user)) {
                 mv.addObject("changeMessage", "Uzivatel byl odblokovan");
@@ -132,7 +134,8 @@ public class ProfileController {
                 mv.addObject("changeMessage", "Uzivatel byl odblokovan");
             }
             if (user != null) {
-                setCommonProfileVariables(session, mv);
+//                setCommonProfileVariables(session, mv);
+                setCommonUserVariables(session,mv,user);
                 if (user.isEnabled()) {
                     mv.addObject("disableEnableUser", "hidden");
                     mv.addObject("disableDisableUser", "");
@@ -161,6 +164,22 @@ public class ProfileController {
         mv.addObject("streetno", session.getAttribute("streetno"));
         mv.addObject("profilePhoto", userService.getPhoto(session.getAttribute("userName").toString()));
         mv.addObject("orders", carorderService.getAllOrders(userService.loadUserByUsername(session.getAttribute("userName").toString())));
+    }
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    private void setCommonUserVariables(HttpSession session, ModelAndView mv,User user) {
+
+        mv.addObject("firstnameA",user.getFirstname() );
+        mv.addObject("lastnameA", user.getLastname());
+        mv.addObject("phoneA", user.getPhone());
+        mv.addObject("emailA", user.getEmail());
+        mv.addObject("countrycodeA", user.getCountryCode());
+        mv.addObject("cityA", user.getCity());
+        mv.addObject("streetA", user.getStreet());
+        mv.addObject("streetnoA", user.getStreetno());
+        mv.addObject("profilePhotoA", userService.getPhoto(user.getUsername()));
+        System.out.println("______________ORDRY");
+        mv.addObject("orders", carorderService.getAllOrders(userService.loadUserByUsername(user.getUsername())));
+        System.out.println("______________KONECORDRY");
     }
 
     @RequestMapping(value = "/adminPage")

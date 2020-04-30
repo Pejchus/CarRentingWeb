@@ -215,7 +215,7 @@ public class CarorderService {
     public boolean deleteOrder(String userId, String id, boolean admin) {
         try {
             Carorder carOrder = carOrderDao.getOrder(id);
-            if (System.currentTimeMillis()>carOrder.getBegindate().getTime() || !admin && !userId.equals(carOrder.getAccount().getId().toString())) {
+           if (System.currentTimeMillis()>carOrder.getBegindate().getTime() || !admin && !userId.equals(carOrder.getAccount().getId().toString())) {
                 return false;
             }
             return carOrderDao.removeOrder(carOrderDao.getOrder(id));
@@ -224,6 +224,9 @@ public class CarorderService {
         }
     }
 
+    public String getCarOrderOwner(String id) {
+        return carOrderDao.getOrder(id).getAccount().getId().toString();
+    }
     public CarorderDao getCarOrderDao() {
         return carOrderDao;
     }

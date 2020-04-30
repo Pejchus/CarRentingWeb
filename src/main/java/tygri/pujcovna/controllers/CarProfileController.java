@@ -209,18 +209,45 @@ public class CarProfileController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_CUSTOMER')")
     @RequestMapping(value = "/deleteCarOrder", method = RequestMethod.GET)
     public ModelAndView deleteCarOrder(HttpSession session, @RequestParam String id) {
-        ModelAndView mv = new ModelAndView("profile.jsp");
         String userId= session.getAttribute("userId").toString();
+        String userIdOwner=carorderService.getCarOrderOwner(id);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        boolean hasUserRole = authentication.getAuthorities().stream()
-                .anyMatch(r -> r.getAuthority().equals("ROLE_USER"));
-        carorderService.deleteOrder(userId,id,hasUserRole);
-        if (carorderService.deleteOrder(userId,id,hasUserRole)) {
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
+        ModelAndView mv;
+        if(isAdmin) {
+            mv = new ModelAndView("profileA.jsp");
+            User user=userService.loadUserById(userIdOwner);
+            mv.addObject("firstnameA",user.getFirstname() );
+            mv.addObject("lastnameA", user.getLastname());
+            mv.addObject("phoneA", user.getPhone());
+            mv.addObject("emailA", user.getEmail());
+            mv.addObject("countrycodeA", user.getCountryCode());
+            mv.addObject("cityA", user.getCity());
+            mv.addObject("streetA", user.getStreet());
+            mv.addObject("streetnoA", user.getStreetno());
+            mv.addObject("profilePhotoA", userService.getPhoto(user.getUsername()));
+            mv.addObject("userId", userIdOwner);
+            mv.addObject("disabled", "hidden");
+            if (user.isEnabled()) {
+                mv.addObject("disableEnableUser", "hidden");
+                mv.addObject("disableDisableUser", "");
+            } else {
+                mv.addObject("disableEnableUser", "");
+                mv.addObject("disableDisableUser", "hidden");
+            }
+
+        }else{
+            mv=new ModelAndView("profile.jsp");
+        }
+        carorderService.deleteOrder(userId,id,isAdmin);
+        if (carorderService.deleteOrder(userId,id,isAdmin)) {
             mv.addObject("changeMessage", "Rezervace byla smazana");
         } else {
             mv.addObject("changeMessage", "Rezervace nebyla smazana");
         }
-        mv.addObject("orders", carorderService.getAllOrders(userService.loadUserById(userId)));
+//        mv.addObject("orders", carorderService.getAllOrders(userService.loadUserById(userId)));
+        mv.addObject("orders", carorderService.getAllOrders(userService.loadUserById(userIdOwner)));
         return mv;
     }
 
