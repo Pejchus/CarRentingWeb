@@ -48,9 +48,6 @@ public class CarorderService {
                 companyHistory.put(car.getModel(), 1);
             }
         }
-        companyHistory.forEach((k, v) -> {
-            System.out.format("key: %s, value: %d%n", k, v);
-        });
         System.out.println(companyHistory.containsKey("A4"));
         Set<Car> preferedcars = new LinkedHashSet<>();
         String[][] topick = permutations(colorHistory, typeHistory, companyHistory);
@@ -62,9 +59,7 @@ public class CarorderService {
             System.out.println(topick[i][2]);
             List<Car> toadd = getEnabledFilteredCars(topick[i][2], "", "", "", "", "", topick[i][1], topick[i][0], pagestartt);
             preferedcars.addAll(toadd);
-            for (Car c : preferedcars){
-                System.out.println(c.getModel());
-            }
+            
         }
         preferedcars.addAll(getEnabledFilteredCars("", "", "", "", "", "", "all", "", pagestartt));
         return carService.getCarsPreviews(new ArrayList<>(preferedcars));
