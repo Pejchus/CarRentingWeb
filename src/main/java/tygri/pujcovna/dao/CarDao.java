@@ -35,16 +35,7 @@ public class CarDao extends BaseDao {
         return true;
     }
 
-    public boolean deleteCar(int id) {
-        try {
-            Car toDelete = em.find(Car.class, id);
-            super.remove(toDelete);
-
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
-    }
+    
 
     public List<Car> getFilteredEnabledCars(String model, String brand, double lowest, double highest, CarCategory carCategory, String color, int pageStart) {
         model = "%" + model + "%";

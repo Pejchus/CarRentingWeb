@@ -34,7 +34,7 @@ public class ProfileController {
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
     public ModelAndView profile(HttpSession session) {
         ModelAndView mv = new ModelAndView("/profile.jsp");
-        setCommonProfileVariables(session, mv);
+        setCommonProfileVariables(session, mv, session.getAttribute("userId").toString());
         mv.addObject("disabled", "");
         mv.addObject("disabledAdminButtons", "hidden");
         mv.addObject("disableEnableUser", "hidden");
@@ -51,7 +51,7 @@ public class ProfileController {
         } else {
             mv.addObject("profilePhotoChangeMsg", "<p>Profilove foto nebylo zmeneno</p>");
         }
-        setCommonProfileVariables(session, mv);
+        setCommonProfileVariables(session, mv, session.getAttribute("userId").toString());
         mv.addObject("disabled", "");
         mv.addObject("disabledAdminButtons", "hidden");
         mv.addObject("disableEnableUser", "hidden");
@@ -68,7 +68,7 @@ public class ProfileController {
             ModelAndView mv = new ModelAndView("/profile.jsp");
             User user = userService.loadUserById(id);
             if (user != null) {
-                setCommonProfileVariables(session, mv);
+                setCommonProfileVariables(session, mv, id);
                 if (user.isEnabled()) {
                     mv.addObject("disableEnableUser", "hidden");
                     mv.addObject("disableDisableUser", "");
@@ -100,7 +100,7 @@ public class ProfileController {
                 mv.addObject("changeMessage", "Uzivatel nebyl zablokovan");
             }
             if (user != null) {
-                setCommonProfileVariables(session, mv);
+                setCommonProfileVariables(session, mv, id);
                 if (user.isEnabled()) {
                     mv.addObject("disableEnableUser", "hidden");
                     mv.addObject("disableDisableUser", "");
@@ -132,7 +132,7 @@ public class ProfileController {
                 mv.addObject("changeMessage", "Uzivatel byl odblokovan");
             }
             if (user != null) {
-                setCommonProfileVariables(session, mv);
+                setCommonProfileVariables(session, mv, id);
                 if (user.isEnabled()) {
                     mv.addObject("disableEnableUser", "hidden");
                     mv.addObject("disableDisableUser", "");
@@ -150,17 +150,18 @@ public class ProfileController {
         }
     }
 
-    private void setCommonProfileVariables(HttpSession session, ModelAndView mv) {
-        mv.addObject("firstname", session.getAttribute("firstname"));
-        mv.addObject("lastname", session.getAttribute("lastname"));
-        mv.addObject("phone", session.getAttribute("phone"));
-        mv.addObject("email", session.getAttribute("email"));
-        mv.addObject("countrycode", session.getAttribute("countrycode"));
-        mv.addObject("city", session.getAttribute("city"));
-        mv.addObject("street", session.getAttribute("street"));
-        mv.addObject("streetno", session.getAttribute("streetno"));
-        mv.addObject("profilePhoto", userService.getPhoto(session.getAttribute("userName").toString()));
-        mv.addObject("orders", carorderService.getAllOrders(userService.loadUserByUsername(session.getAttribute("userName").toString())));
+    private void setCommonProfileVariables(HttpSession session, ModelAndView mv, String id) {
+        User user = userService.loadUserById(id);
+        mv.addObject("firstname", user.getFirstname());
+        mv.addObject("lastname", user.getLastname());
+        mv.addObject("phone", user.getPhone());
+        mv.addObject("email", user.getEmail());
+        mv.addObject("countrycode", user.getCountryCode());
+        mv.addObject("city", user.getCity());
+        mv.addObject("street", user.getStreet());
+        mv.addObject("streetno", user.getStreetno());
+        mv.addObject("profilePhoto", userService.getPhoto(user.getUsername()));
+        mv.addObject("orders", carorderService.getAllOrders(userService.loadUserByUsername(user.getUsername())));
     }
 
     @RequestMapping(value = "/adminPage")
