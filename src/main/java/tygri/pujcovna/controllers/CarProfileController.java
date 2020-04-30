@@ -208,7 +208,7 @@ public class CarProfileController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_CUSTOMER')")
     @RequestMapping(value = "/deleteCarOrder", method = RequestMethod.GET)
-    public ModelAndView deleteCarOrder(HttpSession session, @RequestParam String id) {
+    public ModelAndView deleteCarOrder(HttpSession session, @RequestParam("id") String id) {
         ModelAndView mv = new ModelAndView("profile.jsp");
         String userId= session.getAttribute("userId").toString();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
