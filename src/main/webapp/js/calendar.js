@@ -42,11 +42,12 @@ function updateCalendar(data) {
                     var msecsInADay = 86400000;
                     var endDate = new Date(selectedDate.getTime());
                     var maxDate;
-                    console.log(reservationDates);
-                    for (var i = 0; i < reservationDates[0].length; i++) {
-                        if (selectedDate < Date.parse(reservationDates[0][i])) {
-                            maxDate = new Date(Date.parse(reservationDates[0][i]) - msecsInADay);
-                            break;
+                    if (reservationDates.length > 0) {
+                        for (var i = 0; i < reservationDates[0].length; i++) {
+                            if (selectedDate < Date.parse(reservationDates[0][i])) {
+                                maxDate = new Date(Date.parse(reservationDates[0][i]) - msecsInADay);
+                                break;
+                            }
                         }
                     }
                     $("#tripend").datepicker("option", "minDate", endDate);
@@ -94,7 +95,6 @@ function getUrlParameter(sParam) {
         for (i = 0; i < sURLVariables.length; i++) {
             sParameterName = sURLVariables[i].split('=');
             if (sParameterName[0] === "carId") {
-                console.log("aaa")
                 return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
             }
         }
