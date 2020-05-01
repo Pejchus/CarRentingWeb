@@ -240,9 +240,9 @@ public class ProfileController {
     @RequestMapping("/doAddUser")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ModelAndView doAddUser(HttpSession session, @RequestParam String username, @RequestParam String password, @RequestParam String email, @RequestParam String enabled, @RequestParam String phone, @RequestParam String countryCode, @RequestParam String firstname, @RequestParam String lastname, @RequestParam String city, @RequestParam String street, @RequestParam String streetNo, @RequestParam String authority) {
-        boolean userCreated = userService.createUser(username, password, email, enabled, phone, countryCode, firstname, lastname, city, street, streetNo, authority);
+        User userCreated = userService.createUser(username, password, email, enabled, phone, countryCode, firstname, lastname, city, street, streetNo, authority);
         ModelAndView mv = getAdminPagePaged(session, "0", "0");
-        if (userCreated) {
+        if (userCreated != null) {
             mv.addObject("changeMessage", "<p>User added!</p>");
         } else {
             mv.addObject("changeMessage", "<p>User not added!</p>");
@@ -253,9 +253,9 @@ public class ProfileController {
     @RequestMapping(value = "/doAddCar", method = RequestMethod.POST)
     @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE','ROLE_ADMIN')")
     public ModelAndView doAddCar(HttpSession session, @RequestParam("model") String model, @RequestParam("brand") String brand, @RequestParam("baseprice") String baseprice, @RequestParam("color") String color, @RequestParam("power") String power, @RequestParam("productionyear") String productionyear, @RequestParam("trunkvolume") String trunkvolume, @RequestParam("seats") String seats, @RequestParam("consumption") String consumption, @RequestParam("transmissiontype") String transmissiontype, @RequestParam("enginetype") String enginetype, @RequestParam("description") String description, @RequestParam("photo") MultipartFile photo, @RequestParam("carcategory") String carcategory) {
-        boolean carCreated = carService.createCar(model, brand, baseprice, color, power, productionyear, trunkvolume, seats, consumption, transmissiontype, enginetype, description, photo, carcategory);
+        Car carCreated = carService.createCar(model, brand, baseprice, color, power, productionyear, trunkvolume, seats, consumption, transmissiontype, enginetype, description, photo, carcategory);
         ModelAndView mv = getAdminPagePaged(session, "0", "0");
-        if (carCreated) {
+        if (carCreated != null) {
             mv.addObject("carAddedMessage", "<p>Car added!</p>");
         } else {
             mv.addObject("carAddedMessage", "<p>Car not added!</p>");

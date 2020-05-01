@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import tygri.pujcovna.dao.CarorderDao;
 import tygri.pujcovna.dao.UserAndAuthorityDao;
+import tygri.pujcovna.model.Authority;
 import tygri.pujcovna.model.AuthorityType;
 import tygri.pujcovna.model.Carorder;
 import tygri.pujcovna.model.User;
@@ -78,13 +79,7 @@ public class UserService implements UserDetailsService {
         return sb.toString();
     }
 
-    /* @Transactional
-    public boolean isUniqueUsername(String username) {
-        User user = userAndAuthorityDao.getUserByUsername(username);
-        return user == null;
-    }*/
     @Transactional
-
     public String isOK(String username, String email, String phone, String countryCode, String firstname, String lastname, String city, String street, String streetNo) {
         Pattern pattern = Pattern.compile("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}");
         Matcher mat = pattern.matcher(email);
@@ -114,7 +109,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public boolean createUser(String username, String password, String email, String enabled, String phone, String countryCode, String firstname, String lastname, String city, String street, String streetNo, String authority) {
+    public User createUser(String username, String password, String email, String enabled, String phone, String countryCode, String firstname, String lastname, String city, String street, String streetNo, String authority) {
         try {
             boolean booleanEnabled;
             if ("true".equals(enabled)) {
@@ -137,11 +132,11 @@ public class UserService implements UserDetailsService {
             String encodedPassword = passwordEncoder.encode(password);
             return userAndAuthorityDao.create(username, encodedPassword, email, booleanEnabled, phone, countryCode, firstname, lastname, city, street, streetNo, AUTHORITYTYPE);
         } catch (NumberFormatException e) {
-            return false;
+            return null;
         }
     }
 
-    public boolean createAuthority(AuthorityType type) {
+    public Authority createAuthority(AuthorityType type) {
         return userAndAuthorityDao.createAuthority(type);
     }
 

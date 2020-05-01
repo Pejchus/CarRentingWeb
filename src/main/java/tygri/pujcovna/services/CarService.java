@@ -39,7 +39,7 @@ public class CarService {
     }
 
     public String getAllCarsPreviews(String pagestart) {
-        return carorderService.cutToPreview(carDao.getAllCars(),Integer.valueOf(pagestart));
+        return carorderService.cutToPreview(carDao.getAllCars(), Integer.valueOf(pagestart));
     }
 
     @Transactional
@@ -75,7 +75,7 @@ public class CarService {
     }
 
     @Transactional
-    public boolean createCar(String model, String brand, String baseprice, String color, String power, String productionyear, String trunkvolume, String seats, String consumption, String transimissionType, String engineType, String description, MultipartFile photo, String carCategory) {
+    public Car createCar(String model, String brand, String baseprice, String color, String power, String productionyear, String trunkvolume, String seats, String consumption, String transimissionType, String engineType, String description, MultipartFile photo, String carCategory) {
         try {
             boolean enabled = true;
             if (photo != null) {
@@ -91,7 +91,7 @@ public class CarService {
         } catch (IOException | IllegalArgumentException e) {
             System.out.println("Velky spatny: ");
             System.out.println(e);
-            return false;
+            return null;
         }
     }
 

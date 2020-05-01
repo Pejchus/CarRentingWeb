@@ -60,7 +60,7 @@ public class LoginController {
         if (((message = userService.isOK(username, email, phone, countryCode, firstname, lastname, city, street, streetNo)) != null) || (message = userService.isUnique(username, email, phone)) != null) {
             mv = new ModelAndView("/signup.jsp");
             mv.addObject("registerMessage", message);
-        } else if (userService.createUser(username, password, email, "true", phone, countryCode, firstname, lastname, city, street, streetNo, "CUSTOMER")) {
+        } else if (userService.createUser(username, password, email, "true", phone, countryCode, firstname, lastname, city, street, streetNo, "CUSTOMER") != null) {
             mv = new ModelAndView("/login.jsp");
             mv.addObject("errorMsg", "Vas ucet byl vytvoren, muzete se prihlasit");
         } else {

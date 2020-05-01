@@ -57,7 +57,7 @@ public class UserAndAuthorityDao extends BaseDao /*implements UserRepository*/ {
 
     }
 
-    public boolean create(String username, String password, String email, boolean booleanEnabled, String phone, String countryCode, String firstname, String lastname, String city, String street, String streetNo, AuthorityType AUTHORITYTYPE) {
+    public User create(String username, String password, String email, boolean booleanEnabled, String phone, String countryCode, String firstname, String lastname, String city, String street, String streetNo, AuthorityType AUTHORITYTYPE) {
         try {
             TypedQuery<Authority> query = em.createQuery("FROM Authority a where a.name=:name", Authority.class);
             query.setParameter("name", AUTHORITYTYPE);
@@ -65,22 +65,19 @@ public class UserAndAuthorityDao extends BaseDao /*implements UserRepository*/ {
             Set<Authority> authorities = Collections.singleton(query.getSingleResult());
             user.setUserAuthorities(authorities);
             persist(user);
+            return user;
         } catch (Exception e) {
-            return false;
+            return null;
         }
-        return true;
     }
 
-    /* public List<User> findAll() {
-        return super.getAll();
-    }*/
-    public boolean createAuthority(AuthorityType name) {
-        Authority auth = new Authority(name);
+    public Authority createAuthority(AuthorityType name) {
         try {
+            Authority auth = new Authority(name);
             em.persist(auth);
-            return true;
+            return auth;
         } catch (RuntimeException e) {
-            return false;
+            return null;
         }
     }
 

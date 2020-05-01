@@ -32,7 +32,7 @@ public class CarorderDao extends BaseDao {
      * @param paid
      * @return
      */
-    public boolean createCarorder(User customer, Timestamp begin, Timestamp end, Car car, double price, boolean paid) {
+    public Carorder createCarorder(User customer, Timestamp begin, Timestamp end, Car car, double price, boolean paid) {
         try {
             Calendar c = Calendar.getInstance();
             c.setTimeInMillis(begin.getTime());
@@ -51,10 +51,10 @@ public class CarorderDao extends BaseDao {
             double days = ((end.getTime() - begin.getTime()) / 86400000) + 1;
             Carorder order = new Carorder(customer, car, begin, end, new Timestamp(System.currentTimeMillis()), days * price, paid);
             persist(order);
+            return order;
         } catch (Exception e) {
-            return false;
+            return null;
         }
-        return true;
     }
 
     public List<Carorder> getUserOrderHistory(User u) {
@@ -154,6 +154,7 @@ public class CarorderDao extends BaseDao {
             return false;
         }
     }
+
     public boolean removeOrder(Carorder order) {
         try {
             int i = order.getAccount().getOrders().indexOf(order);
@@ -178,8 +179,3 @@ public class CarorderDao extends BaseDao {
         }
     }
 }
-
-
-
-
-

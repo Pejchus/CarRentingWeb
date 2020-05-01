@@ -25,10 +25,10 @@ public class Main {
         return (ApplicationArguments args) -> dataSetup(userService, carService, carorderDao);
     }
 
-    //init db on launch, works only when db is empty
+    //init db on launch, works only when db is empty, this is executed before any tests
     public void dataSetup(UserService userService, CarService carService, CarorderDao carorderDao) {
-        userService.createAuthority(AuthorityType.ROLE_ADMIN);
         userService.createAuthority(AuthorityType.ROLE_CUSTOMER);
+        userService.createAuthority(AuthorityType.ROLE_ADMIN);
         userService.createAuthority(AuthorityType.ROLE_EMPLOYEE);
         userService.createUser("admin", "admin", "admin@admin.com", "true", "777777777", "25101", "admin", "vonAdmin", "Praha", "Parizska", "4", "ADMIN");
         userService.createUser("zamestnanec", "zamestnanec", "zamestnanec@zamestnanec.com", "true", "666666666", "069", "zamestnanec", "vonZamestnanec", "Ricany", "Sokolska", "5", "EMPLOYEE");

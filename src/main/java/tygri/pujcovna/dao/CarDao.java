@@ -15,27 +15,25 @@ public class CarDao extends BaseDao {
         super(Car.class);
     }
 
-    public boolean CreateCar(String model, String brand, double baseprice, String color, double power, int productionyear, double trunkvolume, boolean enabled, int seats, double consumption, TransmissionType transimissionType, EngineType engineType, String description, Byte[] photo, CarCategory carCategory) {
+    public Car CreateCar(String model, String brand, double baseprice, String color, double power, int productionyear, double trunkvolume, boolean enabled, int seats, double consumption, TransmissionType transimissionType, EngineType engineType, String description, Byte[] photo, CarCategory carCategory) {
         try {
             Car car = new Car(model, brand, baseprice, color, power, productionyear, trunkvolume, enabled, seats, consumption, transimissionType, engineType, description, photo, carCategory);
             persist(car);
+            return car;
         } catch (Exception e) {
-            return false;
+            return null;
         }
-        return true;
     }
 
-    public boolean CreateCar(String model, String brand, double baseprice, String color, double power, int productionyear, double trunkvolume, boolean enabled, int seats, double consumption, TransmissionType transimissionType, EngineType engineType, String description, CarCategory carCategory) {
+    public Car CreateCar(String model, String brand, double baseprice, String color, double power, int productionyear, double trunkvolume, boolean enabled, int seats, double consumption, TransmissionType transimissionType, EngineType engineType, String description, CarCategory carCategory) {
         try {
             Car car = new Car(model, brand, baseprice, color, power, productionyear, trunkvolume, enabled, seats, consumption, transimissionType, engineType, description, carCategory);
             persist(car);
+            return car;
         } catch (Exception e) {
-            return false;
+            return null;
         }
-        return true;
     }
-
-    
 
     public List<Car> getFilteredEnabledCars(String model, String brand, double lowest, double highest, CarCategory carCategory, String color) {
         model = "%" + model + "%";
@@ -48,7 +46,7 @@ public class CarDao extends BaseDao {
         }
     }
 
-    public List<Car> getFilteredEnabledCars(String model, String brand, double lowest, double highest ) {
+    public List<Car> getFilteredEnabledCars(String model, String brand, double lowest, double highest) {
         model = "%" + model + "%";
         brand = "%" + brand + "%";
         try {

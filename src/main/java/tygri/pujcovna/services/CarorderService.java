@@ -24,8 +24,6 @@ public class CarorderService {
     @Autowired
     private CarDao carDao;
 
-
-
     public String getEnabledPrefferd(User user, String modelsearch, String carcompany, String tripstart, String tripend, String range1a, String range1b, String type, String pagestart) {
         int pagestartt = Integer.valueOf(pagestart);
         HashMap<String, Integer> colorHistory = new HashMap<>();
@@ -57,31 +55,33 @@ public class CarorderService {
             if (topick[i][1] == null) {
                 topick[i][1] = "all";
             }
-            if(!modelsearch.equals("")&&topick[i][2]!=modelsearch){
+            if (!modelsearch.equals("") && topick[i][2] != modelsearch) {
                 continue;
             }
-            if(topick[i][1]!=type && (!type.equals("all"))){
+            if (topick[i][1] != type && (!type.equals("all"))) {
                 continue;
             }
             List<Car> toadd = getEnabledFilteredCars(topick[i][2], carcompany, tripstart, tripend, range1a, range1b, topick[i][1], topick[i][0]);
             preferedcars.addAll(toadd);
         }
-        preferedcars.addAll(getEnabledFilteredCars(modelsearch, carcompany, tripstart, tripend, range1a,range1b, type, ""));
-        return cutToPreview(new ArrayList(preferedcars),pagestartt);
+        preferedcars.addAll(getEnabledFilteredCars(modelsearch, carcompany, tripstart, tripend, range1a, range1b, type, ""));
+        return cutToPreview(new ArrayList(preferedcars), pagestartt);
 
     }
-    public String cutToPreview(List carlist,int pagestartt){
-        int pageend = pagestartt+10;
-        if(pageend>carlist.size()){
-            pageend=carlist.size();
-        }if(pageend<pagestartt){
+
+    public String cutToPreview(List carlist, int pagestartt) {
+        int pageend = pagestartt + 10;
+        if (pageend > carlist.size()) {
+            pageend = carlist.size();
+        }
+        if (pageend < pagestartt) {
             return carService.getCarsPreviews(new ArrayList<>());
         }
-        return carService.getCarsPreviews(carlist.subList(pagestartt,pageend));
+        return carService.getCarsPreviews(carlist.subList(pagestartt, pageend));
     }
 
     public String getEnabledCarsOffers(String modelsearch, String carcompany, String tripstart, String tripend, String range1a, String range1b, String type, String pagestart) {
-        return cutToPreview(getEnabledFilteredCars(modelsearch, carcompany, tripstart, tripend, range1a, range1b, type, ""),Integer.valueOf(pagestart));
+        return cutToPreview(getEnabledFilteredCars(modelsearch, carcompany, tripstart, tripend, range1a, range1b, type, ""), Integer.valueOf(pagestart));
     }
 
     private List<Car> getEnabledFilteredCars(String modelsearch, String carcompany, String tripstart, String tripend, String range1a, String range1b, String type, String color) {
@@ -148,17 +148,17 @@ public class CarorderService {
         return false;
     }
 
-    public boolean createOrder(User user, Car car, String begin, String end) {
+    public Carorder createOrder(User user, Car car, String begin, String end) {
         try {
             Timestamp beginDate = Timestamp.valueOf(begin + " 00:00:00");
             Timestamp endDate = Timestamp.valueOf(end + " 00:00:00");
             if (!beginDate.after(endDate) && isFree(car, beginDate, endDate)) {
                 return carOrderDao.createCarorder(user, beginDate, endDate, car, car.getBaseprice(), true);
             } else {
-                return false;
+                return null;
             }
         } catch (IllegalArgumentException e) {
-            return false;
+            return null;
         }
     }
 
@@ -202,7 +202,7 @@ public class CarorderService {
         int first, second, third;
         first = second = third = -1;
         String[] res = new String[3];
-       int i=0;
+        int i = 0;
         for (String name : map.keySet()) {
             if (map.get(name).intValue() > first) {
                 third = second;
@@ -243,7 +243,6 @@ public class CarorderService {
             return false;
         }
     }
-
 
     public String getCarOrderOwner(String id) {
         return carOrderDao.getOrder(id).getAccount().getId().toString();

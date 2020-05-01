@@ -80,7 +80,7 @@ public class CarProfileController {
                     mv.addObject("createOrderMsg", "<p>Please fill valid username</p>");
                 }
             }
-            if (userok && carorderService.createOrder(user, car, tripstart, tripend)) {
+            if (userok && carorderService.createOrder(user, car, tripstart, tripend) != null) {
                 mv.addObject("createOrderMsg", "<p>Order successfully made on specified date</p>");
             } else if (!userok) {
                 mv.addObject("createOrderMsg", "<p>Please fill valid username</p>");
