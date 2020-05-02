@@ -202,4 +202,18 @@ public class CarProfileController {
             mv.addObject("disabled", "hidden");
         }
     }
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RequestMapping(value = "/deleteCarOrderCar", method = RequestMethod.GET)
+    public ModelAndView deleteCarOrderCar(HttpSession session, @RequestParam("id") String orderId) {
+        String carId=carorderService.getCarOrderCar(orderId).getId().toString();
+        ModelAndView mv = new ModelAndView("/carProfile.jsp");
+        if (carorderService.deleteOrder(carId, orderId, true)) {
+            mv.addObject("carChangeMsg", "Rezervace byla smazana");
+        } else {
+            mv.addObject("carChangeMsg", "Rezervace nebyla smazana");
+        }
+        setCommonCarProfileVariables(mv,session,carService.getCarById(carId));
+        return mv;
+    }
+
 }

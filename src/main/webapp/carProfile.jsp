@@ -127,7 +127,7 @@
                                     <td><c:out value="${order.enddate}"/></td>
                                     <td><c:out value="${order.price}"/></td>
                                     <td>
-                                        <a class="cancelOrder" href="/deleteCarOrder?id=${order.id}">Odstranit</a>
+                                        <a class="cancelOrder" href="/deleteCarOrderCar?id=${order.id}">Odstranit</a>
                                     </td>
                                 </tr>
                             </c:forEach>
