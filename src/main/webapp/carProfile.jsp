@@ -79,13 +79,15 @@
                                 <input type="text" class="form-control" id="username" name="username" value ="" placeholder="Zadejte username" >
                             </security:authorize>
                             <input type="hidden" name="carId" value="${carId}">
-                            <span id="totalPrice"></span>
+
+                            <p>Celkova cena: <span id="totalPrice"></span></p>
                             <input type="submit" value="Rezervovat">
                         </form>
-                        ${createOrderMsg}
+                        <h4>${createOrderMsg}</h4>
                     </div>
                     <div class="car-profile">
-                        ${foto}
+                        <div class="car-profile-img">${foto}</div>
+
                     </div>
 
 
@@ -104,7 +106,7 @@
                             <input type="hidden" name="carid" value="${carId}">
                             <input type="submit" value="Vybrat foto"><br>
                         </form>
-                        ${carProfilePhotoChangeMsg}
+                        <h4>${carProfilePhotoChangeMsg}</h4>
 
                         <h4>Objednavky</h4>
                         <table class="table table-condensed table-hover" id="ordersHistoryTable">
@@ -149,7 +151,7 @@
                         </fieldset>
 
                         <a href="deleteCar?id=${carId}">Smazat auto (nezrusi jeho objednavky)</a>
-                        ${carChangeMsg}
+                        <h4>${carChangeMsg}</h4>
                     </fieldset>
                 </div>
             </div>

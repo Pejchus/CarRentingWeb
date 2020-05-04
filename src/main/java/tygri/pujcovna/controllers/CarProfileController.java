@@ -77,18 +77,18 @@ public class CarProfileController {
                     user = userService.loadUserByUsername(username);
                 } catch (UsernameNotFoundException e) {
                     userok = false;
-                    mv.addObject("createOrderMsg", "<p>Please fill valid username</p>");
+                    mv.addObject("createOrderMsg", "<p>Prosim, vyplnte spravne username</p>");
                 }
             }
             if (userok && carorderService.createOrder(user, car, tripstart, tripend) != null) {
-                mv.addObject("createOrderMsg", "<p>Order successfully made on specified date</p>");
+                mv.addObject("createOrderMsg", "<p>Objednavka byla uspesne vytvorena na vybrane datum</p>");
             } else if (!userok) {
-                mv.addObject("createOrderMsg", "<p>Please fill valid username</p>");
+                mv.addObject("createOrderMsg", "<p>Prosim, vyplnte spravne username</p>");
             } else {
-                mv.addObject("createOrderMsg", "<p>Unable to order for that date</p>");
+                mv.addObject("createOrderMsg", "<p>Auto neni mozne objednat na vybrane datum</p>");
             }
         } else {
-            mv.addObject("createOrderMsg", "<p>Unable to order for that date</p>");
+            mv.addObject("createOrderMsg", "<p>Auto neni mozne objednat na vybrane datum</p>");
         }
         setCommonCarProfileVariables(mv, session, car);
         return mv;
