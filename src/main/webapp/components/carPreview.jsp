@@ -7,7 +7,7 @@
 
                 <h3>;carCompany; <strong>;carModel;</strong></h3>
                 <div class="cimage">
-                    <img src="data:image/png;base64,;carPhotoData;" alt="Foto auta" height="100" width="100"/>;
+                    <img src="data:image/png;base64,;carPhotoData;" alt="Foto auta"/>
                 </div>
 
                 <div class="cmatter">
@@ -27,7 +27,7 @@
                     <div class="row">
                         <div class="col-sm-5 detailLeftTd">Rok Vyroby: <b>;productionyear;</b>
                         </div>
-                        <div class="col-sm-7">Vykon: <b>;power;</b>
+                        <div class="col-sm-7">Vykon: <b>;power;</b> kW
                         </div>
                     </div>
                     <div class="btn btn-price rezervovatDetailBtn">
