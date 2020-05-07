@@ -70,7 +70,7 @@ public class CarorderService {
     }
 
     public String cutToPreview(List carlist, int pagestartt) {
-        int pageend = pagestartt + 10;
+        int pageend = pagestartt + 9;
         if (pageend > carlist.size()) {
             pageend = carlist.size();
         }
