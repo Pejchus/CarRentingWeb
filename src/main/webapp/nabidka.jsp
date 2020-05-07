@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Tygri Pujcovna</title>
+        <title>Nabidka</title>
 
         <link rel="stylesheet" href="css/styles.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -16,7 +16,10 @@
         <%--              href="https://demos.jquerymobile.com/1.4.2/css/themes/default/jquery.mobile-1.4.2.min.css">--%>
 
         <!-- Potreba ve vsech .jsp kde pouzivame security:authorize tagy -->
+
+        <!-- Potreba ve vsech .jsp kde pouzivame security:authorize tagy -->
         <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+        <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     </head>
 
     <body>
@@ -140,7 +143,7 @@
                                     <input name="range1b" type="range" min="${minSliderVal}" max="${maxSliderVal}" value="${range1bValue}" id="upper">
                                 </div>
 
-                                <div class="slider_lower_value_span">
+                                <div class="slider_higher_value_span">
                                     <span>Do</span>
                                     <span id="upper-value" disabled></span>
                                 </div>
@@ -160,7 +163,7 @@
                     </div>
                 </div>
                 <fieldset ${pagingNext}>
-                    <form action="filterOffers">    
+                    <form action="filterOffers" class="paging">
                         <input type="hidden" name="type" value="${typeValue}">
                         <input type="hidden" name="modelsearch" value="${modelsearchValue}">
                         <input type="hidden" name="carcompany" value="${carcompanyValue}">
@@ -171,10 +174,12 @@
                         <input type="hidden" name="pagestart" value="${nextpagestart}">
                         <input type="hidden" name="prefferedCars" value="false">
                         <input type="submit" value=">">
+                        <span>Dalsich 10 aut</span>
                     </form>
+
                 </fieldset>
                 <fieldset ${pagingPrevious}>
-                    <form action="filterOffers">    
+                    <form action="filterOffers" class="paging">
                         <input type="hidden" name="type" value="${typeValue}">
                         <input type="hidden" name="modelsearch" value="${modelsearchValue}">
                         <input type="hidden" name="carcompany" value="${carcompanyValue}">
@@ -185,7 +190,9 @@
                         <input type="hidden" name="pagestart" value="${previouspagestart}">
                         <input type="hidden" name="prefferedCars" value="false">
                         <input type="submit" value="<">
+                        <span>Predchozich 10 aut</span>
                     </form>
+
                 </fieldset>
             </div>
 

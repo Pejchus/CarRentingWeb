@@ -6,6 +6,7 @@
             <div class="nabidka-auto-container">
 
                 <h3>;carCompany; <strong>;carModel;</strong></h3>
+                
                 <div class="cimage">
                     <img src="data:image/png;base64,;carPhotoData;" alt="Foto auta"/>
                 </div>

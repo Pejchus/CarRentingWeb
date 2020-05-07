@@ -244,7 +244,15 @@ form {
     display: flex;
     width: 100%;
 }
-
+.slider{
+    display: flex;
+}
+.slider_lower_value_span{
+    margin-right: 15px;
+}
+.slider_higher_value_span{
+    margin-left: 30px;
+}
 input[type=range] {
     box-sizing: border-box;
     -webkit-appearance: none;
@@ -314,7 +322,7 @@ input[type=range]::-webkit-slider-thumb::before {
     margin-bottom: 3em;
 }
 
-.car-profile, .car-description {
+.car-profile, .car-description, .car-profile-foto {
     width: 40%;
     margin: 0 3em 0 3em;
     border-style: solid;
@@ -322,6 +330,14 @@ input[type=range]::-webkit-slider-thumb::before {
     padding: 10px;
     min-height: 15em;
 
+}
+.car-state{
+    color: red;
+}
+.car-profile-foto{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .car-description{
     width: 90%;
@@ -345,6 +361,34 @@ input[type=range]::-webkit-slider-thumb::before {
 }
  */
 
+
+/* admin page*/
+.admin-form input{
+    border:2px solid #9b9b9b;
+    border-radius: 5px;
+    margin: 6px;
+
+
+}
+.paging input[type=submit], .accounts input[type=submit]{
+    border:2px solid #9b9b9b;
+    border-radius: 5px;
+    background-color: #f38100;
+
+}
+/*KONTAKTY*/
+/*
+.kontakty-footer{
+    position: absolute;
+    bottom:0;
+}*/
+.kontakty-text{
+    margin-top: 15px;
+    width:40%;
+}
+.kontakty-container{
+    display: flex;
+}
 
 /* Responziv */
 @media only screen and (max-width: 1200px) {

@@ -186,9 +186,11 @@ public class CarProfileController {
             mv.addObject("disabled", "");
             if (car.isEnabled()) {
                 mv.addObject("disableEnableCar", "hidden");
+                mv.addObject("carState", "neblokovane");
                 mv.addObject("disableDisableCar", "");
             } else {
                 mv.addObject("disableEnableCar", "");
+                mv.addObject("carState", "blokovane");
                 mv.addObject("disableDisableCar", "hidden");
             }
             if (car.isOnFrontPage()) {

@@ -16,7 +16,7 @@
                         <a class="nav-link" href="/offers">Nabidka aut</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Kontakty</a>
+                        <a class="nav-link" href="/kontakty.jsp">Kontakty</a>
                     </li>
 
                     <security:authorize access="!hasAnyRole('ROLE_CUSTOMER','ROLE_EMPLOYEE','ROLE_ADMIN')">
