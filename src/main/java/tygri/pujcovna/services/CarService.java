@@ -69,6 +69,13 @@ public class CarService {
             previewString = previewString.replaceFirst(";transmissiontype;", car.getTransimissionType().toString());
             previewString = previewString.replaceFirst(";productionyear;", car.getProductionyear().toString());
             previewString = previewString.replaceFirst(";power;", car.getPower().toString());
+            if (!car.isEnabled()) {
+                previewString = previewString.replaceFirst(";adminPreview;", " <label class=\"car-state\">\n"
+                        + "                    Stav vozidla: Blokovano\n"
+                        + "                </label>");
+            } else {
+                previewString = previewString.replaceFirst(";adminPreview;", "");
+            }
             sb.append(previewString);
         }
         return sb.toString();

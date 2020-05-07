@@ -1,18 +1,13 @@
 <div class="col-lg-4">
-
     <a href=";carProfileLink;" class="odkaz-auto">
         <label>
-
             <div class="nabidka-auto-container">
-
                 <h3>;carCompany; <strong>;carModel;</strong></h3>
-                
                 <div class="cimage">
                     <img src="data:image/png;base64,;carPhotoData;" alt="Foto auta"/>
                 </div>
-
+                ;adminPreview;               
                 <div class="cmatter">
-
                     <div class="row">
                         <div class="col-sm-5 detailLeftTd">Pocet sedadel: <b>;carSeatNumber;</b>
                         </div>
@@ -34,15 +29,11 @@
                     <div class="btn btn-price rezervovatDetailBtn">
                         od <strong>;carPrice; / den</strong>
                     </div>
-
                     <div class="nabidka-button">
                         Prohlednout vuz
                     </div>
-
                 </div>
-
             </div>
-
         </label>
     </a>
 </div>
