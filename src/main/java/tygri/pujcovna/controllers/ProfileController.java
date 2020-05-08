@@ -192,6 +192,9 @@ public class ProfileController {
             mv.addObject("previoususerpagestart", String.valueOf(Integer.valueOf(userpagestart) - 9));
             mv.addObject("nextuserpagestart", String.valueOf(Integer.valueOf(userpagestart) + 9));
             mv.addObject("currentuserpagestart", String.valueOf(Integer.valueOf(userpagestart)));
+        } else {
+            mv.addObject("paginguserPrevious", "hidden");
+            mv.addObject("paginguserNext", "hidden");
         }
         if (!"".equals(carService.getAllCarsPreviews(String.valueOf(Integer.valueOf(carpagestart) + 9)))) {
             mv.addObject("pagingcarNext", "");
