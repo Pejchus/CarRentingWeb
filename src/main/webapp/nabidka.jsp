@@ -174,7 +174,7 @@
                         <input type="hidden" name="pagestart" value="${nextpagestart}">
                         <input type="hidden" name="prefferedCars" value="false">
                         <input type="submit" value=">">
-                        <span>Dalsich 10 aut</span>
+                        <span>Dalsi</span>
                     </form>
 
                 </fieldset>
@@ -190,7 +190,7 @@
                         <input type="hidden" name="pagestart" value="${previouspagestart}">
                         <input type="hidden" name="prefferedCars" value="false">
                         <input type="submit" value="<">
-                        <span>Predchozich 10 aut</span>
+                        <span>Predchozi</span>
                     </form>
 
                 </fieldset>

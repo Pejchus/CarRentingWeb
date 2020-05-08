@@ -26,7 +26,7 @@
                     <li>Adresa: Tygri 888, Praha</li>
                     <li>Email: tygri@pujcovna.cz</li>
                     <li>Telefon: 123 456 789</li>
-                    <li>ja nevim</li>
+
                 </ul>
             </div>
             <div class="kontakty-mapa">

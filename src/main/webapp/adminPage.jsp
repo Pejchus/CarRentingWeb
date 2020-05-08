@@ -76,7 +76,7 @@
                 <input type="hidden" name="carpagestart" value="${nextcarpagestart}">
                 <input type="hidden" name="userpagestart" value="${currentuserpagestart}">
                 <input type="submit" value=">">
-                <span>Dalsich 10 aut</span>
+                <span>Dalsi</span>
             </form>
 
         </fieldset>
@@ -85,7 +85,7 @@
                 <input type="hidden" name="carpagestart" value="${previouscarpagestart}">
                 <input type="hidden" name="userpagestart" value="${currentuserpagestart}">
                 <input type="submit" value="<">
-                <span>Predchozich 10 aut</span>
+                <span>Predchozi</span>
             </form>
 
         </fieldset>
@@ -94,7 +94,7 @@
                 <input type="hidden" name="userpagestart" value="${nextuserpagestart}">
                 <input type="hidden" name="carpagestart" value="${currentcarpagestart}">
                 <input type="submit" value=">">
-                <span>Dalsich 10 uzivatelu</span>
+                <span>Dalsi</span>
             </form>
 
         </fieldset>
@@ -103,7 +103,7 @@
                 <input type="hidden" name="userpagestart" value="${previoususerpagestart}">
                 <input type="hidden" name="carpagestart" value="${currentcarpagestart}">
                 <input type="submit" value="<">
-                <span>Predchozich 10 uzivatelu</span>
+                <span>Predchozi</span>
             </form>
 
         </fieldset>
