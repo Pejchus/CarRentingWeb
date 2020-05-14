@@ -19,7 +19,7 @@
     background-color: rgba(0,0,0,0.5) !important;
 }
 .card-signup{
-    height: 675px;
+    height: 725px;
     margin-top: 7%;
     margin-bottom: 7%;
     width: 400px;
@@ -80,6 +80,9 @@ input:focus{
     color: white;
 }
 .loginErrorMsg{
+    color: yellow;
+}
+.signupErrorMsg {
     color: yellow;
 }
 

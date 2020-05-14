@@ -86,12 +86,13 @@
                                     <input type="password" class="form-control" name='password' placeholder="Heslo" required>
                                 </div>
                                 <div class="row align-items-center remember">
-                                    <input type="checkbox" required>Souhlasim s obchodnim podminkami
+                                    <input type="checkbox" required>Souhlasim s obchodnim podminkam
                                 </div>
+                                <span class="signupErrorMsg">${registerMessage}</span>
                                 <div class="form-group">
                                     <input type="submit" value="Zaregistrovat" class="float-right signup_btn">
                                 </div>
-                                <p>${registerMessage}</p>
+
                             </form>                            
                         </div>
                     </div>
