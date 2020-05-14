@@ -91,7 +91,8 @@
                                 <div class="form-group">
                                     <input type="submit" value="Zaregistrovat" class="float-right signup_btn">
                                 </div>
-                            </form>
+                                <p>${registerMessage}</p>
+                            </form>                            
                         </div>
                     </div>
                 </div>
